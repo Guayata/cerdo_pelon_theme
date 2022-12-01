@@ -1,0 +1,139 @@
+{{ 'footer-cerdo.scss.css' | asset_url | stylesheet_tag }}
+<div
+  class="container-fluid foo">
+  <div class="content-top">
+    <div class="content-get spac">
+      <p class="cur">Get updates &</p>
+      <p class="juni">STAY CONECTED</p>
+      <input type="email" placeholder="Escribe tu e-mail" size="11" required/>
+      <br class="d-block d-sm-block d-md-none">
+      <button type="button">ENVIAR</button>
+    </div>
+    <div class="content-his spac">
+      <div class="column">
+        <a href="{{ section.settings.ne }}">NUESTRA HISTORIA</a>
+        <a href="{{ section.settings.jo }}">JOURNAL</a>
+        <a href="{{ section.settings.en }}">ENCUENTRANOS</a>
+      </div>
+      <div class="column">
+        <a href="{{ section.settings.te }}">TÉRMINOS Y CONDICIONES</a>
+        <a href="{{ section.settings.pr }}">PREGUNTAS FRECUENTES</a>
+        <a href="{{ section.settings.fa }}">FACTURACIÓN</a>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="bottom-link">
+      <div class="d-block d-sm-block d-md-none"> 
+        <img src="{{ 'Logo2-Blanco.png' | asset_url }}" class="logo-2-blanco" />
+      </div>
+    <div class="redes-links">
+    <a href="{{ section.settings.email }}">EMAIL &nbsp &nbsp &nbsp &nbsp </a>
+    <a href="{{ section.settings.instagram }}">INSTAGRAM &nbsp &nbsp &nbsp &nbsp </a>
+    <a href="{{ section.settings.youtube }}">YOUTUBE &nbsp &nbsp &nbsp &nbsp</a>
+    <a href="{{ section.settings.linkedin }}">LINKEDIN &nbsp &nbsp &nbsp &nbsp</a>
+      </div>
+    <img class="d-none d-sm-none d-md-block logo-2-blanco" src="{{ 'Logo2-Blanco.png' | asset_url }}"/>
+     <a href="{{ section.settings.undertk }}" class="d-none d-sm-none d-md-block">COPYRIGHT © 2022 UNDETK STUDIO. ALL RIGHTS RESERVED.</a>
+    <div class="d-block d-sm-block d-md-none">
+      <a href="{{ section.settings.undertk }}"
+      
+      >COPYRIGHT © 2022 UNDETK STUDIO. ALL RIGHTS RESERVED.</a
+    >
+  </div></div>
+
+ 
+
+    
+   </div>
+  </div>
+</div>
+
+{% schema %} 
+  { 
+    "name": "footer-cerdo", 
+    "class": "footer", 
+    "settings": 
+    [
+        {
+"type": "header",
+"content": "===== Imagen de Fondo ======"
+},
+       {
+          "type": "image_picker",
+          "id": "background-footer",
+          "label": "Imagen Fondo"
+        },
+        {
+"type": "header",
+"content": "===== Datos Web ======"
+},
+   {
+    "type": "url",
+    "id": "ne",
+    "label": "NUESTRA HISTORIA"
+  },
+  {
+    "type": "url",
+    "id": "jo",
+    "label": "JOURNAL"
+  },
+  {
+    "type": "url",
+    "id": "en",
+    "label": "ENCUENTRANOS"
+  },
+  {
+    "type": "url",
+    "id": "te",
+    "label": "TÉRMINOS Y CONDICIONES"
+  },
+  {
+    "type": "url",
+    "id": "pr",
+    "label": "PREGUNTAS FRECUENTES"
+  },
+  {
+    "type": "url",
+    "id": "fa",
+    "label": "FACTURACIÓN"
+  },  
+        {
+"type": "header",
+"content": "===== Datos botton ======"
+},
+       {
+          "type": "url",
+          "id": "email",
+          "label": "EMAIL"
+        },
+       {
+          "type": "url",
+          "id": "instagram",
+          "label": "INSTAGRAM"
+        },
+       {
+          "type": "url",
+          "id": "youtube",
+          "label": "YOUTUBE"
+        },
+       {
+          "type": "url",
+          "id": "linkedin",
+          "label": "LINKEDIN"
+        },
+       {
+          "type": "url",
+          "id": "undertk",
+          "label": "UNDERTK"
+        }
+    ], 
+    "presets": 
+    [ 
+      { 
+        "name": "footer-cerdo",
+        "category": "form" 
+      } 
+    ] 
+  } 
+  {% endschema %}

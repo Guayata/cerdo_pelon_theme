@@ -1,0 +1,167 @@
+<style>
+  .row{display:-ms-flexbox;
+    display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+  .col-12{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%;position:relative;width:100%;padding-right:15px;padding-left:15px;}
+  @media(min-width: 992px){
+    .col-lg-4{-ms-flex:0 0 33.333333% !important;flex:0 0 33.333333% !important;max-width:33.333333% !important;}
+  }
+</style>
+
+<div class="block-section" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{section.settings.bg_section }}" {%- endif -%}>
+  <div class="block_content {{set-box}}">
+    {% if section.settings.title != blank %}
+    <div class="text-center title-description-section">
+      {{ section.settings.title }}
+    </div>
+    {% endif %}
+    {% if section.settings.text != blank %}
+    <div class="rte-setting text-description-section">{{ section.settings.text }}</div>
+    {% endif %}
+    <div class="row "  style="margin: 0px !important;">
+      {% for block in section.blocks %}
+      <div class="col-12 col-lg-4 text-{{ section.settings.align_text }}" {{ block.shopify_attributes }}>
+        {% if block.settings.enable_image %}
+        {% if block.settings.image != blank %}
+        <a href="{{ block.settings.button_link }}" target="_blank">
+          <div class="content">
+            <div class="content-overlay"></div>
+            {{ block.settings.image | img_url: 'master' | img_tag: 'feature-row__image', 'content-image' }}
+            <div class="content-details fadeIn-bottom">
+              {% if block.settings.title != blank %}
+              <h3 class="content-title">{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.text != blank %}
+              <div class="content-text">{{ block.settings.text }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+          {% else %}
+            <p>
+              {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+            </p>
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.blocks.size == 0 %}
+    {% include 'no-blocks' %}
+  {% endif %}
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Columns image",
+  "class": "index-section-column-images",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "custom_space",
+      "label": "Css Style Section",
+      "default":"padding-top:100px;padding-bottom:100px"
+    },
+    {
+       "type":      "radio",
+       "id":        "set_box",
+       "label":     "Set Layout Section",
+       "options": [
+         { "value": "box-container", "label": "Box Container" },
+         { "value": "box-full", "label": "Box Full" },
+         { "value": "none", "label": "None" }
+       ],
+       "default":   "box-full",
+       "info":      "Set Layout Section"
+    },
+    {
+      "type": "color",
+      "id": "bg_section",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    },
+{
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        },
+    {
+      "type": "select",
+      "id": "align_text",
+      "label": "Text alignment",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centered"
+        }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_image",
+          "label": "Show image",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Add a title or tagline"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Columns image",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

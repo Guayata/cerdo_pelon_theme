@@ -1,0 +1,329 @@
+<style>
+  .section {
+    height: 50%;
+  }
+  .scene {
+    height: 100%;
+    width: 100%;
+  }
+  .viewer {
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 200px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: 0 50%;
+  }
+
+  .viewer.frame1 {
+    background-position: -200px 50%;
+  }
+
+  .viewer.frame2 {
+    background-position: -400px 50%;
+  }
+
+  .viewer.frame3 {
+    background-position: -600px 50%;
+  }
+
+  .viewer.frame4 {
+    background-position: -800px 50%;
+  }
+
+  .viewer.frame5 {
+    background-position: -1000px 50%;
+  }
+
+  .viewer.frame6 {
+    background-position: -1200px 50%;
+  }
+
+  .viewer.frame7 {
+    background-position: -1400px 50%;
+  }
+
+  .viewer.frame8 {
+    background-position: -1600px 50%;
+  }
+
+  .viewer.frame9 {
+    background-position: -1800px 50%;
+  }
+  .viewer.frame10 {
+    background-position: -2000px 50%;
+  }
+
+  @-webkit-keyframes drink-coffee {
+    to {
+      background-position: -1800px 50%;
+    }
+  }
+
+  @keyframes drink-coffee {
+    to {
+      background-position: -1800px 50%;
+    }
+  }
+  .product-slider-details .quick-view{
+    cursor: url('{{ 'eye-cursor.png' | asset_img_url: 'master'  }}'),auto;
+      }
+  .slick-slide {
+    position: relative;
+  }
+</style>
+{% assign current_variant = product.selected_or_first_available_variant %}
+<div class="container-fluid box-product-fnws">
+ <div class="quick-view-button"><a class="quick-view" data-handle="{{ product.handle }}" href="javascript:void(0);">
+    {% assign my_first-tag =  product.tags[0] %}
+    <div class="overlay" style="background: #{{ my_first-tag | capitalize }};"></div>
+  </a>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-9">
+      <div class="row">
+        <div class="col-12">
+          <div class="grid-view-item__title">
+            <span>{{ product.title | truncate: 40 }}</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="content_price">
+            {%- if on_sale -%}
+            <span class="old-price product-price">{{ product.compare_at_price | money }}</span>
+            {%- endif -%}
+            <span class="price product-price {% if on_sale %}sale-price{% endif %}">
+              {{ product.price | money_with_currency }}
+            </span>
+          </div>
+        </div>
+        
+           
+        <div class="col-12 border-bottom-block block-image-modal">
+          {% assign img_url =  product.featured_image | img_url: 'master' %}
+          <a class="product_img_link" data-bs-toggle="modal" data-bs-target="#{{ product.featured_image.alt | camelize  }}">
+            <img class="img-product lazyload img-fluid" data-lazy="{{ product.featured_image | product_img_url: 'master' }}"
+                 src="{{ product.featured_image | product_img_url: 'master'  }}"
+                 data-src="{{ img_url }}"
+                 data-widths="[180,360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                 data-aspectratio="{{ product.featured_image.aspect_ratio }}"
+                 data-sizes="auto"
+                 alt="{{ product.featured_image.alt | escape  }}" >
+            <noscript>
+              <img src="{{ product.featured_image | product_img_url: 'master' }}" alt="{{ image.alt | escape }}" class="img-product">
+            </noscript>
+            {%- if settings.theme_more_pimages_option == 'showone' -%}
+            {%- include 'product-more-image' -%}
+            {%- endif -%}
+          </a>
+          
+          
+          <div class="modal fade modal-product-detail" id="{{ product.featured_image.alt | camelize  }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-body" style="{% if product.tags.size > 0 %}{% for tag in product.tags %}  background: #{{ tag | capitalize }}  {% endfor %}{% endif %}">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <div class="row">
+                    <div class="col-12 col-lg-6">
+                      <section class="scene section  sticky"  id="">
+                        {% assign my_product_image =  product.images[1] %}
+                        <div class="section-canvas" style="background-image: url('{{  my_product_image | img_url: 'master' }}')"></div>
+                      </section>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="content-title">
+                            {{ product.title | truncate: 40 }}
+                          </div>
+                        </div>
+                        <div class="col-12 box-content-date-nutri">
+                          <div class="row">
+                            <div class="col-12 col-lg-6 content-details-nutri">
+                              {%- if product.description contains '[/shortdesc]' -%}  
+                              {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                              {{ shortdesc[1] | split: '[/shortdesc]' | first }}
+                              {%- else -%}
+                              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                              {% assign splitShortDesc = shortdesc | split: "|" %}
+                              {{ splitShortDesc[1] | split: '[/shortdesc]' | first }}
+                              {%- endif -%}
+                            </div>
+                            <div class="col-12 col-lg-6 content-details-nutri">
+                              {%- if product.description contains '[/shortdesc]' -%}  
+                              {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                              {{ shortdesc[2] | split: '[/shortdesc]' | first }}
+                              {%- else -%}
+                              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                              {% assign splitShortDesc = shortdesc | split: "|" %}
+                              {{ splitShortDesc[2] | split: '[/shortdesc]' | first }}
+                              {%- endif -%}
+                            </div>
+                            <div class="col-12 col-lg-6 content-details-nutri mt-2">
+                              {%- if product.description contains '[/shortdesc]' -%}  
+                              {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                              {{ shortdesc[3] | split: '[/shortdesc]' | first }}
+                              {%- else -%}
+                              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                              {% assign splitShortDesc = shortdesc | split: "|" %}
+                              {{ splitShortDesc[3] | split: '[/shortdesc]' | first }}
+                              {%- endif -%}
+                            </div>
+                            <div class="col-12 col-lg-6 content-details-nutri mt-2">
+                              {%- if product.description contains '[/shortdesc]' -%}  
+                              {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                              {{ shortdesc[4] | split: '[/shortdesc]' | first }}
+                              {%- else -%}
+                              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                              {% assign splitShortDesc = shortdesc | split: "|" %}
+                              {{ splitShortDesc[4] | split: '[/shortdesc]' | first }}
+                              {%- endif -%}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="content-description-product-modal">
+                            {%- if product.description contains '[/shortdesc]' -%}  
+                            {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                            {{ shortdesc[5] | split: '[/shortdesc]' | first }}
+                            {%- else -%}
+                            {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[5] | split: '[/shortdesc]' | first }}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                        <div class="col-12 size-product">
+                          {%- if product.description contains '[/shortdesc]' -%}  
+                          {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                          {{ shortdesc[6] | split: '[/shortdesc]' | first }}
+                          {%- else -%}
+                          {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                          {% assign splitShortDesc = shortdesc | split: "|" %}
+                          {{ splitShortDesc[6] | split: '[/shortdesc]' | first }}
+                          {%- endif -%}
+                        </div>
+                        <div class="col-12">
+                          <div class="content-ingredient-title-modal">
+                            {%- if product.description contains '[/shortdesc]' -%}  
+                            {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                            {{ shortdesc[7] | split: '[/shortdesc]' | first }}
+                            {%- else -%}
+                            {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[7] | split: '[/shortdesc]' | first }}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="content-ingred-product-modal">
+                            {%- if product.description contains '[/shortdesc]' -%}  
+                            {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                            {{ shortdesc[8] | split: '[/shortdesc]' | first }}
+                            {%- else -%}
+                            {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[8] | split: '[/shortdesc]' | first }}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="content-nutri-product-modal">
+                            {%- if product.description contains '[/shortdesc]' -%}  
+                            {%- assign shortdesc = product.description | split: '[shortdesc]' | last -%}
+                            {{ shortdesc[9] | split: '[/shortdesc]' | first }}
+                            {%- else -%}
+                            {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[9] | split: '[/shortdesc]' | first }}
+                            {%- endif -%}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          {%- if settings.theme_more_pimages_option == 'showmore' -%}
+          {% include 'product-more-image' %}
+          {%- endif -%}
+        </div>
+        <div class="col-12">
+          <div class="product-desc">
+            {{ product.description | truncate: 150}}
+          </div>
+        </div>
+        <div class="col-12 mt-5 cart-add-product-box">
+          <div class="row">
+            <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+              <div class="col-12">
+                <div class="row justify-content-center">
+                  <div class="cart_qty col-12 ">
+                    <select name="id" id="productSelect" class="product-single__variants">
+                      {% for variant in product.variants %}
+                      {% if variant.available %}
+                      <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+                      {% else %}
+                      <option disabled="disabled">
+                        {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                      </option>
+                      {% endif %}
+                      {% endfor %}
+                    </select>
+                    <div class="row">
+                      <div class="quantity_wanted_p col-12 col-lg-6 d-flex">
+                        <label for="Quantity" class="quantity-selector me-2 my-auto">{{ 'products.product.quantity' | t }}</label> 
+                        <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+                      </div>
+                      <div class="col-12 col-lg-6 text-right my-auto">
+                        <button type="submit" name="add" id="AddToCart" class="btn ajax_addtocart">
+                          <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector
+    });
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+</script>

@@ -1,0 +1,157 @@
+<section id="columns" class="columns-container mb-5">
+	<div class="container-fluid content-article">
+		<div class="row">
+			<article id="blogpage" class="blog-detail blog-container col-12 {% if section.settings.blog-sidebar-enable %}col-lg-8{% endif %}" itemscope itemtype="http://schema.org/NewsArticle">
+				<div class="container-article-element container-article-aboutus">
+					<div class="container-box-general content-page-width border-0" style="background-color: {{section.settings.bg_section }}">
+						<div class="container-fluid">
+							<div class="row justify-content-center">
+								<div class="col-12 py-5">
+									<div class="title_lines text-uppercase w-100">Nosotros</div>
+								</div>
+								<div class="col-12 text-center">
+									{% if section.settings.title != blank %}
+										<div class="title-aboutUs">
+											{{section.settings.title}}
+										</div>
+									{% endif %}
+								</div>
+								<div class="col-12 col-lg-10 col-xl-12 col-xxl-9">
+									<div class="row">
+										<div class="col-12">
+											<div class="row justify-content-center">
+												<div class="col-12 col-xl-7 column-information text-justify py-5">
+													<div class="rte-setting">
+														<p>
+															Tras muchos meses complicados e inciertos, aprendimos el valor
+															de las buenas noticias, de aquellas manos que no nos soltaron y
+															esos abrazos virtuales que nos contuvieron.
+															Este maravilloso proyecto es un trabajo en equipo cuya única
+															misión es hacerte sentir bien y compartir felicidad, porque juntos
+															podemos llegar más lejos. Si nos unimos para lo bueno, crearemos un mejor mañana para todos.
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-12 column-information-strong text-center py-5">
+											<div class="row justify-content-center">
+												<div class="col-12 col-xl-7 column-information text-center">
+													<div class="rte-setting"><p>¡NOTICIAS E INFORMACIÓN QUE NOS HACE SENTIR BIEN!</p></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="row justify-content-center content-image-about">
+												<div class="col-12 col-xl-10">
+													{% if section.settings.image != blank %}
+														{{ section.settings.image | img_url: 'master' | img_tag: 'feature-row__image', 'img-fluid w-100' }}
+													{% else %}
+														{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+													{% endif %}
+												
+												</div>
+											</div>
+										
+										</div>
+										<div class="col-12 column-information-complete">
+											<div class="row justify-content-center">
+												<div class="col-12 col-xl-7 column-information text-center">
+													<div class="rte-setting">
+														<p>
+															
+															En una época marcada por la desinformación, las fake news y las malas noticias,
+															todos necesitamos un espacio donde respirar. Aquí encontrarás un contraste de lo
+															que usualmente lees en redes sociales. ¡Aquí sólo tendrás buenas noticias!.
+														</p>
+														<p>
+															Food News llega a revolucionar el panorama noticioso de nuestro país con
+															una plataforma de alegría, felicidad y bienestar integral que incorpora
+															contenido vivo y multifacético, concentrando una filosofía propia que abraza
+															y articula de manera significativa todo lo bueno que sucede en México y el mundo.
+															Aquí encontrarás consejos, noticias y recomendaciones que no sólo alegrarán tu día,
+															sino que también se volverán parte de una nueva etapa donde tu felicidad y bienestar
+															son prioridad.
+														</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+{% schema %}
+{
+"name": "Nosotros publisher",
+"class": "nosotros-publisher",
+"settings": [
+{
+"type": "textarea",
+"id": "custom_space",
+"label": "Css Style Section",
+"default":"padding-top:100px;padding-bottom:100px"
+},
+{
+"type":      "radio",
+"id":        "set_box",
+"label":     "Set Layout Section",
+"options": [
+{ "value": "box-container", "label": "Box Container" },
+{ "value": "box-full", "label": "Box Full" },
+{ "value": "none", "label": "None" }
+],
+"default":   "box-full",
+"info":      "Set Layout Section"
+},
+{
+"type": "color",
+"id": "bg_section",
+"label": "Background color",
+"default": "#ffffff"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Title about"
+},
+{
+"type": "richtext",
+"id": "text_left",
+"label": "Text Column",
+"default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+},
+{
+"type": "richtext",
+"id": "text_complete_strong",
+"label": "Text Column ",
+"default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+},
+{
+"type": "richtext",
+"id": "text_complete",
+"label": "Text Column ",
+"default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+},
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image"
+}
+],
+
+"presets": [
+{
+"name": "Nosotros publisher",
+"category": "Componentes publisher"
+}
+]
+}
+{% endschema %}

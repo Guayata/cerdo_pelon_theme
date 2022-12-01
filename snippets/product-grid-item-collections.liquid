@@ -1,0 +1,96 @@
+<div class="col-12 col-lg-4">
+	<div class="row">
+		<div class="container-fluid grid__item grid-product h-100 {{product.id}}">
+			<div class="row h-100">
+				{%- liquid
+					assign preview_image = product.featured_media.preview_image
+					assign img_url = preview_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.'
+					assign variants = product.variants | size
+				-%}
+				<div class="h-100 col-12">
+					<div class="grid-product__image-mask h-100 row h-100 justify-content-center">
+						<!-- ================= PRODUCT-INFO ==================== -->
+						<div class="col-12">
+							<!-- ================= Titulo producto ==================== -->
+							{%- if variants == 1 -%}
+								<div class="grid-product__title">{{ product.title }} · {{ product.metafields.variante.gramaje }}</div>
+							{%- else -%}
+								<div class="grid-product__title">{{ product.title }} · {{ product.variants[0].metafields.variante.gramaje }}</div>
+							{%- endif -%}
+							<!-- ================= Titulo producto ==================== -->
+							<div class="row grid-product-weight">
+								<!-- ================= Precio producto ==================== -->
+								<div class="grid-product__price col-6">
+									{%- if product.price_varies -%}
+										{{ product.price_min | money_without_trailing_zeros   }} MXN
+									{%- else -%}
+										{{ product.price  | money_without_trailing_zeros  }} MXN
+									{%- endif -%}
+								</div>
+								<!-- ================= Precio producto ==================== -->
+								<!-- ================= Peso producto ==================== -->
+								<div class="grid-product__weight col-6">
+									{%- if variants == 1 -%}
+										{{ product.metafields.variante.presentacion }}
+									{%- else -%}
+										{{ product.variants[0].metafields.variante.presentacion }}
+									{%- endif -%}
+								</div>
+							</div>
+							
+							<!-- ================= Precio producto ==================== -->
+							<!-- ================= Imagen producto ==================== -->
+							<div class="row justify-content-center">
+								<div class="col-12 col-lg-12 p-0">
+									<div class="quick-view">
+										{%- liquid
+											assign mediaIndex = product.media | size | plus:0
+											assign  mediaI = mediaIndex | minus: 2 | plus:0
+										-%}
+										<img class="modalProductClic grid-product__image lazyload w-100"
+										     data-src="{{ preview_image  | img_url: 'master' }}"
+										     data-aspectratio="{{ preview_image.aspect_ratio }}"
+										     data-sizes="auto"
+										     alt="{{ preview_image.alt | escape }}"
+										     data-handle="{{ product.handle }}"
+										     data-srcalt="{{ product.media[mediaI].preview_image | img_url: 'master'}}"
+										     data-srcori="{{ preview_image  | img_url: 'master' }}">
+									
+									</div>
+								</div>
+							</div>
+							
+							<!-- ================= Imagen producto ==================== -->
+						</div>
+						<!-- ================= PRODUCT-INFO ==================== -->
+						<!-- ================= PRODUCT-FORM ==================== -->
+						
+						<!-- ================= PRODUCT-FORM ==================== -->
+						<div class="col-12">
+							{%- liquid
+								assign current_variant = product.selected_or_first_available_variant
+								assign description_style = 'full'
+								assign product_img_structure = product.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.'
+							-%}
+							<div id="ProductSection-{{ section_id }}"
+							     class="product-section h-100"
+							     data-section-id="{{ section_id }}"
+							     data-section-type="product-template"
+							     data-product-handle="{{ product.handle }}"
+							     data-product-title="{{ product.title | escape }}"
+							     data-product-url="{{ product.url | within: collection }}"
+							     data-aspect-ratio="{{ 100 | divided_by: product.featured_media.aspect_ratio }}"
+							     data-img-url="{{ product_img_structure }}">
+								
+								{%- render 'product-template-variables', product: product, current_variant: current_variant -%}
+								<div class="col-12">
+									{%- render 'product-form-grid', section_id: section_id, product: product, current_variant: current_variant, tab_name: tab_name -%}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

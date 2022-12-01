@@ -1,0 +1,36 @@
+{{ 'cintillo-text-3.scss.css' | asset_url | stylesheet_tag }}
+<div class="container-fluid cinta-circle">
+    <div class="two-column">
+        <div class="unline-content">
+            <div class="text-cint">
+                <c>¿Por qué comer</c><br>
+                <t>CERDO PELÓN MEXICANO?</t><br>
+                <te>El primer porcino que llegó a México aún existe en estado puro. Te presentamos al cerdo pelón mexicano, una raza a punto de desaparecer.</te>
+            </div>
+        </div>
+        <div class="image-cicle">
+            <div class="img-text">
+          <img class="img-fluid" src="{{ "Image-1.png" | asset_url }}" alt="Logotipo nauma" loading="lazy">
+                <t><i>El primer porcino que llegó a México aún existe en estado puro.</i></t>
+            </div>
+          <div class="line"></div>
+            <div class="img-text">
+                <img class="img-fluid" src="{{ "Image-2.png" | asset_url }}" alt="" loading="lazy">
+                <t><i>El primer porcino que llegó a México aún existe en estado puro.</i></t>
+            </div>
+          <div class="line"></div>
+            <div class="img-text">
+                 <img class="img-fluid" src="{{ "Image-3.png" | asset_url }}" alt="" loading="lazy">
+                <t><i>El primer porcino que llegó a México aún existe en estado puro.</i></t>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% schema %} 
+  { 
+    "name": "Cintillo text-3-cicle", 
+    "class": "cintillo-marquee", 
+    "settings": [ ], 
+    "presets": [ { "name": "Cintillo text-3-cicle", "category": "Publicity" } ] } {% endschema %}

@@ -1,0 +1,187 @@
+<div class="content-page-width">
+  <div class="row">
+    <div class="container-fluid">
+      <div class="row blogs_content" data-section-id="{{ section.id }}" data-section-type="blogs" data-blogcolumn="{{section.settings.col_blog}}" data-arrows="{{section.settings.arrows}}" data-dot="{{section.settings.dot}}" data-rows="{{section.settings.rows}}">
+        <div class="col-12 page-width-padding">
+          <div class="row">
+            {% if section.settings.title != blank%}
+            <div class="col-12 text-center">
+              <p class="title-home-blog text-uppercase">
+                {{ section.settings.title }}
+              </p>
+              {% if section.settings.subtitle != blank%}
+              <p class="subtitle-home-blog">
+                {{ section.settings.subtitle }}
+              </p>
+              {% endif %}
+            </div>
+            {% endif %}
+            {%- assign blog = blogs[section.settings.blog] -%}
+            {%- unless blog.empty? -%}
+            <div class="col-12 blogs-wrapper" >
+              <div class=" row h-100" id="Blogs-{{ section.id }}"  data-count="{{ blog.articles.size }} " >
+                {%- for article in blog.articles limit: section.settings.post_limit -%}
+                <div class="col-12 col-lg-4 blog-article h-100 blogs-slide--{{ article.id }}" {{ block.shopify_attributes }}>
+                  <div class="article__grid h-100">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="article__tags mb-0">
+                          {%- for tag in article.tags -%}
+                          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__grid-tag">{{ tag }}</a>
+                          {%- endfor -%}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row box-article-content">
+                      <div class="col-12">
+                        <div class="article__title">
+                          <a href="{{ article.url }}">{{ article.title }}</a>
+                        </div>
+                        <div class="rte article__grid-excerpt text-justify">
+                          {%- if section.settings.blog_show_des -%}
+                          {%- if article.excerpt.size > 0 -%}
+                          {{ article.excerpt | strip_html }}
+                          {%- else -%}
+                          {{ article.content | strip_html }}
+                          {%- endif -%}
+                          {%- endif -%}
+                        </div>
+                        <div class="content-button">
+                          {% if section.settings.blog_show_readmore %}
+                          <a href="{{ article.url }}" class="btn btn--secondary btn--small">
+                            {{ 'blogs.article.read_more' | t }}
+                          </a>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="col-12 content-image-blog mt-auto">
+                        {%- assign img_url = article.image | img_url: 'master' -%}
+                        {%- if article.image -%}
+                        <a href="{{ article.url }}">
+                          <img class="img-fluid lazyload" data-src="{{ article | img_url: 'master' }}" alt="{{article.image.alt | escape}}">
+                        </a>
+                        <noscript>
+                          <a href="{{ article.url }}" class="article__grid-image">
+	                          <img class="img-fluid lazyload" data-src=" {{ article | img_url: "master" }}" alt="{{article.image.alt | escape}}">
+                           
+                          </a>
+                        </noscript>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- endunless -%}
+          </div>
+          <div class="row mt-lg-5 pt-lg-3">
+            <div class="col-12 text-center btn_view_blog mt-lg-5 pt-lg-3">
+              {%- if section.settings.show_view_all -%}
+              <a href="{{ blog.url }}" class="btn btn-outline text-uppercase">
+                VER TODAS LAS RECETAS
+              </a>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Blog posts",
+  "class": "index-blog-featured",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Titulo"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitulo"
+    },
+    {
+      "type": "color",
+      "id": "bg_section",
+      "label": "Background color",
+      "default": "transparent"
+    },
+    {
+      "id": "blog",
+      "type": "blog",
+      "label": "Blog"
+    },
+    {
+      "type": "text",
+      "id": "col_blog",
+      "label": "Number Columns",
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "post_limit",
+      "label": "Posts",
+      "default": "3",
+      "options": [
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        },
+        {
+          "value": "12",
+          "label": "12"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_des",
+      "label": "Show Description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_readmore",
+      "label": "Show Read More",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' button",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog posts",
+      "category": "Blog",
+      "settings": {
+        "blog": "News",
+        "post_limit": "3"
+      }
+    }
+  ]
+}
+{% endschema %}

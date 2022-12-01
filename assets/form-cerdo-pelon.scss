@@ -1,0 +1,124 @@
+.formu {
+    margin: 3% 0%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+   @media (max-width: 576px) {
+             margin: 3% 0% 10%;
+        }
+    .container-formu {
+        background: #ADA99F;
+        color: #F7F3ED;
+        width: 85%;
+        display: flex;
+        justify-content: space-around;
+        @media (max-width: 576px) {
+            flex-direction: column;
+        }
+        .content-one {
+            width: 40%;
+            @media (max-width: 576px) {
+                width: auto;
+            }
+            .content-texto {
+                display: flex;
+                flex-direction: column;
+                margin: 5% 20%;
+                @media (max-width: 576px) {
+                    margin: 5% 9% 10%;
+                }
+                pa {
+                    font-family: Junicode Two Beta;
+                    font-size: 20px;
+                    @media (max-width: 576px) {
+                        font-size: 35px;
+                      line-height: 35px;
+                    }
+                }
+                cu {
+                    font-family: Snell Roundhand;
+                    font-size: 20px;
+                  margin: 0px 0 -10px 0;
+                    @media (max-width: 576px) {
+                        font-size: 40px;
+                      line-height: 50px;
+                      margin-top: 10%;
+                    }
+                }
+                spa {
+                    font-family: Helvetica;
+                    font-size: 13px;
+                }
+            }
+            .puerco-oreja {
+                width: 200px;
+                margin: 0 15px;
+                
+            }
+        }
+        .content-two {
+            width: 60%;
+            padding: 0% 0;
+            @media (max-width: 576px) {
+                width: 100%;
+                padding: 0% 10%;
+            }
+        }
+    }
+}
+.puerco-abajo
+{
+  @media (max-width: 576px) {
+                    width: 180px;
+                    height: 54px;
+                      margin-left: 30%;
+                }
+}
+.globo-form-id-89615 .globo-form-app .globo-heading {
+    color: #F7F3ED !important;
+    font-family: Junicode Two Beta !important;
+    margin: 0px !important;
+  font-size:20px;
+  font-weight: 100;
+}
+
+.globo-form-app .globo-form-control input {
+    background: none;
+    color: #F6F3EE;
+    border-bottom: 1px solid #F6F3EE;
+}
+
+.globo-form-app .globo-form-control textarea {
+    background: none;
+    color: #F6F3EE;
+    border-bottom: 1px solid #F6F3EE;
+}
+
+.globo-form-app .globo-form-control {
+    height: 21px;
+}
+
+.globo-form-app p {
+    color: #ADA99F !important;
+}
+
+.globo-form-app a {
+    color: #ADA99F !important;
+}
+
+.globo-form-id-89615 .globo-form-app .footer button.submit {
+    border: 1px solid #F6F3EE;
+    color: #F6F3EE !important;
+}
+
+.globo-form-app {
+    margin: 0% auto !important;
+}
+
+.globo-form-app .message+.footer {
+    margin-top: -5px !important;
+}
+.globo-form-app .header {
+    margin-bottom: 25px;
+    margin-top: 15px !important;
+}

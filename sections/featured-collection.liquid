@@ -1,0 +1,114 @@
+{%- assign per_row = section.settings.per_row -%}
+{%- assign collection = collections[section.settings.home_featured_products] -%}
+
+
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+<div
+     id="CollectionSection-{{ section.id }}"
+     data-section-id="{{ section.id }}"
+     data-section-type="collection-template">
+  <div class="content-page-width box-product-fnws">
+    <div class="grid grid--uniform product-slider-home"{% if section.settings.mobile_scrollable %} data-aos="overflow__animation"{% endif %}>
+      {%- if section.settings.home_featured_products == blank or collections[section.settings.home_featured_products].empty? or collections[section.settings.home_featured_products].products_count == 0 -%}
+      {%- unless emptyState -%}
+      {%- assign emptyState = true -%}
+      {%- endunless -%}
+
+      <div class="grid__item">
+        <div class="grid grid--uniform">
+          {%- for i in (1..product_limit) -%}
+          <div class="grid__item grid-product">
+            <div class="grid-product__content">
+              <a href="{{ product.url | within: collection }}" class="grid-product__link{% if sold_out %} grid-product__link--disabled{% endif %}">
+                <div class="grid-product__image-mask">
+                  {%- capture current -%}{% cycle 1, 2, 3, 4, 5, 6 %}{%- endcapture -%}
+                  <div class="image-wrap">{{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}</div>
+                </div>
+                <div class="grid-product__meta">
+                  <div class="grid-product__title">{{ 'home_page.onboarding.product_title' | t }}</div>
+                  <div class="grid-product__price">$29</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- else -%}
+      {%- for product in collections[section.settings.home_featured_products].products limit: product_limit -%}
+      {%- render 'product-grid-item', product: product, grid_item_width: grid_item_width, section_id: product.id, -%}
+      {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{%- if settings.quick_shop_enable -%}
+  {%- for product in collections[section.settings.home_featured_products].products limit: product_limit -%}
+    {%- render 'quick-shop-modal', product: product -%}
+  {%- endfor -%}
+{%- endif -%}
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "class": "index-section",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "home_featured_products",
+        "label": "Collection"
+      }
+    ],
+    "presets": [{
+      "name": "Featured collection",
+      "category": "Collection"
+    }],
+    "blocks" : []
+  }
+{% endschema %}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+<script>
+  $('.product-slider-home').slick({
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    /*cssEase: 'linear',
+    autoplay: true,
+    autoplaySpeed: 0,
+    speed: 5000,
+    centerMode: true,
+    pauseOnHover:true,
+    focusOnSelect: true,
+    pauseOnFocus: true,
+    infinite:true,
+    slidesToScroll: 0.2,*/
+    responsive: [
+    {
+    breakpoint: 1024,
+    settings: {
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    }
+    },
+    {
+    breakpoint: 600,
+    settings: {
+    slidesToShow: 2,
+    slidesToScroll: 2
+    }
+    },
+    {
+    breakpoint: 480,
+    settings: {
+    slidesToShow: 1,
+    slidesToScroll: 1
+    }
+    }
+
+    ]
+  });
+</script>

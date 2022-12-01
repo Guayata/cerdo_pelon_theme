@@ -1,0 +1,21 @@
+{% layout none %}
+{%- liquid assign variants = product.variants | size -%}
+{
+  "id":{{ product.id | json }},
+  "title":{{ product.title | json }},
+  "price":{{ product.price | json }},
+  "handle":{{ product.handle | json }},
+  "gramaje":{{ product.metafields.variante.gramaje | json }},
+  "presentacion":{{ product.metafields.variante.presentacion | json }},
+  "variants":[
+  {%- if variants > 1 -%}
+	{%- for variant in product.variants -%}
+	{
+		"price":{{ variant.price | json }},
+		"gramaje":{{ variant.metafields.variante.gramaje | json }},
+        "presentacion":{{ variant.metafields.variante.presentacion | json }}
+	}{% unless forloop.last %},{% endunless %}
+	{%- endfor -%}
+  {%- endif -%}
+  ]
+}

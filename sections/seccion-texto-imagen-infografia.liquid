@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="row content-page-width">
+    <div class="col-12 col-lg-4">
+      <div class="row h-100 m-lg-0 content-box-txt">
+        {% if section.settings.title != blank %}
+        <div class="content-title col-12" style="background:{{section.settings.bg_title}}">
+          <div class="row h-100">
+            <div class="col-12 my-auto">
+              <p class="title p-0 m-0">
+                {{ section.settings.title }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% if section.settings.description != blank %}
+        <div class="col-12 p-0">
+          <div class="description">
+            {{ section.settings.description }}
+          </div>
+          {% if section.settings.image_des != blank %}
+          <div class="content-image  mt-auto p-0">
+            <img class="img-fluid lazyload"
+                 data-src="{{ section.settings.image_des | img_url: "master" }}"
+                 data-widths="[180, 360, 540, 720, 900, 1080]"
+                 data-aspectratio="{{ preview_image.aspect_ratio }}"
+                 alt="{{ preview_image.alt | escape }}">
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="col-12 col-lg-8 my-auto">
+      {% if section.settings.image_desktop != blank %}
+      <img class="img-fluid lazyload d-none d-lg-block"
+           data-src="{{ section.settings.image_desktop | img_url: "master" }}"
+           data-widths="[180, 360, 540, 720, 900, 1080]"
+           data-aspectratio="{{ preview_image.aspect_ratio }}"
+           alt="{{ preview_image.alt | escape }}">
+      <img class="img-fluid w-100 lazyload d-block d-lg-none"
+           data-src="{{ section.settings.image_mobile | img_url: "master" }}"
+           data-widths="[180, 360, 540, 720, 900, 1080]"
+           data-aspectratio="{{ preview_image.aspect_ratio }}"
+           alt="{{ preview_image.alt | escape }}">
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Texto e imagen info",
+  "class": "seccion-texto-imagen-infografia",
+  "settings": [
+   {
+      "type": "header",
+      "content": "==== Imagenes ===="
+    },
+{
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Imagen Desktop"
+    },
+	{
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Imagen Mobile"
+    },
+	   {
+      "type": "header",
+      "content": "==== Titulo y descripción ===="
+    },
+{
+      "type": "color",
+      "id": "bg_title",
+      "label": "Background titulo"
+    },
+{
+      "type": "text",
+      "id": "title",
+      "label": "Titulo"
+    },
+{
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción"
+    },
+	   {
+      "type": "header",
+      "content": "==== Imagen ===="
+    },
+	{
+      "type": "image_picker",
+      "id": "image_des",
+      "label": "Imagen"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Texto e imagen info",
+      "category": "Images"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,19 @@
+{%- if settings.cart_type == 'drawer' -%}
+<div id="CartDrawer" class="drawer drawer--right limoniapps-discountninja-drawercart-root">
+  <form action="{{ routes.cart_url }}" method="post" novalidate class="drawer__contents limoniapps-discountninja-drawercart-root">
+    <div class="drawer__fixed-header">
+      <div class="drawer__header appear-animation appear-delay-1">
+        <div class="h2 drawer__title">TU CARRITO</div>
+        <div class="drawer__close">
+          <button type="button" class="drawer__close-button js-drawer-close">
+            <svg id="Capa_1" width="30px" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.36 28.75"><polyline style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1.62px;" points="27.78 0.57 14.18 14.37 27.78 28.18"/><polyline style="fill:none;stroke:gray;stroke-miterlimit:10;stroke-width:1.62px;" points="0.58 28.18 14.18 14.37 0.58 0.57"/></svg>
+            <span class="icon__fallback-text">{{ 'cart.general.close_cart' | t }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="CartContainer" class="drawer__inner"></div>
+  </form>
+</div>
+{%- endif -%}

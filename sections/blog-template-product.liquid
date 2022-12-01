@@ -1,0 +1,51 @@
+{%- assign min = 0 -%}
+{%- assign max = section.blocks.size -%}
+{%- assign diff = max | minus: min -%}
+{%- assign random_number = "now" | date: "%N" | modulo: diff | plus: min -%}
+  <div class="box-image h-100 banner-products-blog" style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('{{ section.blocks[random_number].settings.image | img_url: 'master' }}')">
+    <div class="meta-button-blog row m-0 h-100">
+      <div class="col-12 text-center text-uppercase my-auto">
+        <p class=" title-banner">{{ section.blocks[random_number].settings.banner_Title }}</p>
+        <p class="content-button-banner text-center">
+          <a href="{{ section.blocks[random_number].settings.link }}" target="_blank" class="text-uppercase grid-link text-center firstlink" title="{{ section.blocks[random_number].settings.banner_Title }}">
+            <span>{{ section.blocks[random_number].settings.banner_Buttom }}</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>                                    
+{% schema %}
+{
+  "name": "Banner de Productos",
+  "max_blocks": 5,
+  "class":"col-12 col-lg-7 content-border mb-4 mb-lg-0",
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Banner de Productos",
+      "settings": [
+		{
+          "type": "text",
+          "id": "banner_Title",
+          "label": "Título principal"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "banner_Buttom",
+          "label": "Texto del Botón"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

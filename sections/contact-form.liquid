@@ -1,0 +1,165 @@
+
+{{ 'style-extras.scss.css' | asset_url | stylesheet_tag }} 
+
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="section-form">
+            <div class="our-products">
+                <div class="dis">¿Quieres distribuir</div>
+                <div class="our">NUESTROS PRODUCTOS?</div>
+                <div class="datos">Llena los siguientes datos y envíanos todas las dudas que tengas. Nos pondremos en contacto contigo lo más pronto posible.</div>
+            </div>
+            <div class="formu">
+                <p class="head">CONTÁCTANOS</p>
+<div class="row">
+                <div class="col-6">
+                  <input type="text" id="ContactFormName-{{ section.id }}" class="input-information input-full" name="contact[name]" placeholder="Nombre" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                </div>
+                <div class="col-6">
+                  <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-information input-full" name="contact[email]" placeholder="Correo electrónico" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                </div>
+                <div class="col-6">
+                  <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-information input-full" name="contact[phone]" placeholder="Teléfono de contacto" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                </div>
+                <div class="col-6">
+                  <textarea rows="2" id="ContactFormMessage-{{ section.id }}" class="input-message input-full" name="contact[body]" placeholder="Mensaje">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
+                <div class="col-12 text-start">
+                  <button type="submit" class="btn">
+                    {{ 'contact.form.send' | t }}
+                  </button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+  .box-contact-general .rte-settings p{
+    color: {{section.settings.color_text}};
+  }
+</style>
+<div class="container-fluid">
+  <div class="row content-page-width">
+    <div class="box-contact p-0">
+      <div class="col-12 box-contact-general" style="background:{{section.settings.bg_color}}">
+        <div class="row">
+          <div class="col-12 col-lg-5 col-xl-5 col-xxl-4">
+            <div class="row">
+              {%- if section.settings.title != blank -%}
+              <div class="col-12 text-center text-lg-start">
+                <p class="title mb-0" style="color: {{section.settings.color_text}}">
+                  {{ section.settings.title }}
+                </p>
+              </div>
+              {%- endif -%}
+              {%- if section.settings.text_description != blank -%}
+              <div class="col-12 text-center text-lg-start">
+                <div class="rte-settings">
+                  {{ section.settings.text_description }}
+                </div>
+              </div>
+              {%- endif -%}
+            </div>
+
+          </div>
+          <div class="col-12 col-lg-5 offset-lg-1 col-xl-5 offset-xl-1 col-xxl-6 offset-xxl-1">
+            <div class="form-vertical mb-0">
+              {%- if section.settings.title_contact != blank -%}
+              <h2 class="section-header__title text-start text-center text-lg-start" style="color: {{section.settings.color_text}}">
+                {{ section.settings.title_contact }}
+              </h2>
+              {%- endif -%}
+              {%- assign form_id = 'contact-' | append: section.id -%}
+              {%- form 'contact', id: form_id -%}
+
+              {%- if form.posted_successfully? -%}
+              <p class="note note--success">
+                {{ 'contact.form.post_success' | t }}
+              </p>
+              {%- endif -%}
+
+              {{ form.errors | default_errors }}
+              <div class="row">
+                <div class="col-12">
+                  <input type="text" id="ContactFormName-{{ section.id }}" class="input-information input-full" name="contact[name]" placeholder="Nombre" autocapitalize="words" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+                </div>
+                <div class="col-12">
+                  <input type="email" id="ContactFormEmail-{{ section.id }}" class="input-information input-full" name="contact[email]" placeholder="Correo electrónico" autocorrect="off" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}">
+                </div>
+                <div class="col-12">
+                  <input type="tel" id="ContactFormPhone-{{ section.id }}" class="input-information input-full" name="contact[phone]" placeholder="Teléfono de contacto" pattern="[0-9\-]*" value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+                </div>
+                <div class="col-12">
+                  <textarea rows="2" id="ContactFormMessage-{{ section.id }}" class="input-message input-full" name="contact[body]" placeholder="Mensaje">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+                </div>
+                <div class="col-12 text-start">
+                  <button type="submit" class="btn">
+                    {{ 'contact.form.send' | t }}
+                  </button>
+                </div>
+              </div>
+              {%- endform -%}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Contact form",
+    "class": "index-section-contact",
+    "settings": [
+{
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background",
+        "default": "#FFF"
+      },
+{
+        "type": "color",
+        "id": "color_text",
+        "label": "Color text",
+        "default": "#FFF"
+      },
+ {
+        "type": "header",
+        "content": "====== información ======"
+      },
+ {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      },
+ {
+        "type": "richtext",
+        "id": "text_description",
+        "label": "Text",
+"default": "<p>Aqui va la información</p>"
+      },
+      {
+        "type": "header",
+        "content": "====== Titulo formulario de contacto ======"
+      },
+      {
+        "type": "text",
+        "id": "title_contact",
+        "label": "Title",
+        "default": "Contact us"
+      }
+    ],
+    "presets": [{
+      "name": "Contact form",
+      "category": "Store information"
+    }]
+  }
+{% endschema %}

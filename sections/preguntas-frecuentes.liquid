@@ -1,0 +1,88 @@
+<div class="content-page-width">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10">
+        <div class="row">
+          <div class="col-12 title">
+            {{section.settings.title}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="accordion" id="accordionExample">
+            {% for block in section.blocks %}
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="option-header-{{block.settings.number}}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#option-{{block.settings.number}}" aria-expanded="false" aria-controls="option-{{block.settings.number}}">
+                  <div class="block-number">{{block.settings.number}}</div>   <span> {{block.settings.title}}</span>
+                </button>
+              </h2>
+              <div id="option-{{block.settings.number}}" class="accordion-collapse collapse" aria-labelledby="option-header-{{block.settings.number}}" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  {{block.settings.description}}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {% schema %}
+  {
+      "name": "Preguntas frecuentes",
+"class":"contenedor-preguntas-frecuentes",
+    "settings": [
+  {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    }
+],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "Add a number"
+        },
+ {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Preguntas frecuentes",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+  }
+{% endschema %}

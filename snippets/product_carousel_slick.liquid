@@ -1,0 +1,81 @@
+
+{% unless product_in_tab %}
+{% assign product_in_tab = 12 %}
+{% endunless %}
+{% if columns_product == blank %}
+{% assign columns_product = 4 %}
+{% endif%}
+{% if slidesToScroll == blank %}
+{% assign slidesToScroll = 4 %}
+{% endif%}
+{% unless row_in_tab%}
+{% assign row_in_tab = 1 %}
+{% endunless%}
+{% assign middle_control = product_carousel | truncate: 13 %}   
+<div class="product_list_owl row product-slider-details">
+  <div id="Productlists-{{ section.id }}" data-toshow="{{ columns_product }}" 
+         data-scroll="{{ slidesToScroll }}" 
+         data-row="{{ row_slick }}"
+         data-arrows="{{ enable_nav }}"
+         data-dot="{{ enable_dot }}"
+         data-laptop="{{item_laptop}}"
+         data-table="{{item_table}}"
+         data-phonemin="{{item_phone_min}}"
+        {% if product_interval > 0 %}
+         data-play="{{ product_interval }}" 
+         data-autoplay="true" 
+         {% else %} 
+         data-autoplay="false" 
+         {% endif %} 
+        class="slick-hide {% if middle_control == 'producttab...' %} middle{% endif %} slide">
+    {% assign grid_item_width = ' ' %}
+    {% assign products = collection_produclists %}
+    {% for product in products limit:product_in_tab %}    
+    {% assign modpage = forloop.index | minus : 1 | modulo:row_in_tab %}
+    {% assign rowminus = row_in_tab | minus : 1 %}
+        {% unless current_pro == product.id %}
+    {% if forloop.first or modpage == 0 %}
+    <div class="item">          
+      {% endif %}
+      {% include 'product-grid-item' %}   
+      {% if forloop.last or modpage == rowminus %}
+    </div>
+    {% endif %}
+    {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+<script>
+  $('#Productlists-{{ section.id }}').slick({
+    slidesToShow: {{ slidesToScroll }},
+    slidesToScroll: {{ slidesToScroll }},
+    dots: {{ enable_dot }},
+    arrows: {{ enable_nav }},
+    responsive: [
+    {
+    breakpoint: 1024,
+    settings: {
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    }
+    },
+    {
+    breakpoint: 600,
+    settings: {
+    slidesToShow: 2,
+    slidesToScroll: 2
+    }
+    },
+    {
+    breakpoint: 480,
+    settings: {
+    slidesToShow: 1,
+    slidesToScroll: 1
+    }
+    }
+
+    ]
+    });
+</script>

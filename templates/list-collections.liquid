@@ -1,0 +1,34 @@
+<!-- /templates/list-collections.liquid -->
+{% comment %}
+
+  This page represents the /collections and /products pages.
+  It is an optional, but highly recommended, template for your theme.
+
+  More info:
+    - http://docs.shopify.com/manual/configuration/store-customization/taking-control-of-collections-listing
+
+{% endcomment %}
+{% comment %}
+  Loop through each collection, except 'frontpage'
+{% endcomment %}
+<div class="container-fluid">
+	<div class="content-page-width box-product-fnws row
+
+
+">
+		{% for collection in collections %}
+			
+			{% unless collection.handle == 'frontpage' %}
+				
+				{% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+				<div class="grid-uniform row">
+					{% for product in collection.products limit:products %}
+						{% assign grid_item_width = 'large--one-fifth medium--one-half' %}
+						{% include 'product-grid-item-collections' %}
+					{% endfor %}
+				</div>
+			{% endunless %}
+		
+		{% endfor %}
+	</div>
+</div>

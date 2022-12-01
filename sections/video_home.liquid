@@ -1,0 +1,42 @@
+<div class="container-fluid">
+	<div class="content-page-width row">
+		<div class="col-12 p-0 content-video">
+			<video class="myVideo lazy d-none d-lg-block" autoplay muted loop playsinline width="100%">
+				<source data-src="{{ section.settings.video_desktop }}" type="video/mp4">
+			</video>
+			<video class="myVideo lazy d-block d-lg-none" autoplay muted loop playsinline width="100%">
+				<source data-src="{{ section.settings.video_mobile }}" type="video/mp4">
+			</video>
+          <div id="audio-control" class="muted"><span>Activa tu felicidad</span></div>
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+"name": "Video home",
+"class": "home-video",
+"settings": [
+{
+"type": "header",
+"content": "==== Video ===="
+},
+{
+"type": "url",
+"id": "video_desktop",
+"label": "Video Desktop"
+},
+{
+"type": "url",
+"id": "video_mobile",
+"label": "Video Mobile"
+}
+],
+"presets": [
+{
+"name": "Video home",
+"category": "Video"
+}
+]
+}
+{% endschema %}

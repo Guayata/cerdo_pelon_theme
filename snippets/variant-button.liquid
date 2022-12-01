@@ -1,0 +1,99 @@
+{%- assign swatch_file_extension = 'png' -%}
+
+<div class="variant-wrapper variant-wrapper--{{ settings.variant_type }} js">
+  <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
+    for="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+    {{ option.name }}
+    {%- if is_color -%}
+      <span class="variant__label-info">
+        &mdash;
+        <span
+          id="VariantColorLabel-{{ section_id }}-{{ forloop.index0 }}"
+          data-option-index="{{ color_option_index }}">
+          {{ option.selected_value }}
+        </span>
+      </span>
+    {%- endif -%}
+  </label>
+  {%- assign option_index = forloop.index -%}
+  <fieldset class="variant-input-wrap"
+    name="{{ option.name }}"
+    data-index="option{{ option_index }}"
+    data-handle="{{ option.name | handleize }}"
+    id="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+    {%- for value in option.values -%}
+      {%- liquid
+        assign product_available = true
+        if product.options.size == 1
+          assign product_available = product.variants[forloop.index0].available
+        endif
+      -%}
+      <div
+        class="variant-input {{ value | escape | camelize }}"
+        data-index="option{{ option_index }}"
+        data-value="{{ value | escape }}">
+        <input type="radio"
+          value="{{ value | escape }}"
+          data-index="option{{ option_index }}"
+          name="{{ option.name }}"
+          class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
+          {% if is_color %} data-color-name="{{ value | escape }}"{% endif %}
+          {% if is_color %} data-color-index="{{ color_option_index }}"{% endif %}
+          id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
+        {%- if is_color -%}
+          {%- liquid
+            assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first
+            assign color_swatch_fallback = value | split: ' ' | last | handle
+          -%}
+          <label
+            for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="variant__button-label color-swatch color-swatch--{{ value | handle }}{% unless product_available %} disabled{% endunless %}"
+            style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};"
+          >
+            {{ value | escape }}
+        </label>
+        {%- else -%}
+        <label
+               for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+               class="variant__button-label{% unless product_available %} disabled{% endunless %}">{{ value | escape }}</label>
+        {%- endif -%}
+    </div>
+    {%- endfor -%}
+    {% if product.handle contains "bicicleta-wcycle-s-con-soporte-para-tableta" %}
+    <div class="variant-input variant-input-atrato" data-index="option1" data-value="Hasta 12 meses con Paypal">
+      <input type="radio" value="Hasta 12 meses con Paypal" data-index="option1" name="Elige cómo paga dando click aquí ☟" class="variant__input-6299064729785" id="ProductSelect-6299064729785-option-elige-como-paga-dando-click-aqui-Hasta+12+meses+con+Paypal"><label for="ProductSelect-6299064729785-option-elige-como-paga-dando-click-aqui-Hasta+12+meses+con+Paypal" class="variant__button-label">Hasta 12 meses con Paypal</label></div>
+    {%- elsif product.handle contains "bicicleta-wcycle-s-pro-con-pantalla-tactil"-%}
+    <div class="variant-input variant-input-atrato" data-index="option1" data-value="A 12 Meses con PayPal">
+      <input type="radio" value="A 12 Meses con PayPal" data-index="option1" name="Elige como pagar" class="variant__input-6579216515257" id="ProductSelect-6579216515257-option-elige-como-pagar-A+12+Meses+con+PayPal"><label for="ProductSelect-6579216515257-option-elige-como-pagar-A+12+Meses+con+PayPal" class="variant__button-label">A 12 Meses con PayPal</label></div>
+    {%- endif -%}
+
+  </fieldset>
+</div>
+{% if product.handle contains "bicicleta-wcycle-s-pro-con-pantalla-tactil" or product.handle contains "bicicleta-wcycle-s" or product.handle contains "bicicleta-wcycle-s-con-soporte-para-tableta" or product.handle contains "wkt-01"%}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $(".form_submit").on("change", "input:radio", function(){
+      console.log("submit");
+      instantBuy();
+    });
+  });
+  function instantBuy(){
+    var $ = jQuery;
+    var formParams = $('form.form_submit').serialize();
+    $.ajax({
+      url: "/cart/add",
+      type: "post",
+      data: formParams,
+      success: function(){
+        console.log("location");
+        window.location.href = "/checkout";
+      },
+      error: function(){
+        console.log("error");
+      }
+    })
+  }
+</script>
+{%- endif -%}
+

@@ -1,0 +1,154 @@
+{{ "two-column-slider.scss.css" | asset_url | stylesheet_tag }}
+<div class="container-tho-column">
+    <div class="column-one">
+        <img src="{{ 'Patasvolteadas.png' | asset_url }}" class="puerco-volteado">
+        <div class="content-text">
+            
+                <c>¿Dónde nos</c><p>PUEDES ENCONTRAR?</p>
+            <span>La mayoría de los especímenes de cerdo pelón no tiene pelo en el cuerpo y su piel es color gris oscuro, tersa y mate. Por supuesto, también pensamos en el cerdo blanco convencional, pero las diferencias son evidentes: esta especie lampiña tiene trompa más larga, orejas semirrectas, ancas caídas y pezuñas oscuras.</span>
+        </div>
+        <div class="slideshow-container">
+            <div class="slideshow-innert">
+                <div class="Mov fade">
+                    <div class="item-img">
+                        <img src="{{ 'cost.png' | asset_url }}">
+                        <img src="{{ 'city-mark.png' | asset_url }}">
+                    </div>
+                </div>
+                <div class="Mov fade">
+                    <div class="item-img">
+                        <img src="{{ 'city-mark.png' | asset_url }}">
+                        <img src="{{ 'cost.png' | asset_url }}">
+                    </div>
+                </div>
+                <div class="Mov fade">
+                    <div class="item-img">
+                        <img src="{{ 'cost.png' | asset_url }}">
+                        <img src="{{ 'city-mark.png' | asset_url }}">
+                    </div>
+                </div>
+                <div class="Mov fade">
+                    <div class="item-img">
+                        <img src="{{ 'city-mark.png' | asset_url }}">
+                        <img src="{{ 'cost.png' | asset_url }}">
+                    </div>
+                </div>
+            </div>
+            <a class="prev" onclick='plusSlide(-1)'>
+                <img src="{{ 'left.png' | asset_url }}">
+            </a>
+            <a class="next" onclick='plusSlide(1)'>
+                <img src="{{ 'right.png' | asset_url }}">
+            </a>
+        </div>
+    </div>
+    <div class="column-two">
+        <div class="content-text">
+            <p>
+                <c>Descubre las mejores</c><br>RECETAS</p>
+            <span>La mayoría de los especímenes de cerdo pelón no tiene pelo en el cuerpo y su piel es color gris oscuro, tersa y mate. Por supuesto, también pensamos en el cerdo blanco convencional, pero las diferencias son evidentes: esta especie lampiña.</span>
+        </div>
+        <div class="bt-art">
+            <button>VER</button>
+        </div>
+    </div>
+  
+    <script>
+        var slideInde = 1;
+        var Timer;
+        var slideshowContaine;
+        window.addEventListener("load", function() {
+                showSlide(slideInde);
+                Timer = setInterval(function() {
+                    plusSlide(1)
+                }, 4000);
+                //COMMENT OUT THE LINE BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+                slideshowContaine = document.getElementsByClassName('slideshow-innert')[0];
+                //UNCOMMENT OUT THE LINE BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+                // slideshowContaine = document.getElementsByClassName('slideshow-container')[0];
+                slideshowContaine.addEventListener('mouseenter', pause)
+                slideshowContaine.addEventListener('mouseleave', resume)
+            })
+            // NEXT AND PREVIOUS CONTROL
+        function plusSlide(n) {
+            clearInterval(Timer);
+            if (n < 0) {
+                showSlide(slideInde -= 1);
+            } else {
+                showSlide(slideInde += 1);
+            }
+            //COMMENT OUT THE LINES BELOW TO KEEP ARROWS PART OF MOUSEENTER PAUSE/RESUME
+
+            if (n === -1) {
+                Timer = setInterval(function() {
+                    plusSlide(n + 2)
+                }, 4000);
+            } else {
+                Timer = setInterval(function() {
+                    plusSlide(n + 1)
+                }, 4000);
+            }
+        }
+
+        //Controls the current slide and resets interval if needed
+        function currentSlide(n) {
+            clearInterval(Timer);
+            Timer = setInterval(function() {
+                plusSlide(n + 1)
+            }, 4000);
+            showSlide(slideInde = n);
+        }
+
+        function showSlide(n) {
+            var i;
+            var slides = document.getElementsByClassName("Mov");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {
+                slideInde = 1
+            }
+            if (n < 1) {
+                slideInde = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideInde - 1].style.display = "block";
+            dots[slideInde - 1].className += " active";
+        }
+
+        pause = () => {
+            clearInterval(Timer);
+        }
+
+        resume = () => {
+            clearInterval(Timer);
+            Timer = setInterval(function() {
+                plusSlide(slideInde)
+            }, 4000);
+        }
+    </script>
+{% schema %} 
+  { 
+    "name": "two-column-slider",
+    "class": "slider-text", 
+    "settings": [
+      
+{
+      "type": "text",
+      "id": "title",
+      "label": "Texto Frase",
+      "default": "Cerdo pelón mexicano, una especie única en la gastronomía nacional Este animal de origen mexicano encontró libertad y una nueva vida en un rancho de Morelos."
+    }
+    ], 
+    "presets": 
+    [ 
+      { 
+        "name": "two-column-slider", 
+        "category": "Publicity" 
+      } 
+    ] 
+  } 
+  {% endschema %}

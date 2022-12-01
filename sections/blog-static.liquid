@@ -1,0 +1,175 @@
+{{ 'blog-static.scss.css' | asset_url | stylesheet_tag }}
+<div class="container-fluid blog">
+  <div class="content-items">
+    <div class="item-blog">
+      <div class="texts"> 
+        <t>{{ section.settings.blog-title }}</t><br/><br/>
+        <d>{{ section.settings.blog-subtitle }}</d><br/><br/>
+        <div class="content-button">
+          <a href="{{ section.settings.button_link_1 }}">
+            {{ section.settings.button_label_1 }}
+          </a>
+        </div>
+      </div>
+      <div class="imagee">
+        <img src="{{section.settings.image-blog | img_url:" master "}}">
+      </div>
+    </div>
+    <div class="item-blog">
+      <div class="texts">
+        <t>{{ section.settings.blog-title-2 }}</t><br /><br/>
+        <d>{{ section.settings.blog-subtitle-2 }}</d><br/><br/>
+        <div class="content-button">
+          <a href="{{ section.settings.button_link_2 }}">
+            {{ section.settings.button_label_2 }}
+          </a>
+        </div>
+      </div>
+      <div class="imagee">
+        <img src="{{section.settings.image-blog-2 | img_url:" master "}}">
+      </div>
+    </div>
+    <div class="item-blog">
+      <div class="texts">
+        <t>{{ section.settings.blog-title-3 }}</t><br /><br/>
+        <d>{{ section.settings.blog-subtitle-3 }}</d><br/><br/>
+        <div class="content-button">
+          <a href="{{ section.settings.button_link }}">
+            {{ section.settings.button_label }}
+          </a>
+        </div>
+      </div>
+      <div class="imagee">
+        <img src="{{section.settings.image-blog-3 | img_url:" master "}}">
+      </div>
+    </div>
+  </div>
+  <div class="exter text-upercase">
+    <a href="{{ section.settings.button_link_vermas }}">
+            {{ section.settings.button_vermas }}
+          </a>
+  </div>
+</div>
+
+{% schema %}
+{
+"name": "blog-static",
+"class": "blog-static",
+  "settings": [
+    {
+"type": "header",
+"content": "===== Primer articulo ======"
+},
+   {
+      "type": "text",
+      "id": "blog-title",
+      "label": "Titulo del articulo",
+      "default": "EL CERDO PELÓN MEXICANO, UNA RAZA ESPAÑOLA."
+    } ,
+      {
+      "type": "text",
+      "id": "blog-subtitle",
+      "label": "Descripción del articulo",
+      "default": "description article"
+    } ,
+      {
+          "type": "image_picker",
+          "id": "image-blog",
+          "label": "Image"
+        },
+      {
+          "type": "text",
+          "id": "button_label_1",
+          "label": "Nombre de Boton"
+        },
+        {
+          "type": "url",
+          "id": "button_link_1",
+          "label": "URL"
+        },
+    {
+"type": "header",
+"content": "===== Segundo articulo ======"
+},
+   {
+      "type": "text",
+      "id": "blog-title-2",
+      "label": "Titulo del articulo",
+      "default": "EL CERDO PELÓN MEXICANO, UNA RAZA ESPAÑOLA."
+    } ,
+      {
+      "type": "text",
+      "id": "blog-subtitle-2",
+      "label": "Descripción del articulo",
+      "default": "description article"
+    } ,
+      {
+          "type": "image_picker",
+          "id": "image-blog-2",
+          "label": "Image"
+        },
+      {
+          "type": "text",
+          "id": "button_label_2",
+          "label": "Nombre de Boton"
+        },
+        {
+          "type": "url",
+          "id": "button_link_2",
+          "label": "URL"
+        }, 
+    {
+"type": "header",
+"content": "===== tercer articulo ======"
+},
+   {
+      "type": "text",
+      "id": "blog-title-3",
+      "label": "Titulo del articulo",
+      "default": "EL CERDO PELÓN MEXICANO, UNA RAZA ESPAÑOLA."
+    } ,
+      {
+      "type": "text",
+      "id": "blog-subtitle-3",
+      "label": "Descripción del articulo",
+      "default": "description article"
+    } ,
+      {
+          "type": "image_picker",
+          "id": "image-blog-3",
+          "label": "Image"
+      },
+   {
+          "type": "text",
+          "id": "button_label",
+          "label": "Nombre de Boton"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link"
+        },
+        {
+"type": "header",
+"content": "===== Boton Externo ======"
+},
+    
+   {
+          "type": "text",
+          "id": "button_vermas",
+          "label": "Nombre de Boton"
+        },
+        {
+          "type": "url",
+          "id": "button_link_vermas",
+          "label": "Link"
+        }
+  ],
+  "presets": [
+    {
+      "name": "blog-static",
+      "category": "Publicity"
+    }
+  ]
+}
+{% endschema %}

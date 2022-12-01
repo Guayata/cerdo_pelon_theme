@@ -1,0 +1,1100 @@
+<style>
+  {% if template == 'index' %}
+  @media(min-width: 992px){
+    #shopify-section-header{
+      position: absolute;
+      width: 100%;
+      top: 480px;
+      z-index: 99;
+    }
+  }
+  {% endif %}
+</style>
+ {% if template == 'index'  %}
+<div class="container-fluid box-date-header page-width-padding">
+  <div class="row">
+    <div class="col-12 col-lg-6 text-start date-type-info">
+      MÉXICO | {{ "now" | date: '%Y-%m-%d'| date: format: 'month_day_year' }}
+
+    </div>
+    <div class="col-12 col-lg-6 text-end account-section-header">
+      <a href="{{ routes.account_login_url }}" class="site-header__icon site-header__account">
+        LOG IN
+      </a>
+    </div>
+  </div>
+</div> 
+
+<div id="NavDrawer" class="drawer drawer--left">
+  <div class="drawer__header">
+    <div class="drawer__title h3">{{ 'layout.drawers.browse' | t }}</div>
+    <div class="drawer__close js-drawer-close">
+      <button type="button" class="icon-fallback-text">
+        <span class="icon icon-x" aria-hidden="true"></span>
+        <span class="fallback-text">{{ 'layout.drawers.close_menu' | t }}</span>
+      </button>
+    </div>
+  </div>
+  <!-- begin mobile-nav -->
+
+
+  <ul class="mobile-nav">
+    <li class="mobile-nav__item mobile-nav__search">
+      {% include 'search-bar' %}
+    </li>
+    {% for link in linklists.main-menu.links %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+    <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}" aria-haspopup="true">
+      <div class="mobile-nav__has-sublist">
+        <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+        <div class="mobile-nav__toggle">
+          <button type="button" class="icon-fallback-text mobile-nav__toggle-open">
+            <span class="icon icon-plus" aria-hidden="true"></span>
+            <span class="fallback-text">See More</span>
+          </button>
+          <button type="button" class="icon-fallback-text mobile-nav__toggle-close">
+            <span class="icon icon-minus" aria-hidden="true"></span>
+            <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+          </button>
+        </div>
+      </div>
+      <ul class="mobile-nav__sublist">
+        {% for childlink in linklists[child_list_handle].links %}
+        <li class="mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
+          <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}">
+      <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    {% comment %}
+    If customer accounts are enabled, provide login and create account links
+    {% endcomment %}
+    {% if shop.customer_accounts_enabled %}
+    {% if customer %}
+    <li class="mobile-nav__item">
+      {% if customer.first_name != blank %}
+      {% capture first_name %}{{ customer.first_name }}{% endcapture %}
+      <a href="/account">{{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}</a>
+      {% else %}
+      <a href="/account">{{ 'layout.customer.account' | t }}</a>
+      {% endif %}
+    </li>
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.log_out' | t | customer_logout_link }}
+    </li>
+    {% else %}
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.log_in' | t | customer_login_link }}
+    </li>
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.create_account' | t | customer_register_link }}
+    </li>
+    {% endif %}
+    {% endif %}
+  </ul>
+  <!-- //mobile-nav -->
+</div>
+{% if settings.ajax_cart_method == "drawer" %}
+<div id="CartDrawer" class="drawer drawer--right">
+  <div class="drawer__header">
+    <div class="drawer__title h3">{{ 'cart.general.title' | t }}</div>
+    <div class="drawer__close js-drawer-close">
+      <button type="button" class="icon-fallback-text">
+        <span class="icon icon-x" aria-hidden="true">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="17.5px"
+               height="17.8px" viewBox="0 0 17.5 17.8" enable-background="new 0 0 17.5 17.8" xml:space="preserve">
+            <g>
+              <polyline fill="none" stroke="#808080" stroke-miterlimit="10" points="17.2,0.4 8.8,8.9 17.2,17.4 	"/>
+              <polyline fill="none" stroke="#808080" stroke-miterlimit="10" points="0.4,17.4 8.8,8.9 0.4,0.4 	"/>
+            </g>
+          </svg>
+        </span>
+        <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+      </button>
+    </div>
+  </div>
+  <div id="CartContainer"></div>
+</div>
+{% endif %}
+<div id="PageContainer" class="is-moved-by-drawer">
+  <header class="site-header" role="banner">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 page-width-padding">
+          <nav class="navbar navbar-expand-lg navbar-light navbar-foodnews">
+            <div class="container-fluid p-0">
+              {% if template == 'index' %}
+              <h1 class="site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                {% else %}
+                <div class="h1 site-header__logo large--left" itemscope itemtype="http://schema.org/Organization">
+                  {% endif %}
+                  <a href="/" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ 'logo_publisher.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo" class="img-fluid m-auto">
+                  </a>
+                  {% if template == 'index' %}
+                  </h1>
+                {% else %}
+                </div>
+              {% endif %}
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                  {% include 'site-nav', linklist: section.settings.main_linklist %}
+                  <li class="nav-item cart-option">
+                    <a href="/cart" class="site-header__cart-toggle js-drawer-open-right text-uppercase" aria-controls="CartDrawer" aria-expanded="false">
+                      <span class="icon icon-cart" aria-hidden="true"></span>
+                      {{ 'layout.cart.title' | t }}
+                      <span id="CartCount" data-cart-count-bubble>
+                        <span data-cart-count>{{ cart.item_count }}</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+{% elsif template == 'article' %}
+<div id="NavDrawer" class="drawer drawer--left">
+  <div class="drawer__header">
+    <div class="drawer__title h3">{{ 'layout.drawers.browse' | t }}</div>
+    <div class="drawer__close js-drawer-close">
+      <button type="button" class="icon-fallback-text">
+        <span class="icon icon-x" aria-hidden="true"></span>
+        <span class="fallback-text">{{ 'layout.drawers.close_menu' | t }}</span>
+      </button>
+    </div>
+  </div>
+  <!-- begin mobile-nav -->
+
+  <ul class="mobile-nav">
+    <li class="mobile-nav__item mobile-nav__search">
+      {% include 'search-bar' %}
+    </li>
+    {% for link in linklists.main-menu.links %}
+    {% comment %}
+    Create a dropdown menu by naming a linklist the same as a link in the parent nav
+    More info on dropdowns:
+    - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
+    {% endcomment %}
+    {% assign child_list_handle = link.title | handleize %}
+    {% if linklists[child_list_handle].links != blank %}
+    <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}" aria-haspopup="true">
+      <div class="mobile-nav__has-sublist">
+        <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+        <div class="mobile-nav__toggle">
+          <button type="button" class="icon-fallback-text mobile-nav__toggle-open">
+            <span class="icon icon-plus" aria-hidden="true"></span>
+            <span class="fallback-text">See More</span>
+          </button>
+          <button type="button" class="icon-fallback-text mobile-nav__toggle-close">
+            <span class="icon icon-minus" aria-hidden="true"></span>
+            <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+          </button>
+        </div>
+      </div>
+      <ul class="mobile-nav__sublist">
+        {% for childlink in linklists[child_list_handle].links %}
+        <li class="mobile-nav__item {% if childlink.active %} mobile-nav__item--active{% endif %}">
+          <a href="{{ childlink.url }}" class="mobile-nav__link">{{ childlink.title | escape }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <li class="mobile-nav__item{% if link.active %} mobile-nav__item--active{% endif %}">
+      <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    {% comment %}
+    If customer accounts are enabled, provide login and create account links
+    {% endcomment %}
+    {% if shop.customer_accounts_enabled %}
+    {% if customer %}
+    <li class="mobile-nav__item">
+      {% if customer.first_name != blank %}
+      {% capture first_name %}{{ customer.first_name }}{% endcapture %}
+      <a href="/account">{{ 'layout.customer.logged_in_as_html' | t: first_name: first_name }}</a>
+      {% else %}
+      <a href="/account">{{ 'layout.customer.account' | t }}</a>
+      {% endif %}
+    </li>
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.log_out' | t | customer_logout_link }}
+    </li>
+    {% else %}
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.log_in' | t | customer_login_link }}
+    </li>
+    <li class="mobile-nav__item">
+      {{ 'layout.customer.create_account' | t | customer_register_link }}
+    </li>
+    {% endif %}
+    {% endif %}
+  </ul>
+  <!-- //mobile-nav -->
+
+</div>
+<div id="PageContainer" class="is-moved-by-drawer">
+  <header class="site-header" role="banner">
+      <div class="row">
+        <div class="col-12 col-lg-3 pe-0 box-menu-blog-collapse text-center">
+          <nav class="nav-bar h-100 row m-0" role="navigation">
+            <div class="wrapper col-12 my-auto">
+              <div class="medium-down--hide">
+                <!-- begin site-nav -->
+
+              </div>
+              <div class="large--hide medium-down--show">
+                <div class="site-nav--mobile m-0">
+                  <button type="button" class="m-auto icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+                    <span class="icon icon-hamburger" aria-hidden="true"><img src="{{ 'menu.png' | asset_img_url: 'master' }}"></span>
+                    <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>  
+        </div>
+        <div class="col-12 col-lg">
+          <div class="row">
+            <div class="col-12 ps-0">
+              <div class="box-date-header">
+                <div class="row">
+                  <div class="col-12 col-lg-6  my-auto box-date-header-content">
+                    MÉXICO | {{ "now" | date: '%Y-%m-%d'| date: format: 'month_day_year'}}
+                  </div>
+                  <div class="col-12 col-lg-6 text-end my-auto d-none d-lg-block">
+                    <ul class="d-flex justify-content-end m-0 list-unstyled">
+                      <li class="me-4">
+                        <a href="#" target="_blank">
+                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20.3px"
+                               height="20.3px" viewBox="0 0 20.3 20.3" enable-background="new 0 0 20.3 20.3" xml:space="preserve">
+                            <defs>
+                            </defs>
+                            <g>
+                              <g>
+                                <g>
+                                  <path d="M15.9,20.3H4.3c-1.2,0-2.2-0.4-3.1-1.3C0.4,18.1,0,17.1,0,15.9V4.3c0-1.2,0.4-2.2,1.3-3.1C2.1,0.4,3.1,0,4.3,0h11.6
+                                           c1.2,0,2.2,0.4,3.1,1.3c0.8,0.8,1.3,1.9,1.3,3.1v11.6c0,1.2-0.4,2.2-1.3,3.1C18.2,19.8,17.1,20.3,15.9,20.3z M4.3,1.7
+                                           C3.6,1.7,3,1.9,2.5,2.5C1.9,3,1.7,3.6,1.7,4.3v11.6c0,0.7,0.3,1.3,0.8,1.9c0.5,0.5,1.1,0.8,1.9,0.8h11.6c0.7,0,1.3-0.3,1.9-0.8
+                                           c0.5-0.5,0.8-1.1,0.8-1.9V4.3c0-0.7-0.3-1.3-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8H4.3z"/>
+                                </g>
+                              </g>
+                              <circle cx="15.8" cy="4.6" r="1.3"/>
+                              <g>
+                                <path d="M10.1,15.2c-2.8,0-5.1-2.3-5.1-5.1C5.1,7.3,7.3,5,10.1,5c2.8,0,5.1,2.3,5.1,5.1C15.2,12.9,12.9,15.2,10.1,15.2z M10.1,6.7
+                                         c-1.9,0-3.4,1.5-3.4,3.4c0,1.9,1.5,3.4,3.4,3.4c1.9,0,3.4-1.5,3.4-3.4C13.5,8.3,12,6.7,10.1,6.7z"/>
+                              </g>
+                            </g>
+                          </svg>
+
+                        </a>
+                      </li>
+                      <li class="me-2">
+                        <a href="#" target="_blank">
+                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20.3px"
+                               height="20.1px" viewBox="0 0 20.3 20.1" enable-background="new 0 0 20.3 20.1" xml:space="preserve">
+                            <defs>
+                            </defs>
+                            <g>
+                              <path d="M10.1,0C4.5,0,0,4.5,0,10.1c0,5.1,3.7,9.3,8.6,10v-7.1H6v-2.9h2.6V7.9c0-2.5,1.5-3.9,3.8-3.9c1.1,0,2.3,0.2,2.3,0.2v2.5
+                                       h-1.3c-1.3,0-1.7,0.8-1.7,1.6v1.9h2.8l-0.4,2.9h-2.4v7.1c4.8-0.8,8.6-5,8.6-10C20.3,4.5,15.7,0,10.1,0z"/>
+                            </g>
+                          </svg>
+
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center box-menu-logo">
+            <div class="col-12 ps-0">
+              <div class="box-logo-search">
+                <div class="h1 site-header__logo large--left mb-0" itemscope itemtype="http://schema.org/Organization">
+                  <a href="/blogs/noticias" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ 'logo_publisher.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo" class="img-fluid m-auto">
+                  </a>
+                </div>
+                <div class="search-box">
+                  <div class="site-header__search d-flex">
+                    {% include 'search-bar' %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </header>
+
+  {% else %}
+  <div id="NavDrawer" class="drawer drawer--left">
+    <div class="drawer__header">
+      <div class="row">
+        <div class="drawer__close js-drawer-close">
+          <button type="button" class="icon-fallback-text">
+            <span class="icon icon-x" aria-hidden="true"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="28.8px"
+                                                              height="28.8px" viewBox="0 0 28.8 28.8" style="enable-background:new 0 0 28.8 28.8;" xml:space="preserve">
+              <style type="text/css">
+                .st0{fill:none;stroke:#333333;stroke-width:2;stroke-miterlimit:10;}
+              </style>
+              <defs>
+              </defs>
+              <g>
+                <line class="st0" x1="28.1" y1="0.7" x2="0.7" y2="28.1"/>
+                <line class="st0" x1="0.7" y1="0.7" x2="28.1" y2="28.1"/>
+              </g>
+              </svg></span>
+          </button>
+        </div>
+        <div class="col-12 text-center">
+          <a href="/blogs/noticias" itemprop="url" class="site-header__logo-link">
+            <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo" class="img-fluid m-auto">
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- begin mobile-nav -->
+
+
+    <div class="row content-link-header mt-5 content-link-box">
+      <div class="col-12 p-0">
+        <ul class="list-unstyled mobile-nav m-0 p-0">
+          <li>
+            <ul class="list-unstyled text-center navbar-filters-blog-menu-drawer">
+              <li class="nosotros">
+                <a href="/pages/nosotros" class="text-uppercase"> <div class="box-name">Nosotros</div> </a>
+              </li>
+              {% for tag in blogs.noticias.all_tags %}
+              {% if current_tags contains tag %}
+              <li class="active text-uppercase box-filters {{ tag | handle }} {{ tag.active }}" >
+                <a href="{{ blogs.noticias.url }}/tagged/{{ tag | handle }}"><div class="box-name">{{ tag }}</div></a>
+              </li>
+              {% else %}
+              <li class="text-uppercase box-filters {{ tag | handle }} {{ tag.active }}" >
+                <a href="{{ blogs.noticias.url }}/tagged/{{ tag | handle }}"><div class="box-name">{{ tag }}</div></a>
+              </li>
+              {% endif %}
+
+              {% endfor %}
+              <li class="recetas">
+                <a href="/blogs/recetas" class="text-uppercase"> <div class="box-name">Recetas</div> </a>
+              </li>
+              <li class="snacks-saludables">
+                <a href="/" class="text-uppercase"> <div class="box-name">Snacks Saludables</div> </a>
+              </li>
+            </ul>
+          </li>
+          <li class="mobile-nav__item mobile-nav__search mt-5">
+            {% include 'search-bar' %}
+          </li>
+          <li class="block-links-social">
+            <ul class="list-unstyled m-0 d-flex justify-content-center box-social-content">
+              <li class="option-social-link">
+                <a href="https://www.instagram.com/foodnews_goodnews/" target="_blank">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="37.6px"
+                       height="37.6px" viewBox="0 0 37.6 37.6" style="enable-background:new 0 0 37.6 37.6;" xml:space="preserve">
+                    <defs>
+                    </defs>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <path d="M29.6,37.6H8c-2.2,0-4.1-0.8-5.7-2.4C0.8,33.7,0,31.8,0,29.6V8c0-2.2,0.8-4.1,2.4-5.7C3.9,0.8,5.8,0,8,0h21.5
+                                     c2.2,0,4.1,0.8,5.7,2.4c1.6,1.6,2.4,3.5,2.4,5.7v21.5c0,2.2-0.8,4.1-2.4,5.7C33.7,36.8,31.8,37.6,29.6,37.6z M8,3.1
+                                     c-1.4,0-2.5,0.5-3.5,1.4c-1,1-1.4,2.1-1.4,3.5v21.5c0,1.4,0.5,2.5,1.4,3.5c1,1,2.1,1.4,3.5,1.4h21.5c1.4,0,2.5-0.5,3.5-1.4
+                                     c1-1,1.4-2.1,1.4-3.5V8c0-1.4-0.5-2.5-1.4-3.5c-1-1-2.1-1.4-3.5-1.4H8z"/>
+                          </g>
+                        </g>
+                        <circle cx="29.3" cy="8.6" r="2.4"/>
+                        <g>
+                          <path d="M18.8,28.2c-5.2,0-9.4-4.2-9.4-9.4c0-5.2,4.2-9.4,9.4-9.4c5.2,0,9.4,4.2,9.4,9.4C28.2,24,24,28.2,18.8,28.2z M18.8,12.5
+                                   c-3.5,0-6.3,2.8-6.3,6.3c0,3.5,2.8,6.3,6.3,6.3c3.5,0,6.3-2.8,6.3-6.3C25.1,15.3,22.3,12.5,18.8,12.5z"/>
+                        </g>
+                      </g>
+                    </g>
+                  </svg>
+                </a>
+              </li>
+              <li class="option-social-link">
+                <a href="https://www.facebook.com/Foodnewsisgoodnews-100417452105556" target="_blank">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="37.6px"
+                       height="37.4px" viewBox="0 0 37.6 37.4" style="enable-background:new 0 0 37.6 37.4;" xml:space="preserve">
+                    <defs>
+                    </defs>
+                    <g>
+                      <g>
+                        <path d="M21.8,18.8H27l-0.8,5.4h-4.4v13.1c9-1.4,15.9-9.2,15.9-18.6C37.6,8.4,29.2,0,18.8,0S0,8.4,0,18.8C0,28.2,6.9,36,15.9,37.4
+                                 V24.3h-4.8v-5.4h4.8v-4.1c0-4.7,2.8-7.3,7.1-7.3c2.1,0,4.2,0.4,4.2,0.4v4.6h-2.4c-2.3,0-3.1,1.5-3.1,2.9V18.8"/>
+                      </g>
+                    </g>
+                  </svg>
+
+                </a>
+              </li>
+              <li class="option-social-link">
+                <a href="https://api.whatsapp.com/send?phone=525569630505" target="_blank">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="23.7px"
+                       height="37px" viewBox="0 0 23.7 23.9" enable-background="new 0 0 23.7 23.9" xml:space="preserve">
+                    <defs>
+                    </defs>
+                    <g id="WA_Logo_1_">
+                      <g>
+                        <path fill-rule="evenodd" clip-rule="evenodd" fill="#000" d="M20.3,3.5c-4-4-10.4-4.8-16-1c0,0-0.1,0-0.1,0.1
+                                                                                     C-0.4,7-1,13.2,1.7,17.7L0,23.9l6.3-1.6c1.7,0.9,3.7,1.4,5.6,1.4h5.4C25.2,17.4,25.4,8.5,20.3,3.5z M16.4,21.7H9.2l-2.7-1.6
+                                                                                     l-3.7,1l1-3.6l-0.2-0.4C1.2,13.2,1.6,8,5.5,4.1c4.7-3.2,10-2.6,13.4,0.8C23.1,9.1,23,16.5,16.4,21.7z M17.3,14.3
+                                                                                     c-0.3-0.1-1.7-0.9-2-1s-0.5-0.1-0.7,0.1c-0.2,0.3-0.8,1-0.9,1.2s-0.3,0.2-0.6,0.1s-1.2-0.5-2.4-1.5c-0.9-0.8-1.5-1.8-1.6-2
+                                                                                     c-0.2-0.3,0-0.5,0.1-0.6c0.1-0.1,0.3-0.3,0.4-0.5c0.1-0.2,0.2-0.3,0.3-0.5c0.1-0.2,0-0.4,0-0.5S9.2,7.5,9,6.9
+                                                                                     C8.7,6.3,8.5,6.4,8.3,6.4c-0.2,0-0.4,0-0.6,0c-0.2,0-0.5,0.1-0.8,0.4c-0.3,0.3-1,1-1,2.5s1.1,2.9,1.2,3.1c0.1,0.2,2.1,3.2,5,4.5
+                                                                                     c0.7,0.3,1.3,0.5,1.7,0.6c0.7,0.2,1.4,0.2,1.9,0.1c0.6-0.1,1.7-0.7,2-1.4c0.2-0.7,0.2-1.3,0.2-1.4C17.8,14.5,17.6,14.4,17.3,14.3z
+                                                                                     "/>
+                      </g>
+                    </g>
+                  </svg>
+                </a>
+              </li>
+            </ul>
+            <ul class="list-unstyled m-0 d-flex justify-content-center box-legal-content">
+              <li class="option-legal-link">
+                <a href="#" target="_blank" class="text-uppercase">
+                  Preguntas frecuentes
+                </a>
+              </li>
+              <li class="option-legal-link">
+                <a href="#" target="_blank" class="text-uppercase">
+                  Términos y Condiciones
+                </a>
+              </li>
+              <li class="option-legal-link">
+                <a href="#" target="_blank" class="text-uppercase">
+                  Aviso de Privacidad
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- //mobile-nav -->
+
+  </div>
+
+  {% if settings.ajax_cart_method == "drawer" %}
+  <div id="CartDrawer" class="drawer drawer--right">
+    <div class="drawer__header">
+      <div class="drawer__title h3">{{ 'cart.general.title' | t }}</div>
+      <div class="drawer__close js-drawer-close">
+        <button type="button" class="icon-fallback-text">
+          <span class="icon icon-x" aria-hidden="true"></span>
+          <span class="fallback-text">{{ 'cart.general.close_cart' | t | json }}</span>
+        </button>
+      </div>
+    </div>
+    <div id="CartContainer"></div>
+  </div>
+  {% endif %}
+  <div id="PageContainer" class="is-moved-by-drawer">
+    <header class="site-header" role="banner">
+      <div class="row d-flex d-lg-none m-0">
+        <div class="col-12 p-0">
+          <div class="box-date-header">
+            <div class="row">
+              <div class="col-12 col-lg-6 text-center py-2 my-auto box-date-header-content">
+                MÉXICO | {{ "now" | date: '%Y-%m-%d'| date: format: 'month_day_year'}}
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 pe-0 box-menu-blog-collapse text-center">
+          <nav class="nav-bar h-100 row m-0" role="navigation">
+            <div class="wrapper col-12 my-auto">
+              <div class="medium-down--hide">
+                <!-- begin site-nav -->
+
+              </div>
+              <div class="large--hide medium-down--show">
+                <div class="site-nav--mobile m-0">
+                  <button type="button" class="m-auto icon-fallback-text site-nav__link js-drawer-open-left" aria-controls="NavDrawer" aria-expanded="false">
+                    <span class="icon icon-hamburger" aria-hidden="true"><img src="{{ 'menu.png' | asset_img_url: 'master' }}"></span>
+                    <span class="fallback-text">{{ 'layout.navigation.menu' | t }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>  
+        </div>
+        <div class="col-12 col-md-6 col-lg content-box-logo-center">
+          <div class="row d-none d-lg-flex">
+            <div class="col-12 ps-0">
+              <div class="box-date-header">
+                <div class="row">
+                  <div class="col-12 col-lg-6  my-auto box-date-header-content">
+                    MÉXICO | {{ "now" | date: '%Y-%m-%d'| date: format: 'month_day_year'}}
+                  </div>
+                  <div class="col-12 col-lg-6 text-end my-auto d-none d-lg-block">
+                    <ul class="d-flex justify-content-end m-0 list-unstyled">
+                      <li class="me-4">
+                        <a href="https://www.instagram.com/foodnews_goodnews/" target="_blank">
+                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20.3px"
+                               height="20.3px" viewBox="0 0 20.3 20.3" enable-background="new 0 0 20.3 20.3" xml:space="preserve">
+                            <defs>
+                            </defs>
+                            <g>
+                              <g>
+                                <g>
+                                  <path d="M15.9,20.3H4.3c-1.2,0-2.2-0.4-3.1-1.3C0.4,18.1,0,17.1,0,15.9V4.3c0-1.2,0.4-2.2,1.3-3.1C2.1,0.4,3.1,0,4.3,0h11.6
+                                           c1.2,0,2.2,0.4,3.1,1.3c0.8,0.8,1.3,1.9,1.3,3.1v11.6c0,1.2-0.4,2.2-1.3,3.1C18.2,19.8,17.1,20.3,15.9,20.3z M4.3,1.7
+                                           C3.6,1.7,3,1.9,2.5,2.5C1.9,3,1.7,3.6,1.7,4.3v11.6c0,0.7,0.3,1.3,0.8,1.9c0.5,0.5,1.1,0.8,1.9,0.8h11.6c0.7,0,1.3-0.3,1.9-0.8
+                                           c0.5-0.5,0.8-1.1,0.8-1.9V4.3c0-0.7-0.3-1.3-0.8-1.9c-0.5-0.5-1.1-0.8-1.9-0.8H4.3z"/>
+                                </g>
+                              </g>
+                              <circle cx="15.8" cy="4.6" r="1.3"/>
+                              <g>
+                                <path d="M10.1,15.2c-2.8,0-5.1-2.3-5.1-5.1C5.1,7.3,7.3,5,10.1,5c2.8,0,5.1,2.3,5.1,5.1C15.2,12.9,12.9,15.2,10.1,15.2z M10.1,6.7
+                                         c-1.9,0-3.4,1.5-3.4,3.4c0,1.9,1.5,3.4,3.4,3.4c1.9,0,3.4-1.5,3.4-3.4C13.5,8.3,12,6.7,10.1,6.7z"/>
+                              </g>
+                            </g>
+                          </svg>
+
+                        </a>
+                      </li>
+                      <li class="me-2">
+                        <a href="https://www.facebook.com/Foodnewsisgoodnews-100417452105556" target="_blank">
+                          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="20.3px"
+                               height="20.1px" viewBox="0 0 20.3 20.1" enable-background="new 0 0 20.3 20.1" xml:space="preserve">
+                            <defs>
+                            </defs>
+                            <g>
+                              <path d="M10.1,0C4.5,0,0,4.5,0,10.1c0,5.1,3.7,9.3,8.6,10v-7.1H6v-2.9h2.6V7.9c0-2.5,1.5-3.9,3.8-3.9c1.1,0,2.3,0.2,2.3,0.2v2.5
+                                       h-1.3c-1.3,0-1.7,0.8-1.7,1.6v1.9h2.8l-0.4,2.9h-2.4v7.1c4.8-0.8,8.6-5,8.6-10C20.3,4.5,15.7,0,10.1,0z"/>
+                            </g>
+                          </svg>
+
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center box-menu-logo">
+            <div class="col-12 ps-0">
+              <div class="box-logo-search">
+                <div class="h1 site-header__logo large--left mb-0" itemscope itemtype="http://schema.org/Organization">
+                  <a href="/blogs/noticias" itemprop="url" class="site-header__logo-link">
+                    <img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo" class="img-fluid m-auto">
+                  </a>
+                 
+                </div>
+                <div class="search-box d-none d-lg-block">
+                  <div class="site-header__search d-flex">
+                    {% include 'search-bar' %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-2 col-lg content-box-search-mobile d-block d-sm-block d-lg-none text-center">
+          <div class="row h-100">
+            <div class="col-12 my-auto">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+                <style type="text/css">
+                  .st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+                </style>
+                <defs>
+                </defs>
+                <g>
+                  <circle class="st0" cx="17.3" cy="17.3" r="15.8"></circle>
+                  <line class="st0" x1="27.2" y1="27.2" x2="38.9" y2="38.9"></line>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </header>
+
+  </div>
+  {% endif %}
+
+  {% if section.settings.message %}
+    <style>
+      {% if section.settings.logo != blank %}
+      .site-header__logo-image {
+        max-width: {{ section.settings.logo_max_width | escape }}px;
+      }
+      {% endif %}
+
+      {% if section.settings.align_logo == 'left' %}
+      .site-header__logo-image {
+        margin: 0;
+      }
+      {% endif %}
+    </style>
+    {% endif %}
+
+
+{% schema %}
+{
+  "name": {
+    "cs": "Záhlaví",
+    "da": "Overskrift",
+    "de": "Titel",
+    "en": "Header",
+    "es": "Encabezado",
+    "fi": "Ylätunniste",
+    "fr": "En-tête",
+    "it": "Header",
+    "ja": "ヘッダー",
+    "ko": "헤더",
+    "nb": "Header",
+    "nl": "Koptekst",
+    "pl": "Nagłówek",
+    "pt-BR": "Cabeçalho",
+    "pt-PT": "Cabeçalho",
+    "sv": "Rubrik",
+    "th": "ส่วนหัว",
+    "tr": "Üstbilgi",
+    "vi": "Đầu trang",
+    "zh-CN": "标头",
+    "zh-TW": "標頭"
+  },
+  "settings": [
+    {
+      "type": "radio",
+      "id": "align_logo",
+      "label": {
+        "cs": "Zarovnání loga",
+        "da": "Logojustering",
+        "de": "Logo-Ausrichtung",
+        "en": "Logo alignment",
+        "es": "Alineación de logo",
+        "fi": "Logon tasaus",
+        "fr": "Alignement du logo",
+        "it": "Allineamento logo",
+        "ja": "ロゴアラインメント",
+        "ko": "로고 정렬",
+        "nb": "Logojustering",
+        "nl": "Logo-uitlijning",
+        "pl": "Wyrównanie logo",
+        "pt-BR": "Alinhamento do logotipo",
+        "pt-PT": "Alinhamento do logótipo",
+        "sv": "Logojustering",
+        "th": "การจัดวางโลโก้",
+        "tr": "Logo hizalaması",
+        "vi": "Căn chỉnh logo",
+        "zh-CN": "logo 对齐方式",
+        "zh-TW": "商標對齊"
+      },
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": {
+            "cs": "Doleva",
+            "da": "Venstre",
+            "de": "Links",
+            "en": "Left",
+            "es": "Izquierda",
+            "fi": "Vasen",
+            "fr": "Gauche",
+            "it": "Sinistra",
+            "ja": "左",
+            "ko": "왼쪽",
+            "nb": "Venstre",
+            "nl": "Links",
+            "pl": "Do lewej",
+            "pt-BR": "Esquerda",
+            "pt-PT": "Esquerda",
+            "sv": "Vänster",
+            "th": "ด้านซ้าย",
+            "tr": "Sol",
+            "vi": "Bên trái",
+            "zh-CN": "左侧",
+            "zh-TW": "左方"
+          }
+        },
+        {
+          "value": "center",
+          "label": {
+            "cs": "Na střed",
+            "da": "Centreret",
+            "de": "Mittig",
+            "en": "Centered",
+            "es": "Centrada",
+            "fi": "Keskitetty",
+            "fr": "Centré",
+            "it": "Centrato",
+            "ja": "中央揃え",
+            "ko": "센터 맞추기",
+            "nb": "Sentrert",
+            "nl": "Gecentreerd",
+            "pl": "Wyśrodkowane",
+            "pt-BR": "Centralizado",
+            "pt-PT": "Centrado",
+            "sv": "Centrera",
+            "th": "ตรงกลาง",
+            "tr": "Orta",
+            "vi": "Giữa",
+            "zh-CN": "居中",
+            "zh-TW": "置中"
+          }
+        }
+      ]
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "cs": "Obrázek loga",
+        "da": "Logobillede",
+        "de": "Logo-Foto",
+        "en": "Logo image",
+        "es": "Logo",
+        "fi": "Logokuva",
+        "fr": "Image du logo",
+        "it": "Immagine del logo",
+        "ja": "ロゴ画像",
+        "ko": "로고 이미지",
+        "nb": "Logobilde",
+        "nl": "Afbeelding van logo",
+        "pl": "Obraz logo",
+        "pt-BR": "Imagem do logotipo",
+        "pt-PT": "Imagem do logótipo",
+        "sv": "Logobild",
+        "th": "รูปภาพโลโก้",
+        "tr": "Logo görseli",
+        "vi": "Hình ảnh logo",
+        "zh-CN": "logo 图片",
+        "zh-TW": "標誌圖片"
+      }
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "label": {
+        "cs": "Šířka vlastního loga",
+        "da": "Tilpasset logobredde",
+        "de": "Logobreite",
+        "en": "Custom logo width",
+        "es": "Ancho del logo personalizado",
+        "fi": "Mukautetun logon leveys",
+        "fr": "Largeur personnalisée du logo",
+        "it": "Larghezza logo personalizzato",
+        "ja": "ロゴの幅をカスタマイズする",
+        "ko": "사용자 지정 로고 폭",
+        "nb": "Tilpasset logobredde",
+        "nl": "Aangepaste logo-breedte",
+        "pl": "Niestandardowa szerokość logo",
+        "pt-BR": "Largura do logotipo personalizado",
+        "pt-PT": "Largura de logótipo personalizada",
+        "sv": "Anpassad logotypsbredd",
+        "th": "ความกว้างของโลโก้แบบกำหนดเอง",
+        "tr": "Özel logo genişliği",
+        "vi": "Chiều rộng logo tùy chỉnh",
+        "zh-CN": "自定义 logo 宽度",
+        "zh-TW": "自訂商標寬度"
+      },
+      "min": 50,
+      "max": 250,
+      "step": 5,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": {
+        "cs": "Nabídka",
+        "da": "Menu",
+        "de": "Menü",
+        "en": "Menu",
+        "es": "Menú",
+        "fi": "Valikko",
+        "fr": "Menu",
+        "it": "Menu",
+        "ja": "メニュー",
+        "ko": "메뉴",
+        "nb": "Meny",
+        "nl": "Menu",
+        "pl": "Menu",
+        "pt-BR": "Menu",
+        "pt-PT": "Menu",
+        "sv": "Meny",
+        "th": "เมนู",
+        "tr": "Menü",
+        "vi": "Menu",
+        "zh-CN": "菜单",
+        "zh-TW": "選單"
+      },
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": {
+        "cs": "Panel oznámení",
+        "da": "Meddelelseslinje",
+        "de": "Ankündigungsbereich",
+        "en": "Announcement bar",
+        "es": "Barra de anuncios",
+        "fi": "Ilmoituspalkki",
+        "fr": "Barre d'annonces",
+        "it": "Barra degli annunci",
+        "ja": "告知バー",
+        "ko": "공지 표시줄",
+        "nb": "Kunngjøringslinje",
+        "nl": "Aankondigingsbalk",
+        "pl": "Pasek ogłoszeń",
+        "pt-BR": "Barra de avisos",
+        "pt-PT": "Barra de comunicado",
+        "sv": "Meddelandefält",
+        "th": "แถบประกาศ",
+        "tr": "Duyuru çubuğu",
+        "vi": "Thanh thông báo",
+        "zh-CN": "公告栏",
+        "zh-TW": "公告列"
+      }
+    },
+    {
+      "type": "checkbox",
+      "id": "message",
+      "label": {
+        "cs": "Zobrazit oznámení",
+        "da": "Vis meddelelse",
+        "de": "Ankündigung anzeigen",
+        "en": "Show announcement",
+        "es": "Mostrar anuncio",
+        "fi": "Näytä ilmoitus",
+        "fr": "Afficher l'annonce",
+        "it": "Mostra annuncio",
+        "ja": "告知を表示する",
+        "ko": "공지 표시",
+        "nb": "Vis kunngjøring",
+        "nl": "Aankondiging weergeven",
+        "pl": "Pokaż ogłoszenie",
+        "pt-BR": "Exibir comunicado",
+        "pt-PT": "Mostrar comunicado",
+        "sv": "Visa tillkännagivande",
+        "th": "แสดงประกาศ",
+        "tr": "Duyuruyu göster",
+        "vi": "Hiển thị thông báo",
+        "zh-CN": "显示公告",
+        "zh-TW": "顯示公告"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "home_page_only",
+      "label": {
+        "cs": "Jen domovská stránka",
+        "da": "Kun startside",
+        "de": "Nur Startseite",
+        "en": "Home page only",
+        "es": "Solo página de inicio",
+        "fi": "Vain etusivu",
+        "fr": "Page d'accueil uniquement",
+        "it": "Solo home page",
+        "ja": "ホームページのみ",
+        "ko": "홈페이지만",
+        "nb": "Kun på startsiden",
+        "nl": "Alleen homepage",
+        "pl": "Tylko strona główna",
+        "pt-BR": "Apenas na página inicial",
+        "pt-PT": "Apenas a página inicial",
+        "sv": "Endast hemsida",
+        "th": "หน้าแรกเท่านั้น",
+        "tr": "Yalnızca ana sayfa",
+        "vi": "Chỉ trang chủ",
+        "zh-CN": "仅主页",
+        "zh-TW": "僅限首頁"
+      },
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "message_text",
+      "label": {
+        "cs": "Text",
+        "da": "Tekst",
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fi": "Teksti",
+        "fr": "Texte",
+        "it": "Testo",
+        "ja": "テキスト",
+        "ko": "텍스트",
+        "nb": "Tekst",
+        "nl": "Tekst",
+        "pl": "Tekst",
+        "pt-BR": "Texto",
+        "pt-PT": "Texto",
+        "sv": "Text",
+        "th": "ข้อความ",
+        "tr": "Metin",
+        "vi": "Văn bản",
+        "zh-CN": "文本",
+        "zh-TW": "文字"
+      },
+      "default": {
+        "cs": "Tady můžete zadat oznámení",
+        "da": "Meddel noget her",
+        "de": "Hier etwas ankündigen",
+        "en": "Announce something here",
+        "es": "Anuncia algo aquí",
+        "fi": "Ilmoita jotakin tässä",
+        "fr": "Annoncez quelque chose ici",
+        "it": "Annuncia qualcosa qui",
+        "ja": "ここで告知してください",
+        "ko": "여기에 공지하십시오",
+        "nb": "Kunngjør noe her",
+        "nl": "Kondig hier iets aan",
+        "pl": "Ogłoś coś tutaj",
+        "pt-BR": "Anuncie algo aqui",
+        "pt-PT": "Anunciar algo aqui",
+        "sv": "Meddela något här",
+        "th": "ประกาศข้อความที่นี่",
+        "tr": "Buraya bir duyuru ekleyin",
+        "vi": "Thông báo điều gì đó tại đây",
+        "zh-CN": "在此处进行公告",
+        "zh-TW": "在此公告資訊"
+      }
+    },
+    {
+      "type": "url",
+      "id": "message_link",
+      "label": {
+        "cs": "Odkaz",
+        "da": "Link",
+        "de": "Link",
+        "en": "Link",
+        "es": "Enlace",
+        "fi": "Linkki",
+        "fr": "Lien",
+        "it": "Link",
+        "ja": "リンク",
+        "ko": "링크",
+        "nb": "Kobling",
+        "nl": "Link",
+        "pl": "Link",
+        "pt-BR": "Link",
+        "pt-PT": "Ligação",
+        "sv": "Länk",
+        "th": "ลิงก์",
+        "tr": "Bağlantı",
+        "vi": "Liên kết",
+        "zh-CN": "链接",
+        "zh-TW": "連結"
+      },
+      "info": {
+        "cs": "Volitelné",
+        "da": "Valgfri",
+        "de": "Optional",
+        "en": "Optional",
+        "es": "Opcional",
+        "fi": "Valinnainen",
+        "fr": "Facultatif",
+        "it": "Facoltativo",
+        "ja": "オプション",
+        "ko": "선택 사항",
+        "nb": "Valgfritt",
+        "nl": "Optioneel",
+        "pl": "Opcjonalnie",
+        "pt-BR": "Opcional",
+        "pt-PT": "Opcional",
+        "sv": "Valfritt",
+        "th": "ไม่จำเป็น",
+        "tr": "İsteğe bağlı",
+        "vi": "Không bắt buộc",
+        "zh-CN": "可选",
+        "zh-TW": "(選填)"
+      }
+    },
+    {
+      "type": "color",
+      "id": "color_bg",
+      "label": {
+        "cs": "Panel",
+        "da": "Bjælke",
+        "de": "Zeile",
+        "en": "Bar",
+        "es": "Barra",
+        "fi": "Palkki",
+        "fr": "Barre",
+        "it": "Barra",
+        "ja": "バー",
+        "ko": "바",
+        "nb": "Felt",
+        "nl": "Balk",
+        "pl": "Pasek",
+        "pt-BR": "Barra",
+        "pt-PT": "Barra",
+        "sv": "Fält",
+        "th": "แถบ",
+        "tr": "Çubuk",
+        "vi": "Thanh",
+        "zh-CN": "栏",
+        "zh-TW": "橫條"
+      },
+      "default": "#3a3a3a"
+    },
+    {
+      "type": "color",
+      "id": "color_text",
+      "label": {
+        "cs": "Text",
+        "da": "Tekst",
+        "de": "Text",
+        "en": "Text",
+        "es": "Texto",
+        "fi": "Teksti",
+        "fr": "Texte",
+        "it": "Testo",
+        "ja": "テキスト",
+        "ko": "텍스트",
+        "nb": "Tekst",
+        "nl": "Tekst",
+        "pl": "Tekst",
+        "pt-BR": "Texto",
+        "pt-PT": "Texto",
+        "sv": "Text",
+        "th": "ข้อความ",
+        "tr": "Metin",
+        "vi": "Văn bản",
+        "zh-CN": "文本",
+        "zh-TW": "文字"
+      },
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

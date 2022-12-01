@@ -1,0 +1,840 @@
+@font-face {
+  font-family: 'Darwin Ess Rd Bold';
+  src: url(' //cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/DarwinEssRdBold.otf?v=137730446071540186701669316933 ');
+    font-weight: normal;
+    font-style: normal;  
+    font-display: swap;
+    }
+@font-face {
+  font-family: 'Darwin Ess Rd';
+  src: url(' //cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/Darwin-Ess-Rd.otf?v=183670308835058120421669316933 ');
+    font-weight: normal;
+    font-style: normal;  
+    font-display: swap;
+    }
+@font-face {
+  font-family: 'Reservation Wide';
+  src: url(' //cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/ReservationWide-Blk.otf?v=119004524437381018681669316992 ');
+    font-weight: normal;
+    font-style: normal;  
+    font-display: swap;
+    }
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url(' //cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/ProximaNova-Reg.otf?v=173843304794007442521669316990 ');
+    font-weight: normal;
+    font-style: normal;  
+    font-display: swap;
+    }
+@font-face {
+  font-family: 'Oliviar Sans Ultra Light';
+  src: url(' //cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/OliviarSansUltraLight.otf?v=150816483030537034371669316982 ');
+    font-weight: normal;
+    font-style: normal;  
+    font-display: swap;
+    }
+/*============== bienvenidos tribu ==============*/
+.page-tribu{
+  background: transparent !important;
+  letter-spacing: 0;
+  .page-bienvenidos-tribu{
+    padding: 90px 0;
+    letter-spacing: 0;
+    .title{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 40px;
+      line-height : 54px;
+      text-transform : uppercase;
+      color : #000000;
+      @media(min-width: 992px){
+        font-size : 60px;
+        line-height : 60.2px;
+      }
+    }
+    .subtitle{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 27px;
+      line-height : 41px;
+      text-transform : uppercase;
+      color : #FFF;
+      @media(min-width: 992px){
+        font-size : 34px;
+        line-height : 48px;
+      }
+      span{
+        background: #9e0595 !important;
+        @media(min-width: 992px){
+          padding: 5px 43px;
+        }
+      }
+    }
+    .content-txt{
+      margin-top: 40px;
+      .title{
+        font-family: 'Darwin Ess Rd';
+        font-size : 16px;
+        text-transform : uppercase;
+        color : #000000;
+        padding: 5px;	
+        margin-bottom: 0;
+        @media(min-width: 992px){
+          font-size : 26px;
+        }
+      }
+      .subtitle{
+        font-family: 'Darwin Ess Rd Bold';
+        font-size : 34px;
+        text-transform : uppercase;
+        color : #FFFFFF;
+        margin: auto;
+        @media(min-width: 992px){
+          font-size : 45px;
+          width: 395px;
+        }
+        span{
+          background: #ffcd00 !important;
+          border-radius: 50px;
+          @media(min-width: 992px){
+            padding: 0 20px;
+          }
+        }
+      }
+      .subtitle_small{
+        font-family: 'Reservation Wide';
+        font-size : 11px;
+        letter-spacing : 2.2px;
+        color: #000000;
+        margin: auto;
+        margin-top: 15px;
+        @media(min-width: 992px){
+          letter-spacing : 3px;
+          font-size : 15px;
+          width: 395px;
+        }
+      }
+      .description{
+        font-family: 'Proxima Nova';
+        margin: auto;
+        margin-top: 15px;
+        font-size : 14px;
+        color : #000000;
+        @media(min-width: 992px){
+          width: 434px;
+        }
+      }
+    }
+    .content-image-bottom{
+      .text-end-paragraph{
+        p{
+          font-family: 'Darwin Ess Rd';
+          font-size : 15px;
+          text-transform : uppercase;
+          color : #000000;
+          margin: 0 auto;
+          @media(min-width: 992px){
+            font-size : 18px;
+            width: 500px;
+          }
+        }
+      }
+    }
+    .copy-hashtag{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 30px;
+      text-transform : uppercase;
+      color : #000000;
+      @media(min-width: 992px){
+        font-size : 36px;
+      }
+    }
+  }
+  .box-content-contact{
+    form{
+      margin: 100px auto 0;
+      padding: 30px;
+      background: #ffcf00;
+      box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+      -webkit-box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+      -moz-box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+      border-radius: 46px;
+      @media(min-width: 992px){
+        padding: 50px;
+        width: 800px;
+        margin: 100px auto 0;
+        background: #ffcf00;
+        box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+        -webkit-box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+        -moz-box-shadow: 10px 13px 1px 0px rgba(229,229,229,0.75);
+        border-radius: 46px;
+      }
+      .title-contact-tribu{
+        font-family: 'Darwin Ess Rd Bold';
+        font-size: 18px;
+        line-height: 26px;
+        margin-bottom: 40px;
+        @media(min-width: 992px){
+          font-size : 24px;
+          line-height: 31px;
+        }
+      }
+      .content-input{
+        margin-bottom: 10px;
+        padding: 0 6px;
+        input, select{
+          background: rgba(255,215,51,0.45);
+          border-radius:  5px;
+          height: 45px;
+          color: #666666;
+          border: 1px solid #000000;
+          letter-spacing: 0 !important;
+          font-family: 'Oliviar Sans Ultra Light';
+          font-size : 11px !important;
+          line-height: 14px;
+          @media(min-width: 992px){
+            font-size : 13px !important;
+            line-height: 15px;
+          }
+
+          &::placeholder{
+            color: #666666;
+            opacity: 0.4;
+            letter-spacing: 0 !important;
+          }
+          &:focus{
+            border-color: #07e401;
+            box-shadow: 0 0 0 0.1rem rgba(7, 228, 1, .15);
+          }
+        }
+        .checkbox {
+          width: 100%;
+          margin: 15px auto;
+          position: relative;
+          display: block;
+          padding: 0;
+        }
+
+        .checkbox input[type="checkbox"] {
+          width: auto;
+          opacity: 0.00000001;
+          position: absolute;
+          left: 0;
+          margin-left: -20px;
+        }
+        .checkbox label {
+          position: relative;
+        }
+        .checkbox label:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          margin: 4px;
+          width: 26px;
+          height: 26px;
+          transition: transform 0.28s ease;
+          border-radius: 3px;
+          background: rgba(255,215,51,0.45);
+          border: 1px solid #000;
+        }
+        .checkbox label:after {
+          content: '';
+          display: block;
+          width: 10px;
+          height: 5px;
+          border-bottom: 2px solid #07e401;
+          border-left: 2px solid #07e401;
+          -webkit-transform: rotate(-45deg) scale(0);
+          transform: rotate(-45deg) scale(0);
+          transition: transform ease 0.25s;
+          will-change: transform;
+          position: absolute;
+          top: 14px;
+          left: 12px;
+        }
+        .checkbox input[type="checkbox"]:checked ~ label::before {
+          color: #07e401;
+        }
+
+        .checkbox input[type="checkbox"]:checked ~ label::after {
+          -webkit-transform: rotate(-45deg) scale(1);
+          transform: rotate(-45deg) scale(1);
+        }
+
+        .checkbox label {
+          min-height: 34px;
+          display: block;
+          padding-left: 40px;
+          margin-bottom: 0;
+          font-weight: normal;
+          cursor: pointer;
+          vertical-align: sub;
+          font-family: 'Oliviar Sans Ultra Light';
+          font-size : 13px;
+          line-height: 15px;
+          letter-spacing: 0 !important;
+          text-transform: initial;
+        }
+        .checkbox label span {
+          position: absolute;
+          top: 50%;
+          -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+        }
+        .checkbox input[type="checkbox"]:focus + label::before {
+          outline: 0;
+        }
+      }
+      .content-button-submit {
+        .btn{
+          font-family: 'Darwin Ess Rd Bold';
+          font-size : 18px;
+          line-height: 22px;
+          margin: 20px 0;
+          letter-spacing: 0 !important;
+          background: #FFF !important;
+          color: #000 !important;
+          border: 2px solid #000;
+          @media(min-width: 992px){
+            font-size : 23px;
+            line-height: 28px;
+          }
+        }
+      }
+    }
+  }
+}
+/*============== bienvenidos tribu ==============*/
+/*============== bienvenidos gracias tribu ==============*/
+.page-thankyou-tribu{
+  .subtitle{
+    background: transparent !important;
+    span{
+      background: #e80080!important;
+      @media(min-width: 992px){
+        padding: 3px 15px !important;
+      }
+    }
+  }
+  .slider-people{
+    margin-top: 65px;
+    img{
+      padding: 0 4px;
+    }
+  }
+  .box-iconos-section{
+    margin-top: 90px;
+    .title-section-icons{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size: 34px;
+      line-height: 53px;
+      text-transform: uppercase;
+      color: #FFF;
+      margin-bottom: 60px;
+      span{
+        background: #9e0595;
+        @media(min-width: 992px){
+          padding: 0px 14px;
+        }
+      }
+    }
+    .content-iconos{
+      &:nth-child(even){
+        .content-image{
+          @media(max-width: 991px){
+            &:before{
+              content: none !important;
+            }
+          }
+        }
+      }
+      &:last-child{
+        .content-image{
+          @media(max-width: 991px){
+            &:before{
+              content: none !important;
+            }
+          }
+        }
+      }
+      .content-image{
+        position: relative;
+        @media(max-width: 991px){
+          margin-bottom: 52px;
+          &:before{
+            content: "";
+            position: absolute;
+            background: url(//cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/line-right-dashed.png?v=181148728311732097801669316974);
+            width: 4px;
+            height: 30%;
+            right: -15px;
+            top: 27px;
+          }
+        }
+      }
+      .description-iconos{
+        font-family: 'Proxima Nova';
+        font-size: 14px;
+        color: #000000;
+        margin: auto;
+        margin-top: 45px;
+        position: relative;
+        @media(min-width: 992px){
+          &:before{
+            content: "";
+            position: absolute;
+            background: url(//cdn.shopify.com/s/files/1/0580/1695/6589/t/20/assets/line-right-dashed.png?v=181148728311732097801669316974);
+            width: 4px;
+            height: 100%;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+      &:last-child{
+        .description-iconos{
+          &:before{
+            content: none;
+          }
+        }
+      }
+    }
+    .content-button-download{
+      margin-top: 15px;
+      @media(min-width: 992px){
+        margin-top: 85px;
+      }
+      a{
+        font-family: 'Darwin Ess Rd Bold';
+        letter-spacing: 0 !important;
+        font-size: 23px;
+        color: #000;
+        background: #FFF;
+        border: 2px solid #000;
+        &:hover, &:focus{
+          background: #FFF !important;
+        }
+      }
+      p{
+        font-size : 14px;
+        font-family: 'Darwin Ess Rd';
+        color: #000;
+        margin: auto;
+        margin-top: 25px;
+        margin-bottom: 40px;
+        @media(min-width: 992px){
+          width: 680px;
+          font-size : 21px;
+          line-height: 28px;
+        }
+      }
+    }
+  }
+  .box-codigo-download{
+    background: #ff8002;
+    box-shadow: 9px 11px 4px 1px rgb(227, 229,230);
+    -webkit-box-shadow: 9px 11px 4px 1px rgb(227,229,230);
+    -moz-box-shadow: 9px 11px 4px 1px rgb(227,229,230);
+    border-radius: 40px;
+    margin-top: 50px;
+    @media(min-width: 992px){
+      background: #ff8002;
+      box-shadow: 9px 11px 4px 1px rgb(227, 229,230);
+      -webkit-box-shadow: 9px 11px 4px 1px rgb(227,229,230);
+      -moz-box-shadow: 9px 11px 4px 1px rgb(227,229,230);
+      padding: 30px 20px;
+    }
+    .title-codigo{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 34px;
+      line-height : 49px;
+      text-transform : uppercase;
+      color : #FFFFFF;
+    }
+    .text-codigo{
+      font-family: 'Proxima Nova';
+      font-size : 14px;
+      color : #FFFFFF;
+      margin: auto;
+      @media(min-width: 992px){
+        width: 510px;
+      }
+    }
+  }
+  .text-box-codigo-download{
+    font-family: 'Darwin Ess Rd';
+    font-size : 21px;
+    line-height : 27px;
+    color: #000;
+    margin-top: 40px;
+    text-transform: uppercase;
+    @media(min-width: 992px){
+      margin-top: 80px;
+      font-size : 24px;
+      line-height : 31px;
+    }
+    a{
+      font-family: 'Darwin Ess Rd Bold';
+    }
+  }
+  .box-link-description{
+    .title-link{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size: 24px;
+      line-height: 31px;
+      text-transform: uppercase;
+      color: #000000;
+      margin-top: 40px;
+      margin-bottom: 25px;
+    }
+    .text-link{
+      font-family: 'Proxima Nova';
+      font-size : 14px;
+      color : #000000;
+    }
+  }
+  .box-dates-container{
+
+  }
+  .box-dates-txt{
+    margin: auto;
+    margin-top: 80px;
+    background-image: repeating-linear-gradient(-10deg, #1f313b, #1f313b 12px, transparent 12px, transparent 29px, #1f313b 29px), repeating-linear-gradient(80deg, #1f313b, #1f313b 12px, transparent 12px, transparent 29px, #1f313b 29px), repeating-linear-gradient(170deg, #1f313b, #1f313b 12px, transparent 12px, transparent 29px, #1f313b 29px), repeating-linear-gradient(260deg, #1f313b, #1f313b 12px, transparent 12px, transparent 29px, #1f313b 29px);
+    background-size: 2px 100%, 100% 2px, 2px 100% , 100% 2px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: no-repeat;
+    padding: 20px;
+    p{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 24px;
+      line-height : 31px;
+      color : #000000;
+    }
+  }
+  .text-final-box{
+    p{
+      margin-top: 90px;
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 24px;
+      line-height : 31px;
+      color : #000000;
+    }
+  }
+}
+/*============== bienvenidos gracias tribu ==============*/
+.page-profile-tribu{
+  .title-code{
+    font-family: 'Darwin Ess Rd';
+    font-size : 21px;
+    line-height : 27px;
+    @media(min-width: 992px){
+      font-size : 24px;
+      line-height : 31px;
+    }
+    #spcode{
+      font-family: 'Darwin Ess Rd Bold';
+    }
+  }
+  .box-sell-start{
+    border-top: 2px solid #909090;
+    border-bottom: 2px solid #909090;
+    .content-box-sell-start{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 21px;
+      line-height : 27px;
+      text-transform : uppercase;
+      color : #000000;
+      @media(min-width: 992px){
+        font-size : 24px;
+        line-height : 31px;
+      }
+      .subtitle-end{
+        font-family: 'Darwin Ess Rd Bold';
+        font-size : 41px;
+        line-height : 50px;
+        @media(min-width: 992px){
+          font-size : 61px;
+          line-height : 70px;
+        }
+      }
+    }
+  }
+  .box-sell-compare-dates{
+    background: #00aa3c;
+    color: #FFF;
+    margin-top: 75px !important;
+    padding: 10px;
+    .title-sec-date{
+      font-family: 'Darwin Ess Rd Bold';
+      font-size : 27px;
+      line-height : 41px;
+      color : #FFF;
+      @media(min-width: 992px){
+        font-size : 34px;
+        line-height : 48.76px;
+      }
+    }
+    .content-date{
+      font-family: 'Darwin Ess Rd Bold';
+      color : #FFF;
+      font-size : 21px;
+      line-height : 27px;
+      text-transform : uppercase;
+      color : #FFF;
+      @media(min-width: 992px){
+        font-size : 24px;
+        line-height : 31px;
+      }
+      .title-date{
+        font-family: 'Darwin Ess Rd';
+        font-size : 21px;
+        line-height : 27px;
+        text-transform : uppercase;
+        color : #FFF;
+        @media(min-width: 992px){
+          font-size : 24px;
+          line-height : 31px;
+        }
+      }
+      input{
+        padding: 0;
+        border: none !important;
+        color: #FFF;
+        &::placeholder{
+          color: #FFF !important;
+        }
+      }
+      input[type="date"]::-webkit-datetime-edit-text,
+      input[type="date"]::-webkit-datetime-edit-month-field,
+      input[type="date"]::-webkit-datetime-edit-day-field,
+      input[type="date"]::-webkit-datetime-edit-year-field {
+        color: #FFF;
+      }
+      input[type="date"]::-webkit-inner-spin-button,
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        /*         display: none;
+        -webkit-appearance: none; */
+        position: relative;
+        left:- 20px;
+        filter: invert(1);
+      }
+    }
+  }
+  .table-date-sell{
+    table{
+      border-collapse: collapse;
+      border-radius: 10px !important;
+      border-style: hidden; /* hide standard table (collapsed) border */
+      box-shadow: 0 0 0 1px #cacaca; /* this draws the table border  */ 
+      margin: 30px 0;
+      tr{
+        th{
+          border: 1px dashed #cacaca;
+          font-family: 'Darwin Ess Rd';
+          text-align: center;
+          color: #666666;
+          text-transform: uppercase;
+          font-weight: 100;
+          a{
+            color: #666;
+          }
+        }
+        td{
+          border: 1px dashed #cacaca;
+          font-family: 'Darwin Ess Rd';
+          text-align: center;
+          color: #666666;
+          font-weight: 100;
+          a{
+            color: #666;
+            transition: all 0.5s;
+          }
+        }
+      }
+    }
+  }
+  .table-date-gift{
+    table{
+      table-layout: fixed;
+      width: 100%;
+      tbody{
+        th, td{
+          transition: all 0.5s;
+        }
+        tr{
+          transition: all 0.5s;
+          cursor: pointer;
+          &:hover{
+            th, td{
+              color: #FFF;
+              a{
+                color: #FFF;
+
+              }
+            }
+          }
+        }
+        tr:nth-child(1){
+          color: #FFF;
+          background: #FFF;
+          &:hover{
+            background: #00e300;
+          }
+        }
+        tr:nth-child(2){
+          color: #FFF;
+          background: #f0f0f0;
+          &:hover{
+            background: #00d3f5;
+          }
+        }
+        tr:nth-child(3){
+          color: #FFF;
+          background: #cacaca;
+          &:hover{
+            background: #ffcc00;
+          }
+        }
+        tr:nth-child(4){
+          color: #FFF;
+          background: #b1b1b1;
+          &:hover{
+            background: #ff8000;
+          }
+        }
+        tr:nth-child(5){
+          color: #FFF;
+          background: #979797;
+          &:hover{
+            background: #ff4e1f;
+          }
+        }
+      }
+    }
+  }
+  #btnKuLogout{
+    font-family: 'Darwin Ess Rd Bold';
+    background: transparent !important;
+    letter-spacing: 0px;
+    color: #000000;
+    font-size : 21px;
+    line-height : 27px;
+    text-transform : uppercase;
+    @media(min-width: 1800px){
+      font-size : 24px;
+      line-height : 31px;
+    }
+    span{
+      border-bottom: 2px solid #000;
+    }
+  }
+  .content-btn-download{
+    a{
+      font-family: 'Darwin Ess Rd Bold';
+      background: transparent !important;
+      letter-spacing: 0px;
+      color: #000000;
+      font-size : 21px;
+      line-height : 27px;
+      border: 1px solid #000;
+      border-radius: 0;
+      text-transform : uppercase;
+      @media(min-width: 1800px){
+        font-size : 24px;
+        line-height : 31px;
+      }
+    }
+  }
+  .box-description-sale-bottom{
+    background: #000;
+    font-family: 'Darwin Ess Rd';
+    font-size : 21px;
+    line-height : 27px;
+    text-transform : uppercase;
+    color : #FFF;
+    padding: 10px;
+    @media(min-width: 992px){
+      border-radius: 50px;
+      font-size : 19px;
+      line-height : 31px;
+    }
+    @media(min-width: 1800px){
+      font-size : 24px;
+      line-height : 31px;
+    }
+    span{
+      font-family: 'Darwin Ess Rd Bold';
+    }
+    .box-description-content-txt{
+      position: relative;
+      &:before{
+        position: absolute;
+        height: 100%;
+        width: 1px;
+        background: #FFF;
+        left: -28px;
+        @media(min-width: 992px){
+          content: "";
+        }
+      }
+    }
+  }
+  .subtitle-end-box{
+    font-family: 'Darwin Ess Rd';
+    font-size : 24px;
+    line-height : 31px;
+    text-transform : uppercase;
+    color : #000000;
+    margin: 100px 0;
+    strong{
+      font-family: 'Darwin Ess Rd Bold';
+    }
+  }
+}
+.content-profile-login{
+  .page-bienvenidos-tribu {
+    padding: 50px 0 50px;
+  }
+  .box-content-contact{
+    form{
+      margin: 20px auto 0;
+      box-shadow: 9px 8px 0px 0px rgba(229,229,229,1);
+      -webkit-box-shadow: 9px 8px 0px 0px rgba(229,229,229,1);
+      -moz-box-shadow: 9px 8px 0px 0px rgba(229,229,229,1);
+      background: #fece00;
+      border-radius: 24px;
+      .title-login{
+        span{
+          background: #9e0595;
+          color: #FFF;
+          font-family: 'Darwin Ess Rd Bold';
+          font-size : 21px;
+          line-height : 27px;
+          @media(min-width: 992px){
+            padding: 0px 20px;
+            font-size : 28px;
+            line-height : 41px;
+          }
+        }
+      }
+    }
+  }
+}
+.page-tribu .page-bienvenidos-tribu{
+  .subtitle-index-section-welcome{
+    font-family: 'Darwin Ess Rd Bold';
+    font-size : 27px;
+    line-height : 41px;
+    text-transform : uppercase;
+    color : #FFF;
+    @media(min-width: 992px){
+      font-size : 34px;
+      line-height : 48px;
+    }
+    span{
+      background: #ff8000 !important;
+      @media(min-width: 992px){
+        padding: 5px 43px;
+      }
+    }
+  }
+}

@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
+<style>
+  .row{display:-ms-flexbox;
+    display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+  .col-12{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%;position:relative;width:100%;padding-right:15px;padding-left:15px;}
+  .col-lg-6{padding-right:15px;padding-left:15px;}
+  @media(min-width: 992px){
+    .col-lg-6{-ms-flex:0 0 50%;flex:0 0 50%;max-width:50%;}
+  }
+  .h-100{
+    height: 100% !important;
+  }
+  .w-100{
+    width: 100% !important;
+  }
+  .p-0{
+    padding: 0px !important;
+  }
+  .my-auto{margin-top:auto!important;}
+  .my-auto{margin-bottom:auto!important;}
+  .mt-auto{margin-top:auto!important}
+</style>
+<div class="row section-products-demo" style="margin: 0px !important;">
+  <div class="col-12">
+    <div class="row" style="margin: 0px !important;">
+      <div class="col-12 title">TENEMOS 2 OPCIONES CON O SIN TABLETA PERO AMBAS CON LA MISMA FUNCIONALIDAD</div>
+      <div class="col-12 my-4">
+        <div class="rev_slider slider-products-demo">
+          <div class="rev_slide">
+            <a href="https://shop.worqout.mx/pages/conoce-nuestro-sistema-de-entrenamiento">
+              <div class="test">
+                <img src="{{ 'product-1.jpg' | asset_url }}">
+                <p class="title-description">Bicicleta Wcycle S Pro con pantalla táctil</p>
+                <p class="button">
+                  <span>
+                    $ 17,999.00 
+                  </span>
+                </p>
+              </div>
+            </a>
+          </div>
+          <div class="rev_slide">
+            <div class="test">
+              <a href="https://shop.worqout.mx/collections/wcycle-1/products/bicicleta-wcycle-s-con-soporte-para-tableta">
+                <img src="{{ 'product-2.png' | asset_url }}">
+                <p class="title-description">Bicicleta Wcycle S con soporte para tablet</p>
+                <p class="button">
+                  <span>
+                    $ 12,999.00 
+                  </span>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div class="rev_slide">
+            <div class="test">
+              <a href="https://shop.worqout.mx/pages/conoce-nuestro-sistema-de-entrenamiento">
+                <img src="{{ 'product-1.jpg' | asset_url }}">
+                <p class="title-description">Bicicleta Wcycle S Pro con pantalla táctil</p>
+                <p class="button">
+                  <span>
+                    $ 17,999.00 
+                  </span>
+                </p>
+              </a>
+            </div>
+          </div>
+          <div class="rev_slide">
+            <div class="test">
+              <a href="https://shop.worqout.mx/collections/wcycle-1/products/bicicleta-wcycle-s-con-soporte-para-tableta">
+                <img src="{{ 'product-2.png' | asset_url }}">
+                <p class="title-description">Bicicleta Wcycle S con soporte para tablet</p>
+                <p class="button">
+                  <span>
+                    $ 12,999.00 
+                  </span>
+                </p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Slider manual",
+  "class": "index-section-slider-manual",
+  "settings": [
+   
+  ],
+ 
+  "presets": [
+    {
+      "name": "Slider manual",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}
+ <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+  <script>
+    $('.slider-product').slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      fade:true,
+      dots: true
+    });
+    $('.slider-testimonial').slick({
+      infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      fade:true,
+      arrows: false,
+      adaptiveHeight: true,
+      dots: true
+    });
+    var rev = $('.rev_slider');
+    rev.on('init', function(event, slick, currentSlide) {
+      var
+      cur = $(slick.$slides[slick.currentSlide]),
+          next = cur.next(),
+          next2 = cur.next().next(),
+          prev = cur.prev(),
+          prev2 = cur.prev().prev();
+      prev.addClass('slick-sprev');
+      next.addClass('slick-snext');  
+      prev2.addClass('slick-sprev2');
+      next2.addClass('slick-snext2');  
+      cur.removeClass('slick-snext').removeClass('slick-sprev').removeClass('slick-snext2').removeClass('slick-sprev2');
+      slick.$prev = prev;
+      slick.$next = next;
+    }).on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+      console.log('beforeChange');
+      var
+      cur = $(slick.$slides[nextSlide]);
+      console.log(slick.$prev, slick.$next);
+      slick.$prev.removeClass('slick-sprev');
+      slick.$next.removeClass('slick-snext');
+      slick.$prev.prev().removeClass('slick-sprev2');
+      slick.$next.next().removeClass('slick-snext2');
+      next = cur.next(),  
+        prev = cur.prev();
+      //prev2.prev().prev();
+      //next2.next().next();
+      prev.addClass('slick-sprev');
+      next.addClass('slick-snext');
+      prev.prev().addClass('slick-sprev2');
+      next.next().addClass('slick-snext2');
+      slick.$prev = prev;
+      slick.$next = next;
+      cur.removeClass('slick-next').removeClass('slick-sprev').removeClass('slick-next2').removeClass('slick-sprev2');
+    });
+
+    rev.slick({
+      speed: 1000,
+      arrows: true,
+      dots: false,
+      focusOnSelect: true,
+      prevArrow: '<button class="slick-prev"> prev</button>',
+      nextArrow: '<button class="slick-next"> next</button>',
+      infinite: true,
+      centerMode: true,
+      slidesPerRow: 1,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      centerPadding: '0',
+      swipe: true,
+      customPaging: function(slider, i) {
+        return '';
+      },
+      /*infinite: false,*/
+    });
+  </script>

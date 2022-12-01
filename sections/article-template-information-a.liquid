@@ -1,0 +1,273 @@
+{% assign number_of_comments = article.comments_count %}
+{% if comment and comment.created_at %}
+    {% assign number_of_comments = article.comments_count | plus: 0 %}
+{% endif %}
+{% assign column_center = 'col-12' %}
+<section id="columns" class="columns-container articulos-recetas-template">
+  <div class="container-fluid content-article p-0">
+    <div>news</div>
+    <div class="row">
+      <article id="blogpage" class="blog-detail blog-container col-12 {% if section.settings.blog-sidebar-enable %}col-lg-8{% endif %}" itemscope itemtype="http://schema.org/NewsArticle">
+        <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://google.com/article"/>
+        <meta itemprop="headline" content="{{ article.title }}" />
+        <div class="hidden" itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="{{ article.author }}" />
+        </div>
+        <meta itemprop="datePublished" content="{{ article.published_at | date: '%Y-%m-%d' }}" />
+        <meta itemprop="dateModified" content="{{ article.published_at | date: '%Y-%m-%d' }}"/>
+        <div class="container-article-element pb-0">
+          <div>
+            <div class="row content-cintillo-header">
+              <div class="col-12 order-last content-cintillo-loop">
+                <div class="row box-cintillo-loop">
+                  <div class="marquee-header text-uppercase">
+                    ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS! ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS! ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-box-general content-image-article border-top-0 content-page-width">
+            <div class="row m-0">
+              <div class="col-12 p-0">
+                <div class="content-image" style="background: url('{{ article.image | img_url: 'master' }}')">
+                  <div class="row m-0 content-text-title">
+                    <div class=" col-12 date-title">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[0] | split: '[/shortdesc]' | first }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 p-0">
+                <div class="row contenedor-box-informacion-general">
+                  <div class="col-12 col-lg-4 contenedor-ingredientes">
+                    <div class="row box-line-content h-100">
+                      <div class="box-ingredientes">
+                        <div class="titulo-ingredientes mb-0">
+                          {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                          {% assign splitShortDesc = shortdesc | split: "|" %}
+                          {{ splitShortDesc[1] | split: '[/shortdesc]' | first }}
+                        </div>
+                      </div>
+                      <div class="col-12 box-contenido-description">
+                        <div class="contenedor-procedimiento">
+                          {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                          {% assign splitShortDesc = shortdesc | split: "|" %}
+                          {{ splitShortDesc[2] | split: '[/shortdesc]' | first }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-8 contenedor-ingredientes contenedor-ingredientes-big">
+                    <div class="row box-line-content h-100">
+                      <div class="box-ingredientes">
+                        <div class="titulo-ingredientes mb-0">
+                          {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                          {% assign splitShortDesc = shortdesc | split: "|" %}
+                          {{ splitShortDesc[3] | split: '[/shortdesc]' | first }}
+                        </div>
+                      </div>
+                      <div class="col-12 box-contenido-description">
+                        <div class="contenedor-procedimiento">
+                          {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                          {% assign splitShortDesc = shortdesc | split: "|" %}
+                          {{ splitShortDesc[4] | split: '[/shortdesc]' | first }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="slider-recetas">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[5] | split: '[/shortdesc]' | first }}
+                    </div>
+                  </div>
+                  <div class="col-12 text-right">
+                    <div class="content-information-product-div">
+                      <div class="imagen-desktop d-none d-lg-block content-information-banner-product">
+                        {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                        {% assign splitShortDesc = shortdesc | split: "|" %}
+                        {{ splitShortDesc[6] | split: '[/shortdesc]' | first }}
+                      </div>
+                      <div class="imagen-desktop d-block d-lg-none content-information-banner-product">
+                        {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                        {% assign splitShortDesc = shortdesc | split: "|" %}
+                        {{ splitShortDesc[7] | split: '[/shortdesc]' | first }}
+                      </div>
+                      <!--<div class="content-information">
+                        <div class="row">
+                          <div class="col-12 title">
+                            {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[8] | split: '[/shortdesc]' | first }}
+                          </div>
+                          <div class="col-12">
+                            <div class="description">
+                            {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[9] | split: '[/shortdesc]' | first }}
+                            </div>
+                          </div>
+                          <div class="col-12 cantidad-producto">
+                            <span>
+                              {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                              {% assign splitShortDesc = shortdesc | split: "|" %}
+                              {{ splitShortDesc[10] | split: '[/shortdesc]' | first }}
+                            </span>
+                          </div>
+                          <div class="col-12 contenedor-precio py-md-2 py-lg-0 py-xxl-3">
+                            {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[11] | split: '[/shortdesc]' | first }}
+                          </div>
+                          <div class="col-12 contenedor-producto">
+                            {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                            {% assign splitShortDesc = shortdesc | split: "|" %}
+                            {{ splitShortDesc[12] | split: '[/shortdesc]' | first }}
+                          </div>
+                        </div>
+                      </div>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="container-box-general border-0 content-page-width">
+            <div class="row">
+              <div class="col-12 text-center text-uppercase py-5 title-more-articles">
+                <span>RECETAS RELACIONADAS</span>          
+              </div>
+            </div>
+          </div>
+          <div class="container-box-general border-0 content-page-width pb-5">
+            <div class="row">
+            <div class="col-12 related-blog box-news">
+              <div class="slider-more-article">
+                {%- for article in blogs[blog.handle].articles limit: 6 -%}
+                <div class="box-blog-item">
+                  <div class="content-item-blog row">
+                    {%- if article.image -%}
+                    <div class="article__grid col-12 p-0">
+                      {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                      <a class="article__grid-image" href="{{ article.url }}" style="min-height: {{ 1 | divided_by: article.image.aspect_ratio | times: 100}}px">
+                        <img 
+                             class="img-fluid w-100"
+                             src="{{ article.image | img_url: 'master' }}"
+                             data-src="{{ img_url }}"
+                             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                             data-aspectratio="{{ article.image.aspect_ratio }}"
+                             data-sizes="auto"
+                             alt="{{ article.image.alt | escape }}">
+                        <span class="card__preloader"></span>
+                        <noscript>
+                          {% assign card_image = type | img_url: 'master' %}
+                          <img src="{{ card_image }}" alt="{{ type.alt | escape }}" class="card__image">
+                        </noscript>
+                      </a>
+                    </div>
+                    {%- endif -%}
+                    <div class=" col-12 date-title">
+                      <a href="{{ article.url }}">{{ article.title | truncate: 90 }}</a>
+                    </div>
+                    <div class="col-12 date-desShort mb-3">
+                      {{ article.excerpt | strip_html | truncatewords: 50 }}
+                    </div>
+                  </div>
+                </div>
+                {%- endfor -%}
+              </div>
+             </div>
+            </div>
+
+
+          </div>
+
+         
+        </div>
+        <div class="blog-content">
+          {% if blog.comments_enabled? %}
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <hr>
+              <div class="comment-form form-vertical">
+                {% form 'new_comment', article %}
+
+                <h2 class="h3">{{ 'blogs.comments.title' | t }}</h2>
+
+                {{ form.errors | default_errors }}
+
+                  <div class="row">
+
+                    <div class="col-12 col-lg-6">
+                      <label for="CommentAuthor">{{ 'blogs.comments.name' | t }}</label>
+                      <input type="text" name="comment[author]" id="CommentAuthor" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}">
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <label for="CommentEmail">{{ 'blogs.comments.email' | t }}</label>
+                      <input type="email" name="comment[email]" id="CommentEmail" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+                    </div>
+
+                    <div class="col-12">
+                      <label for="CommentBody">{{ 'blogs.comments.message' | t }}</label>
+                      <textarea name="comment[body]" id="CommentBody" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}">{{ form.body }}</textarea>
+                    </div>
+
+                  </div>
+
+                  {% if blog.moderated? %}
+                  <p class="fine-print">{{ 'blogs.comments.moderated' | t }}</p>
+                  {% endif %}
+
+                  <input type="submit" class="btn btn-outline" value="{{ 'blogs.comments.post' | t }}">
+                  {% endform %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </article>      
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Posts",
+  "settings": [
+    
+{
+      "type": "header",
+      "content": "---- * Image header Setting * ----"
+    },
+ {
+      "type": "image_picker",
+      "id": "image_blog",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show social sharing buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+<script>
+  $('.button-link-view-more').click(function(){
+    $('.image-blog').slideToggle();
+    $(this).toggleClass('active');
+  })
+</script>

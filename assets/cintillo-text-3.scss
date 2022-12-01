@@ -1,0 +1,103 @@
+.cinta-circle {
+    background: #CEBCA5;
+    width: 100%;
+    height: auto;
+    padding: 50px 0;
+    margin: 100px 0;
+    .two-column {
+        display: flex;
+        @media (max-width: 576px) {
+            flex-direction: column;
+        }
+        .unline-content {
+            display: flex;
+            width: 35%;
+            height: auto;
+            padding-left: 10%;
+            @media (max-width: 576px) {
+                width: 100%;
+                padding: 10%;
+            }
+            .text-cint {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                @media (max-width: 576px) {
+                    text-align: center;
+                }
+                c {
+                    font-family: 'Snell Roundhand';
+                    font-size: 45px;
+                    line-height: 0px;
+                    @media (max-width: 576px) {
+                        font-size: 40px;
+                    }
+                }
+                t {
+                    font-family: 'Helvetica Regular Italic';
+                    font-size: 45px;
+                    line-height: 45px;
+                    @media (max-width: 576px) {
+                        font-size: 35px;
+                    }
+                }
+                te {
+                    font-family: 'Helvetica';
+                    font-size: 13px;
+                    @media (max-width: 576px) {
+                        font-size: 13px;
+                      text-align:initial;
+                    }
+                }
+            }
+        }
+    }
+    .image-cicle {
+        width: 65%;
+        padding: 2% 0;
+        display: flex;
+        justify-content: space-evenly;
+        @media (max-width: 576px) {
+          padding: 0 0 0 10%;
+            flex-direction: column;
+            width: auto;
+            margin:0;
+        }
+      .line{
+        border-right:1px solid white;
+        @media (max-width: 576px) {
+           border-top:1px solid white;
+          width:50%;
+          border-right:none;
+        }
+      }
+        .img-text {
+            //border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 18%;
+            @media (max-width: 576px) {
+                width: auto;
+                flex-direction: row;
+              margin: 8% 0;
+            }
+          i{
+            font-size:13px;
+            line-height: initial;
+          }
+            t {
+                font-family: 'Helvetica';
+                margin-top: 20%;
+   line-height: initial;
+              @media (max-width: 576px) {
+                    text-align: start;
+                   margin: 0 12%;
+                  
+                }
+            }
+        }
+    }
+}

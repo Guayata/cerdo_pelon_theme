@@ -1,0 +1,117 @@
+{{ 'bootstrap.css' | asset_url | stylesheet_tag }}
+<div class="page-content page-content--product"  data-limoniapps-discountninja-product-handle="{{product_handle }}" data-limoniapps-discountninja-product-quickview>
+  <div class="container-fluid content-product-modal">
+    <div class="row grid">
+      <div class="col-12 col-lg-7 grid__item product-image-price">
+        <div class="row justify-content-center">
+          <!--Titulo producto -->
+          <div class="col-12 text-center">
+            <div id="qv-product-title-principal" class="title-product mb-0 text-uppercase"></div>
+          </div>
+          <!--Titulo producto -->
+          <!--Subtitulo producto -->
+          <div class="col-12 text-center">
+            <div class="qv-product-subtitle subtitle-product mb-0 text-uppercase"></div>
+          </div>
+          <!--Subtitulo producto -->
+          <!--Imagenes producto -->
+          <div id="qv-product-images" class="qv-product-images"></div>
+          <!--Imagenes producto -->
+          <div class="col-12 col-lg-10 col-xxl-8 content-buttons-buy">
+                <ul class="d-flex list-unstyled m-0 p-0">
+                  <li>
+                    <div id="qv-product-price" class="limoniapps-discountninja-productprice"></div>
+                    <!--<div id="qv-product-original-price"></div>-->
+                  </li>
+                  <li>
+                    <div class="quantity js-qty__wrapper">
+                      <input type="text" id="Quantity-QV"
+                        class="js-qty__num qv-quantity"
+                        value="1"
+                        min="1"
+                        aria-label="quantity"
+                        pattern="[0-9]*"
+                        name="quantity">
+                      <button type="button" class="js-qty__adjust js-qty__adjust--minus" aria-label="Quitar uno a la cantidad de artículos" tabindex="0">
+                        <svg id="Capa_1" class="icon icon-minus" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4.27 2.99"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}</style></defs><polyline class="cls-1" points="0.5 0.5 2.13 2.49 3.77 0.5"></polyline></svg>
+                          <span class="icon__fallback-text" aria-hidden="true">−</span>
+                      </button>
+                      <button type="button" class="js-qty__adjust js-qty__adjust--plus" aria-label="Aumentar uno a la cantidad de artículos" tabindex="0">
+                        <svg id="Capa_1" class="icon icon-plus" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4.27 2.99"><defs><style>.cls-1{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;}</style></defs><polyline class="cls-1" points="3.77 2.49 2.13 0.5 0.5 2.49"></polyline></svg>
+                          <span class="icon__fallback-text" aria-hidden="true">+</span>
+                      </button>
+                    </div>
+                  </li>
+                  <li>
+                    <input id="qv-add-button" type="submit" class="content-price-quantify-button" value="COMPRAR">
+                    <div class="qv-add-to-cart-response"></div>
+                  </li>
+                </ul>
+              </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5 p-0">
+        <div class="content-information h-100">
+            <div class="row">
+              <!--Titulo producto -->
+              <div class="col-12">
+                <div id="qv-product-title-blank" class="title-product"></div>
+              </div>
+              <!--Titulo producto -->
+              <!--Logotipos producto -->
+              <div class="col-12">
+                <div id="qv-product-info" class="image-product-info"></div>
+              </div>
+              <!--Logotipos producto -->
+              <!--Contenido Neto producto -->
+              <div class="col-12 box-product-neto">
+                <p id="qv-product-neto" class="product-neto">
+                </p>
+              </div>
+              <!--Contenido Neto producto -->
+              <div class="col-12">
+                <div class="qv-product-options"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-ideal-para" class="title-block"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-ideal-desc" class="description-product-block"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-acidometro-title" class="title-block"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-acidometro-imagen" class=""></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-ingredientes" class="title-block title-first-column"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-descripcion" class="description-product-block"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-tabla-nutricional" class="title-block"></div>
+              </div>
+              <div class="col-12">
+                <div id="qv-tabla-nutricional-imagen" class="description-image-product"></div>
+              </div>
+              <div class="col-12 text-center">
+                <div id="qv-imagen-product-end" class="description-image-product_end"></div>
+              </div>
+              <div class="col-12 text-center">
+                <div id="qv-descripcion-product-end" class="description-text-product_end"></div>
+              </div>
+              <div class="col-12 text-center mt-4">
+                <div id="qv-descripcion-product-url" class="text-product_url">
+                  <a href="#">
+                    Ver producto
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

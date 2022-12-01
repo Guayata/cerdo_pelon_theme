@@ -1,0 +1,20 @@
+{% unless product_interval %}
+	{%- assign product_interval = 8000 -%}
+{% endunless %}
+{% unless type_block %}
+	{%- assign type_block = 'slick_carousel' -%}
+{% endunless %}
+{% unless collection_produclists %}
+	{%- assign collection_produclists = collections.all.products -%}
+{% endunless %}
+<div  class="products_block exclusive block" 
+         >
+	<div class="block_content">
+		{%- if type_block == 'boostrap_carousel' -%}
+			{%- capture product_carousel -%}product_list_00{{ productlist }}{%- endcapture -%}
+			{% include 'product_carousel_slick' %}
+		{%- else -%}
+			{% include 'product_carousel_slick' %}
+		{%- endif -%}
+	</div>
+</div>

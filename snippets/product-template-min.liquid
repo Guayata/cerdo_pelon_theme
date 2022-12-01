@@ -1,0 +1,274 @@
+{{ 'bootstrap.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+
+  unless thumbnail_position
+    assign thumbnail_position = 'beside'
+  endunless
+
+  unless description_style
+    assign description_style = 'full'
+  endunless
+
+  assign product_zoom_size = '1800x1800'
+  assign product_image_size = '620x'
+
+  case image_container_width
+    when 'small'
+      assign product_image_width = 'medium-up--two-fifths'
+      assign product_description_width = 'medium-up--three-fifths'
+      assign product_image_size = '480x'
+    when 'medium'
+      assign product_image_width = 'medium-up--one-half'
+      assign product_description_width = 'medium-up--one-half'
+      assign product_image_size = '620x'
+    when 'large'
+      assign product_image_width = 'medium-up--three-fifths'
+      assign product_description_width = 'medium-up--two-fifths'
+      assign product_image_size = '740x'
+  endcase
+
+  assign product_img_structure = product.featured_media | img_url: '1x1' | replace: '_1x1.', '_{width}x.'
+-%}
+<div id="ProductSection-{{ section_id }}"
+     class="product-section  {{ product.title | camelize }}"
+     data-section-id="{{ section_id }}"
+     data-section-type="product-template"
+     data-product-handle="{{ product.handle }}"
+     data-product-title="{{ product.title | escape }}"
+     data-product-url="{{ product.url | within: collection }}"
+     data-aspect-ratio="{{ 100 | divided_by: product.featured_media.aspect_ratio }}"
+     data-img-url="{{ product_img_structure }}"
+     {% if settings.product_zoom_enable %}
+     data-image-zoom="true"
+     {% endif %}
+     {% if settings.inventory_enable %}
+     data-inventory="true"
+     {% endif %}
+     {% if settings.inventory_transfers_enable %}
+     data-incoming-inventory="true"
+     {% endif %}
+     {% unless isModal %}
+     data-enable-history-state="true"
+     {% endunless %}>
+
+  {%- render 'product-template-variables', product: product, current_variant: current_variant -%}
+
+  <div class="page-content page-content--product">
+    <div class="container-fluid content-product-modal">
+      <div class="row grid{% unless image_position == 'left' %} grid--product-images-right{% endunless %}">
+        <div class="col-12 col-lg-6 grid__item product-image-price">
+          <div class="row">
+            <!--titulo producto -->
+            <div class="col-12 text-center">
+              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+              {% assign splitShortDesc = shortdesc | split: "|" %}
+              <div class="title-product mb-0 text-uppercase">
+                {{ splitShortDesc[0] | split: '[/shortdesc]' | first }}
+              </div>
+            </div>
+            <!--titulo producto -->
+            <!--titulo producto -->
+            <div class="col-12 text-center">
+              {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+              {% assign splitShortDesc = shortdesc | split: "|" %}
+              <div class="subtitle-product mb-0 text-uppercase">
+                {{ splitShortDesc[1] | split: '[/shortdesc]' | first }}
+              </div>
+            </div>
+            <!--titulo producto -->
+            <!--Imagen producto -->
+            <div class="col-12">
+              <div class="row justify-content-center content-image">
+                <div class="col-12 col-lg-12 my-auto">
+                  {%- if image_position == 'left' -%}
+                  <div class="grid__item product-single__sticky">
+                    {%- render 'product-images',
+              section_id: section_id,
+                    product: product,
+                    isModal: isModal,
+                    image_position: image_position,
+                    product_zoom_size: product_zoom_size,
+                    product_image_size: product_image_size,
+                    thumbnail_arrows: thumbnail_arrows,
+                    thumbnail_position: thumbnail_position,
+                    video_looping: video_looping,
+                    video_style: video_style
+                    -%}
+                  </div>
+                  {%- endif -%}
+                </div>
+              </div>
+            </div>
+            <!--Imagen producto -->
+            <!--Precio producto -->
+          
+            
+          </div>
+        </div>
+        <div class="col-12 col-lg-6 p-0">
+          <div class="content-information h-100">
+            <div class="row">
+              <div class="col-12">
+                {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                {% assign splitShortDesc = shortdesc | split: "|" %}
+                <div class="title-product">
+                  {{ splitShortDesc[2] | split: '[/shortdesc]' | first }}
+                </div>
+              </div>
+              <div class="col-12">
+                {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                {% assign splitShortDesc = shortdesc | split: "|" %}
+                <div class="image-product-info">
+                  {{ splitShortDesc[3] | split: '[/shortdesc]' | first }}
+                </div>
+              </div>
+              <div class="col-12 box-product-neto">
+                <p class="product-neto">
+                  Cont. Neto por pieza: <span> {{ splitShortDesc[4] | split: '[/shortdesc]' | first }}</span>
+                </p>
+              </div>
+           
+              
+            <div class="col-12">
+                <div class="product__unit-price product__unit-price--spacing product__unit-price-wrapper--{{ section_id }}{% unless current_variant.unit_price_measurement %} hide{% endunless %}">
+                {%- capture unit_price_base_unit -%}
+                <span class="product__unit-base--{{ section_id }}">
+                  {%- if current_variant.unit_price_measurement -%}
+                  {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+                  {{ current_variant.unit_price_measurement.reference_value }}
+                  {%- endif -%}
+                  {{ current_variant.unit_price_measurement.reference_unit }}
+                  {%- endif -%}
+                  </span>
+                  {%- endcapture -%}
+
+                  <span class="product__unit-price--{{ section_id }}">{{ current_variant.unit_price | money }}</span>/{{ unit_price_base_unit }}
+              </div>
+
+              {%- if shop.taxes_included or shop.shipping_policy.body != blank -%}
+              <div class="product__policies rte small--text-center">
+                <small>
+                  {%- if shop.taxes_included -%}
+                  {{ 'products.product.include_taxes' | t }}
+                  {%- endif -%}
+                  {%- if shop.shipping_policy.body != blank -%}
+                  {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                  {%- endif -%}
+                </small>
+              </div>        
+              {%- endif -%}
+              {%- if settings.inventory_enable or settings.inventory_transfers_enable -%}
+              {%- assign variants_with_inventory_tracking = product.variants | where: 'inventory_management', 'shopify' -%}
+
+              <script>
+                // Store inventory quantities in JS because they're no longer
+                // available directly in JS when a variant changes.
+                // Have an object that holds all potential products so it works
+                // with quick view or with multiple featured products.
+                window.inventories = window.inventories || {};
+                window.inventories['{{section_id}}'] = {};
+                                   {% for variant in variants_with_inventory_tracking %}
+                                   window.inventories['{{section_id}}'][{{variant.id}}] = {
+                  'quantity': {{ variant.inventory_quantity | default: 0 }},
+                  'incoming': {{ variant.incoming | default: false | json }},
+                  'next_incoming_date': {{ variant.next_incoming_date | date: format: 'date' | json }}
+                };
+                {% endfor %}
+              </script>
+              {%- if isModal -%}
+              <div
+                   data-section-id="{{ section_id }}"
+                   class="hide js-product-inventory-data"
+                   aria-hidden="true"
+                   >
+                {%- for variant in variants_with_inventory_tracking -%}
+                <div
+                     class="js-variant-inventory-data"
+                     data-id="{{ variant.id }}"
+                     data-quantity="{{ variant.inventory_quantity | default: 0 }}"
+                     data-incoming="{{ variant.incoming | default: false | json }}"
+                     data-date="{{ variant.next_incoming_date | date: format: 'date' | json }}"
+                     >
+                </div>
+                {%- endfor -%}
+              </div>
+              {%- endif -%}
+              {%- endif -%}
+              {%- unless isModal -%}
+              {%- render 'product-form',
+                section_id: section_id,
+              product: product,
+              current_variant: current_variant
+              -%}
+              {%- else -%}
+              <div
+                   id="ProductFormHolder-{{ section_id }}"
+                   class="product-form-holder"
+                   data-url="{{ product.url }}"
+                   data-template="{{ product.template_suffix }}"></div>
+              {%- endunless -%}
+
+              {%- unless isModal -%}
+              {%- if settings.surface_pickup_enable -%}
+              <div id="StoreAvailabilityHolder-{{ section_id }}"
+                   data-product-name="{{ product.title | escape }}"
+                   data-base-url="{{ shop.url }}{{ routes.root_url }}"
+                   ></div>
+              {%- endif -%}
+              {%- endunless -%}
+              {%- unless description_style == 'full' -%}
+              {%- render 'product-additional-content', product: product, section_id: section_id -%}
+              {%- endunless -%}
+            </div>
+            
+              <div class="col-12">
+                {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                {% assign splitShortDesc = shortdesc | split: "|" %}
+                <div class="title-block title-first-column">
+                  {{ splitShortDesc[5] | split: '[/shortdesc]' | first }}
+                </div>
+                </div>
+                <div class="col-12">
+                  {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                  {% assign splitShortDesc = shortdesc | split: "|" %}
+                  <div class="description-product-block">
+                    {{ splitShortDesc[6] | split: '[/shortdesc]' | first }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                  {% assign splitShortDesc = shortdesc | split: "|" %}
+                  <div class="title-block">
+                    {{ splitShortDesc[7] | split: '[/shortdesc]' | first }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                  {% assign splitShortDesc = shortdesc | split: "|" %}
+                  <div class="description-image-product">
+                    {{ splitShortDesc[8] | split: '[/shortdesc]' | first }}
+                  </div>
+                </div>
+                <div class="col-12 text-center">
+                  {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                  {% assign splitShortDesc = shortdesc | split: "|" %}
+                  <div class="description-image-product_end">
+                    {{ splitShortDesc[9] | split: '[/shortdesc]' | first }}
+                  </div>
+                </div>
+                <div class="col-12 text-center">
+                  {% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+                  {% assign splitShortDesc = shortdesc | split: "|" %}
+                  <div class="description-text-product_end">
+                    <span>{{ splitShortDesc[10] | split: '[/shortdesc]' | first }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

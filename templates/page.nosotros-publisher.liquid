@@ -1,0 +1,38 @@
+{% layout 'theme_article_noticias' %}
+<div class="container-fluid d-none d-lg-block content-article">
+	<div class="row">
+		<div class="col-12">
+			<div class="box-tags-cat">
+				<div class="row m-0">
+					<div class="col-12 col-lg text-center text-uppercase Mente box-filters ">
+						<a href="/blogs/noticias/tagged/mente"><div class="box-name">MENTE</div></a>
+					</div>
+					<div class="col-12 col-lg text-center text-uppercase Cuerpo box-filters ">
+						<a href="/blogs/noticias/tagged/cuerpo"><div class="box-name">CUERPO</div></a>
+					</div>
+					<div class="col-12 col-lg text-center text-uppercase Espiritu box-filters ">
+						<a href="/blogs/noticias/tagged/espiritu"><div class="box-name">ESPIRITU</div></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container-fluid search-mobile-collapse collapse">
+	<div class="row">
+		<div class="col-12 text-center text-uppercase">
+			<div class="content-box">
+				<div class="site-header__search d-flex">
+					{% include 'search-bar' %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<article class="page-width" aria-labelledby="title-0">
+	<div class="grid m-0">
+		<div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+			{% section 'nosotros-publisher' %}
+		</div>
+	</div>
+</article>

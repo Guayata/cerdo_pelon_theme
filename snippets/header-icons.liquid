@@ -1,0 +1,30 @@
+<div class="site-nav">
+    <div class="site-nav__icons">
+        {%- if shop.customer_accounts_enabled -%}
+        <a class="site-nav__link site-nav__link--icon small--hide " href="{{ routes.account_url }}">
+            <img class="icon icon-user" src="{{ " logo-user.png " | asset_url }}" alt="Ingresar Cuenta" loading="lazy">
+            
+                <span class="icon__fallback-text">
+          {%- if customer -%}
+            {{ 'layout.customer.account' | t }}
+          {%- else -%}
+            {{ 'layout.customer.log_in' | t }}
+          {%- endif -%}
+        </span>
+      </a> {%- endif -%} {%- if section.settings.main_menu_alignment == 'left' or section.settings.main_menu_alignment == 'left-center' or section.settings.main_menu_alignment == 'left-drawer' -%}
+            <button type="button" class="site-nav__link site-nav__link--icon js-drawer-open-nav d-block d-lg-none" aria-controls="NavDrawer">
+        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><path d="M7 15h51M7 32h43M7 49h51"/></svg>
+        <span class="icon__fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+      </button> {%- endif -%}
+            {%- if settings.cart_icon == 'cart' -%}
+          <a href="https://cerdopelon.com/cart"><img class="icon icon-shop" src="{{ "logo-shop.png" | asset_url }}" alt="Carrito" itemtype="http://schema.org/Product" ></a>
+        {%- else -%}
+        <svg id="Capa_1" class="icon-cart-fn" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.25 56.77"><path d="M716.93,166.37v-1.81c0-7.75-6.67-14.05-15-14.05s-15,6.3-15,14.05v1.81a7.23,7.23,0,0,0-7.21,7.21v26.48a7.23,7.23,0,0,0,7.21,7.21h29.84a7.23,7.23,0,0,0,7.21-7.21V173.49A7.08,7.08,0,0,0,716.93,166.37Zm-15-13.16c6.76,0,12.26,5,12.26,11.35v1.81H689.71v-1.81C689.71,158.26,695.21,153.21,702,153.21Zm19.38,46.85a4.52,4.52,0,0,1-4.5,4.51H687a4.52,4.52,0,0,1-4.5-4.51V173.49A4.52,4.52,0,0,1,687,169v2.61a1.36,1.36,0,1,0,2.71,0V169h24.51v2.61a1.36,1.36,0,1,0,2.71,0V169a4.52,4.52,0,0,1,4.5,4.51v26.57Z" transform="translate(-679.79 -150.51)"/></svg>
+        {%- endif -%}
+        
+        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+                <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+                </span>
+            </a>
+    </div>
+</div>

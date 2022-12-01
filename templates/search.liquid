@@ -1,0 +1,227 @@
+{% paginate search.results by 10 %}
+	{% layout 'theme_blog_noticias' %}
+	<div class="container-fluid d-none d-lg-block box-filters-cat-blog">
+		<div class="row">
+			<div class="col-12">
+				<div class="box-tags-cat">
+					<div class="row m-0">
+						<div class="col-12 col-lg text-center text-uppercase Mente box-filters ">
+							<a href="/blogs/noticias/tagged/mente"><div class="box-name">MENTE</div></a>
+						</div>
+						<div class="col-12 col-lg text-center text-uppercase Cuerpo box-filters ">
+							<a href="/blogs/noticias/tagged/cuerpo"><div class="box-name">CUERPO</div></a>
+						</div>
+						<div class="col-12 col-lg text-center text-uppercase Espiritu box-filters ">
+							<a href="/blogs/noticias/tagged/espiritu"><div class="box-name">ESPIRITU</div></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid search-mobile-collapse collapse">
+		<div class="row">
+			<div class="col-12 text-center text-uppercase">
+				<div class="content-box">
+					<div class="site-header__search d-flex">
+						{% include 'search-bar' %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="content-blog">
+				<div class="col-12 box-blog-container">
+					<div id="search-page">
+						{% if search.performed %}
+							{% if search.results_count == 0 %}
+								<div class="row content-cintillo-header">
+									<div class="col-12 order-last content-cintillo-loop">
+										<div class="row box-cintillo-loop">
+											<div class="marquee-header text-uppercase">
+												{{ 'general.search.no_results_html' | t: terms: search.terms }} {{ 'general.search.no_results_html' | t: terms: search.terms }}
+											</div>
+										</div>
+									</div>
+								</div>
+								<p>&nbsp;</p>
+							{% else %}
+								<div class="row content-cintillo-header">
+									<div class="col-12 order-last content-cintillo-loop">
+										<div class="row box-cintillo-loop">
+											<div class="marquee-header text-uppercase">
+												{{ 'general.search.results_for_html' | t: terms: search.terms }} {{ 'general.search.results_for_html' | t: terms: search.terms }}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="blog-box-row p-0 content-page-width" id="articleBlog">
+								</div>
+								<div>
+									{%- if paginate.pages > 1 -%}
+										{% include 'pagination', paginate: paginate %}
+									{%- endif -%}
+								</div>
+							{% endif %}
+						{% else %}
+							<h1 class="h2 text-center">{{ 'general.search.title' | t }}</h1>
+							{% include 'search-bar' %}
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+      var url = 'https://foodnews/blogs/noticias/';
+      var articles = [];
+      var indexArticle = 0;
+      var marqueeMobile = true;
+      var marquee = true;
+      function shuffleArray(array) {
+          for (var i = array.length - 1; i > 0; i--) {
+              var j = Math.floor(Math.random() * (i + 1));
+              var temp = array[i];
+              array[i] = array[j];
+              array[j] = temp;
+          }
+      }
+
+      function fillArticle(elBlock, bootstrapClass, column_width_text, column_width_button, column_width_image, itemArt){
+          console.log(articles[indexArticle]);
+          itemArt = itemArt.replaceAll('#column_width#', elBlock[bootstrapClass]);
+          itemArt = itemArt.replaceAll('#tags#', articles[indexArticle]['tags']);
+          itemArt = itemArt.replaceAll('#column_width_text#', column_width_text);
+          itemArt = itemArt.replaceAll('#title#', articles[indexArticle]['title'].length <= 85 ? articles[indexArticle]['title'] : articles[indexArticle]['title'].slice(0,85)+'...');
+          itemArt = itemArt.replaceAll('#summary_html#', articles[indexArticle]['summary_html'].length <= 15000 ? articles[indexArticle]['summary_html'] : articles[indexArticle]['summary_html'].slice(0,15000)+'...');
+          itemArt = itemArt.replaceAll('#column_width_button#', column_width_button);
+          itemArt = itemArt.replaceAll('#handle#', articles[indexArticle]['handle']);
+          itemArt = itemArt.replaceAll('#column_width_image#', column_width_image);
+          itemArt = itemArt.replaceAll('#image_src#', articles[indexArticle]['image']['src']);
+          return(itemArt);
+      }
+
+      function showGroupOfArticles(itemBlock){
+          shuffleArray(itemBlock);								/*Random el Array de bloques*/
+          indexBlock = 0;
+          itemBlock.forEach((elBlock) => {
+              if(articles.length <= indexArticle) {
+                  return;
+              }
+              column_width_text = 'col-lg-12';
+              column_width_button = 'col-lg-12';
+              column_width_image = 'col-lg-12 mt-auto';
+              if(elBlock[0] == '1'){
+                  column_width_text = 'col-12 col-lg-8 content-big-article';
+                  column_width_button = 'col-12 col-lg-12 mt-auto mb-4';
+                  column_width_image = 'col-12 col-lg-3 offset-lg-1 mt-0 img-small';
+              }
+              itemArticle = '<div class="row blog-box-row content-page-width">' + tempArticle;
+              itemArticle2 = '';
+              itemArticle = fillArticle(elBlock, 2, column_width_text, column_width_button, column_width_image, itemArticle);
+              if(elBlock[1] == 2){
+                  indexArticle += 1;
+                  if(indexArticle < articles.length) {
+                      itemArticle2 = tempArticle;
+                      itemArticle2 = fillArticle(elBlock, 3, column_width_text, column_width_button, column_width_image, itemArticle2);
+                  }
+              }
+              rowArticle = itemArticle + itemArticle2 +'</div>';
+              indexArticle += 1;
+              indexBlock += 1;
+              $("#articleBlog").append(rowArticle);
+          })
+      }
+
+      $(document).ready(function(){
+          tempArticle  = `<div class="#column_width# content-border mb-4 mb-lg-0">
+                    <div class="content-information-blog h-100 content-#tags#">
+                      <div class="row m-0 header-note-blog">
+                        <div class="col-12">
+                          <div class="row header-note-blog-container #tags#">
+                            <div class="col-12 text-left my-auto">
+                              <div class="article__tags rte m-0">
+                                <a href="`+url+`/tagged/#tags#" class="article__grid-tag w-100 d-block">#tags#</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row m-0 box-content-general-article">
+                        <div class="col-12 #column_width_text#  box-padding-content">
+                          <div class="row box-title-and-subtitle">
+                            <div class="col-12 pt-2">
+                              <h2 class="article__title h3">
+                                <a href="`+url+`#handle#" aria-label="#title#"><span>#title#</span></a>
+                              </h2>
+   <p class="rte article__grid-excerpt">
+                                #summary_html#
+                              </p>
+                            </div>
+                          </div>
+  <div class="row">
+   <div class="col-12 #column_width_button# content-button">
+                          <ul class="list--inline article__meta-buttons list-unstyled p-0 m-0">
+                            <li>
+                              <a href="`+url+`#handle#" class="btn" aria-label="#title#">
+                                VER MÁS
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+  </div>
+                        </div>
+                        <div class="col-12 #column_width_image# p-0 box-container-image-article">
+                          <a class="article__featured-image" href="`+url+`#handle#">
+                            <img src="#image_src#"" alt="#title#">
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`;
+          itemBlock = [
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+              ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+              ['1', 1, 'col-12 content-full-width',''],
+              ['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article']
+          ];
+				{% for elArticle in search.results %}
+				{% if elArticle.object_type == 'article' %}
+          articles.push({{ elArticle | json }});
+				{% endif %}
+				{% endfor %}
+
+          shuffleArray(articles);	/*Random del Array de artículos*/
+          showGroupOfArticles(itemBlock);
+          $('.marquee').marquee({
+              duration: 10000,
+              gap: 50,
+              direction: 'left',
+              delayBeforeStart: 0,
+              duplicated: true
+          });
+      });
+	</script>
+{% endpaginate %}

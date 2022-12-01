@@ -1,0 +1,38 @@
+<!-- /snippets/search-bar.liquid -->
+{% comment %}
+
+  A snippet to include a search bar anywhere in your theme.
+  Note we are using 'input-group' for the layout. Look under Forms > Input Groups for some demos.
+
+  More information:
+   - http://docs.shopify.com/themes/liquid-variables/search
+
+  To return only products in results:
+    - http://docs.shopify.com/manual/configuration/store-customization/return-only-product-in-storefront-search-results
+    - Or manually add type=product to the search URL as a query parameter
+    - Uncomment hidden input with value="product" below
+
+{% endcomment %}
+
+<form action="/search" method="get" class="input-group search-bar" role="search">
+	{% comment %}<input type="hidden" name="type" value="article">{% endcomment %}
+	<input type="search" name="q" value="{{ search.terms | escape }}" class="form-control"  class="input-group-field" aria-label="{{ 'general.search.placeholder' | t }}">
+	<span class="input-group-btn">
+    <button type="submit" class="btn icon-fallback-text button-submit-search">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="30px"
+           height="30px" viewBox="0 0 40 40" style="enable-background:new 0 0 40 40;" xml:space="preserve">
+        <style type="text/css">
+          .st0{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
+        </style>
+        <defs>
+        </defs>
+        <g>
+          <circle class="st0" cx="17.3" cy="17.3" r="15.8"/>
+          <line class="st0" x1="27.2" y1="27.2" x2="38.9" y2="38.9"/>
+        </g>
+      </svg>
+
+
+    </button>
+  </span>
+</form>

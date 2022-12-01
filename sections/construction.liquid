@@ -1,0 +1,42 @@
+{{ 'construction.scss.css' | asset_url | stylesheet_tag }}  
+<div class="container-fluid general">
+  <img class="parche" src="{{ "Parche.png" | asset_url }}" alt="Cerdo Pelon"> 
+
+  <div class="row justify-content-center">
+  <img class="Cerdo_background" src="{{ "Cerdo_B.png" | asset_url }}" alt="Cerdo_Background">
+  <img class="Logo_Cerdo" src="{{ "Logo_cerdo.png" | asset_url }}" alt="Logo">
+  <marquee loop="infinite" behavior="alternate" class="top">
+      <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t> <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t>
+      <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t> <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t>      
+      <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t> <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t>
+      <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t> <t class="snell">· Sitio en construcción ·</t><t class="helve">SITIO EN CONSTRUCCIÓN</t>      
+  </marquee>
+      <div class="center-column">
+  <div class="content-text">
+    <p>El proyecto Cerdo Pelón Mexicano nació en 2017, cuando un grupo de pequeños 
+      productores con curiosidad gastronómica se juntaron con la ilusión de criar esta 
+      especie fuera de Yucatán, para convertirla en un negocio sustentable.
+    </p>   
+  </div>
+  <div class="bottom">
+  	<div class="button">
+      RECIBIR NOTICIAS
+    </div>
+   </div>
+  		</div> 
+  </div>
+</div>
+
+
+{% schema %}
+  {
+  "name": "In construction",
+  "class": "construction",
+  "presets": [
+  {
+  "name": "In construction",
+  "category": "Text"
+  }
+  ]
+  }
+  {% endschema %}

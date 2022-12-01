@@ -1,0 +1,44 @@
+{{ 'cintillo-marquee.scss.css' | asset_url | stylesheet_tag }}
+<div class="container-fluid">
+  <div class="row box-cintillo-loop">
+<hr>
+    <marquee behavior="alternate" style="color:{{ section.settings.color_text }} ">{% if section.settings.title != blank %}
+      <p>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}&nbsp</c>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}</c>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}&nbsp</c>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}</c>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}&nbsp</c>{{ section.settings.title }}&nbsp<c>{{ section.settings.subtitle }}</c></p>
+      {% endif %}
+    </marquee>
+<hr>
+  </div>
+</div>
+
+{% schema %}
+{
+"name": "Cintillo marquee",
+"class": "cintillo-marquee",
+  "settings": [
+   {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    },
+ {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Heading",
+      "default": " EL CERDO PELÓN MEXICANO TIENE SU ORIGEN EN 1492  "
+    },
+{
+      "type": "color",
+      "id": "color_text",
+      "label": "Color marquee",
+      "default": "#000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cintillo marquee",
+      "category": "Publicity"
+    }
+  ]
+}
+{% endschema %}

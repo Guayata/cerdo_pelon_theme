@@ -1,0 +1,33 @@
+{% comment %}V4.4.14 - November 2021
+This liquid snippet is used by Discount Ninja
+Do not modify or remove this snippet, this snippet can be overwritten when the app is upgraded
+{% endcomment %}
+
+<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-wrapper limoniapps-discountninja-fontsize-base">
+	<div style="" onclick="javascript:if (discountNinja) discountNinja.DiscountCode.ToggleLink(this)" class="limoniapps-discountninja-cartdiscountfield-link"><p><span style="font-size: 11px; color: rgb(240, 18, 190); font-weight: bold;">¿Tienes un código de descuento?</span></p></div>
+	<div style="display:none;" class="limoniapps-discountninja-cartdiscountfield-inner">
+		<div style="display:none;" data-limoniapps-discountninja-cartdiscountfield-showdescription="false" class="limoniapps-discountninja-cartdiscountfield-description"><p><span style='font-size: 12px;'>Enter your discount code here</span></p></div>
+		<div class="limoniapps-discountninja-cartdiscountfield-inputandbutton">
+			<input type="text" class="limoniapps-discountninja-cartdiscountfield-input" value="" autocomplete="off" placeholder="Código de descuento" />
+			<button type="button" class="limoniapps-discountninja-cartdiscountfield-apply" value="APLICAR">APLICAR</button>
+		</div>
+		<div class="limoniapps-discountninja-cartdiscountfield-discountcodes"></div>
+		<div style="display:none;" data-limoniapps-discountninja-cartdiscountfield-showfooter="false" class="limoniapps-discountninja-cartdiscountfield-footer" onmouseover="javascript:if (discountNinja) discountNinja.DiscountCode.ShowFooterInstructions(this)" onmouseout="javascript:if (discountNinja) discountNinja.DiscountCode.HideFooterInstructions(this)">
+			<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-footer-onhover"></div>
+		</div>
+		<div class="limoniapps-discountninja-cartdiscountfield-discountcode-template" style="display:none" >
+			<div class="limoniapps-discountninja-cartdiscountfield-discountcode" data-discountcode="[[DISCOUNT_CODE]]">
+				<span class="limoniapps-discountninja-cartdiscountfield-discountcode-code">[[DISCOUNT_CODE]]</span>
+				<svg onclick="javascript:if (discountNinja) discountNinja.DiscountCode.RemoveTag(this)" class="limoniapps-discountninja-cartdiscountfield-discountcode-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13">
+					<path d="M1.5 1.5l10.05 10.05M11.5 1.5L1.45 11.55" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linecap="round"></path>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-searching"><div class="limoniapps-discountninja-spinner"></div><span> Buscando...</span></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-applied"><p><span style="color: rgb(57, 123, 33);">✔️ </span>Código encontrado se aplicará en el Checkout.</p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied"><p><span style="color: rgb(255, 0, 0);">Código no encontrado.</span></p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notapplied-reason">The discount code cannot be applied to the cart. Please ensure the cart meets the requirements to apply this discount code.</div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notfound"><p><span style="color: rgb(255, 0, 0);">Código no valido.</span></p></div>
+	<div style="display:none" class="limoniapps-discountninja-cartdiscountfield-feedback limoniapps-discountninja-cartdiscountfield-notcombinable"><p><span style="color: rgb(255, 0, 0);">El Código de descuento no puede combinarse con otros códigos.</span></p></div>
+</div>

@@ -1,0 +1,204 @@
+<div class="container-fluid content-description-product" itemscope itemtype="http://schema.org/Product">
+	<meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+	<meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+	{% comment %}
+		Get first variant, or deep linked one
+	{% endcomment %}
+	{% assign current_variant = product.selected_or_first_available_variant %}
+	<div class="content-page-width">
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-12 col-lg-7 pe-lg-0">
+						<div class="content-image" style="background: url({{ product.images.last | img_url:"master" }}), repeat, center; background-size: cover;">
+							{% if product.images.size > 1 %}
+								<div class="slider-products-description" id="ProductThumbs">
+									{% assign sizeImg = product.media.size | minus: 1 %}
+									{%- for media in product.media limit:sizeImg %}
+										<div>
+											<img src="{{ media.src | img_url: 'master' }}" alt="{{ media.alt | escape }}" class="m-auto">
+										</div>
+									{% endfor %}
+								
+								</div>
+							{% endif %}
+						</div>
+					</div>
+					<div class="col-12 col-lg-5 ps-lg-0">
+						<div class="content-description">
+							<div class="row m-0">
+								<div class="col-12">
+									<h1 itemprop="name" class="title-product">{{ product.title }}</h1>
+ 
+								</div>
+								<div class="col-12">
+									<div class="product-description rte" itemprop="description">
+										{% assign shortdesc = product.description | split: '[shortdesc]' | last %}
+										{% assign splitShortDesc = shortdesc | split: "|" %}
+										<div class="row">
+											<div class="col-12">
+												{{ splitShortDesc[3] | split: '[/shortdesc]' | first }}
+											</div>
+											<div class="col-12">
+												<div class="title-block">
+													{{ splitShortDesc[4] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="description-product-block">
+													{{ splitShortDesc[5] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="title-block">
+													{{ splitShortDesc[6] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												{{ splitShortDesc[7] | split: '[/shortdesc]' | first }}
+											</div>
+											<div class="col-12">
+												<div class="title-block">
+													{{ splitShortDesc[8] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="description-product-block">
+													{{ splitShortDesc[9] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="title-block">
+													{{ splitShortDesc[10] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="description-product-block">
+													{{ splitShortDesc[11] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12 text-center">
+												<div class="description-product-block text-center">
+													{{ splitShortDesc[12] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+											<div class="col-12 text-center">
+												<div class="description-product-block text-center">
+														{{ splitShortDesc[13] | split: '[/shortdesc]' | first }}
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-12">
+									<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+										<meta itemprop="priceCurrency" content="{{ shop.currency }}">
+										
+										<link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+										
+										{% comment %}
+											ID addToCartForm is a selector for the ajax cart plugin
+										{% endcomment %}
+										<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+											<select name="id" id="productSelect" class="product-single__variants">
+												{% for variant in product.variants %}
+													{% if variant.available %}
+														
+														{% comment %}
+															Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+														{% endcomment %}
+														<option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+													
+													{% else %}
+														<option disabled="disabled">
+															{{ variant.title }} - {{ 'products.product.sold_out' | t }}
+														</option>
+													{% endif %}
+												{% endfor %}
+											</select>
+											
+											<span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+											<span id="ProductPrice" class="h2 limoniapps-discountninja-productprice" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+                                              {{ current_variant.price | money }}
+                                            </span>
+											<div class="limoniapps-discountninja-promotioncard-productpage"></div>
+											{% if product.compare_at_price_max > product.price %}
+												<span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+												<p id="ComparePrice">
+													{{ 'products.product.compare_at' | t }} {{ current_variant.compare_at_price | money }}
+												</p>
+											{% endif %}
+											<button type="submit" name="add" class="btn">
+												<span id="AddToCartText">Comprar</span>
+											</button>
+										</form>
+          {% render 'banana-stand-product-page-container' %}
+									
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							
+							{% comment %}
+								If the user is on a collection product page (ie with /collections/collection-handle/products/product-handle)
+								in the URL, we can show next/previous links to other products in the collection.
+							{% endcomment %}
+							{% if collection %}
+								{% if collection.previous_product or collection.next_product %}
+									<p>
+										{% if collection.previous_product %}
+											<span class="left">
+                {{ 'products.general.previous_product_html' | t | link_to: collection.previous_product }}
+              </span>
+										{% endif %}
+										{% if collection.next_product %}
+											<span class="right">
+                {{ 'products.general.next_product_html' | t | link_to: collection.next_product }}
+              </span>
+										{% endif %}
+									</p>
+								{% endif %}
+							{% endif %}
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div data-fera-container="503581" data-product_id="{{ product.id }}"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+<script>
+  var selectCallback = function(variant, selector) {
+    timber.productPage({
+      money_format: "{{ shop.money_format }}",
+      variant: variant,
+      selector: selector
+    });
+  };
+
+  jQuery(function($) {
+    new Shopify.OptionSelectors('productSelect', {
+      product: {{ product | json }},
+      onVariantSelected: selectCallback,
+      enableHistoryState: true
+    });
+/* Codigo con defaul title
+
+    // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
+    {% if product.options.size == 1 and product.options.first != 'Title' %}
+      $('.selector-wrapper:eq(0)').prepend('<label for="productSelect-option-0">{{ product.options.first | escape }}</label>');
+    {% endif %}
+
+    // Hide selectors if we only have 1 variant and its title contains 'Default'.
+    {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      $('.selector-wrapper').hide();
+    {% endif %}
+  });
+*/
+
+</script>

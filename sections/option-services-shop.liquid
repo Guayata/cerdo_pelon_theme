@@ -1,0 +1,83 @@
+<style>
+  .row{display:-ms-flexbox;
+    display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+  .col-12{-ms-flex:0 0 100%;flex:0 0 100%;max-width:100%;position:relative;width:100%;padding-right:15px;padding-left:15px;}
+  @media(min-width: 992px){
+    .col-lg-6{-ms-flex:0 0 50% !important;flex:0 0 50% !important;max-width:50% !important;}
+  }
+  .w-100{
+    width: 100% !important;
+  }
+</style>
+
+<div class="block-section" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{section.settings.bg_section }}" {%- endif -%}>
+  <div class="block_content">
+    <div class="row" style="margin: 0px !important;">
+      <div class="col-12 col-lg-6">
+        {% if section.settings.image != blank %}
+        {% if section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}">
+          {{ section.settings.image | img_url: 'master' | img_tag: 'feature-row__image', 'w-100' }}
+        </a>
+        {% else %}
+        {{ section.settings.image | img_url: 'master' | img_tag: 'feature-row__image', 'w-100' }}
+        {% endif %}
+        {% endif %}
+
+      </div>
+      <div class="col-12 col-lg-6">
+        {% if section.settings.image_2 != blank %}
+        {% if section.settings.button_link_2 != blank %}
+        <a href="{{ section.settings.button_link_2 }}">
+          {{ section.settings.image_2 | img_url: 'master' | img_tag: 'feature-row__image', 'w-100' }}
+        </a>
+        {% else %}
+        {{ section.settings.image_2 | img_url: 'master' | img_tag: 'feature-row__image', 'w-100' }}
+        {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Option services shop",
+  "class": "index-section-services-shop",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "custom_space",
+      "label": "Css Style Section",
+      "default":"padding-top:100px;padding-bottom:100px"
+    },
+ {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+{
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+ {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image"
+        },
+
+{
+          "type": "url",
+          "id": "button_link_2",
+          "label": "Button link"
+        }
+  ],
+  "presets": [
+    {
+      "name": "Option services shop",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

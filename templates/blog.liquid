@@ -1,0 +1,322 @@
+{% layout 'theme_blog' %}
+{% paginate blog.articles by 12 %}
+<div class="container-fluid content-page-width">
+  <div class="row">
+    <div class="content-blog">
+      <div class="col-12 box-blog-container">
+        <div class="row content-cintillo-header">
+          <div class="col-12 order-last content-cintillo-loop">
+            <div class="row box-cintillo-loop">
+              <div class="marquee-header text-uppercase">
+              ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS! ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS! ¡PREPARACIONES SALUDABLES, FÁCILES  Y DELICIOSAS!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row blog-box-row content-page-width">
+          <div class="col-12 d-none d-lg-block">
+            <div class="row content-tags m-0" >
+              {% if template  contains 'blog' %}
+              {% assign tag_list = current_tags %}
+              {% else %}
+              {% assign tag_list = article.tags %}
+              {% endif %}
+              {% for tag in blog.all_tags %}
+              {% if tag_list contains tag %}
+              <div class="col-4 col-lg text-center p-0 box-tags-article-blog">
+                <div class="tags-articles active">
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}#content-results" class="{{ tag }}">{{ tag }}</a>
+                </div>
+              </div>
+              {% else %}
+              <div class="col-4 col-lg text-center p-0 box-tags-article-blog">
+                <div class="tags-articles">
+                  <a href="{{ blog.url }}/tagged/{{ tag | handle }}#content-results" class="{{ tag }}">{{ tag }}</a>
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="blog-box-row p-0" id="articleBlog">
+        </div>
+        <div class="blog-box-row p-0" id="loadMore">
+          <div class="col-12  pt-3 pt-lg-5 text-center btn-loadMore">
+            <span onclick="loadMore();">Cargar más</span>
+          </div>
+        </div>
+        <div class="blog-box-row ps-0 pe-0 pt-5 content-page-width">
+          <div class="blog-box-row pt-0">
+            <div class="row">
+              <div class="col-12 mb-4">
+                <div class="box-border-newsletter">
+                  <div class="site-footer__newsletter
+                              {% if section.blocks.size == 1 %} site-footer__single-block--centered{% endif %}">
+
+                    <div class="row m-0 content-newsletter">
+                      <div class="col-12 col-lg-7 text-uppercase text-newsletter-box">
+                        <p class=" title-newsletter m-0">suscríbete</p>
+                        <p class="subtitle-newsletter">A LAS BUENAS NOTICIAS</p>
+                      </div>
+                      <div class="col-12 col-lg-5 my-auto">
+
+                        {%- assign formId = 'ContactFooter' -%}
+                        {% form 'customer', id: formId, novalidate: 'novalidate' %}
+                        {%- if form.posted_successfully? -%}
+                        <p class="form-message form-message--success" tabindex="-1" data-form-status>
+                          Gracias por suscribirte
+                        </p>
+                        {%- endif -%}
+                        <input type="hidden" name="contact[tags]" value="newsletter">
+                        <div class="input-group {% if form.errors %} input-group--error{% endif %}">
+                          <input type="email"
+                                 name="contact[email]"
+                                 id="{{ formId }}-email"
+                                 class="form-control input-group__field newsletter__input{% if form.errors %} input--error{% endif %}"
+                                 value="{{ form.email }}"
+                                 placeholder="Tu correo electrónico"
+                                 aria-label="Tu correo electrónico"
+                                 aria-required="true"
+                                 required
+                                 autocorrect="off"
+                                 autocapitalize="off"
+                                 {% if form.errors %}
+                                 aria-invalid="true"
+                                 aria-describedby="{{ formId }}-email-error"
+                                 data-form-status
+                                 {% endif %}>
+                          <span class="input-group__btn button-send-newsletter">
+                            <button type="submit" class="btn newsletter__submit" name="commit" >
+                              <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+                            </button>
+                          </span>
+                        </div>
+                        {% if form.errors contains 'email' %}
+                        <span id="{{ formId }}-email-error" class="input-error-message">
+                          <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                          {% include 'icon-error' %}
+                          <span class="site-footer__newsletter-error">{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                        </span>
+                        {% endif %}
+                        {% endform %}
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endpaginate %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  let indexPage= 0;
+  var itemProducto = [];
+  itemProducto[0] = `{% section 'blog-template-product' %}`; 
+  itemProducto[1] = `{% section 'blog-template-product' %}`; 
+  itemProducto[2] = `{% section 'blog-template-product' %}`;
+  itemProducto[3] = `{% section 'blog-template-product' %}`;
+  var url = 'https://foodnews/blogs/recetas/';
+  var articles = []; 
+  var indexArticle = 0;
+  var marqueeMobile = true;
+  var marquee = true;
+  function shuffleArray(array) {
+  	for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+  }  
+  
+  function fillArticle(elBlock, bootstrapClass, column_width_text, column_width_button, column_width_image, itemArt){
+    itemArt = itemArt.replaceAll('#column_width#', elBlock[bootstrapClass]);
+    itemArt = itemArt.replaceAll('#tags#', articles[indexArticle]['tags']);
+    itemArt = itemArt.replaceAll('#column_width_text#', column_width_text);
+    itemArt = itemArt.replaceAll('#title#', articles[indexArticle]['title'].length <= 85 ? articles[indexArticle]['title'] : articles[indexArticle]['title'].slice(0,85)+'...');
+    itemArt = itemArt.replaceAll('#summary_html#', articles[indexArticle]['summary_html'].length <= 15000 ? articles[indexArticle]['summary_html'] : articles[indexArticle]['summary_html'].slice(0,15000)+'...');
+    itemArt = itemArt.replaceAll('#column_width_button#', column_width_button);
+    itemArt = itemArt.replaceAll('#handle#', articles[indexArticle]['handle']);
+    itemArt = itemArt.replaceAll('#column_width_image#', column_width_image);
+    itemArt = itemArt.replaceAll('#image_src#', articles[indexArticle]['image']['src']);
+    return(itemArt);
+  }
+  
+  function showGroupOfArticles(itemBlock){
+    shuffleArray(itemBlock);								/*Random el Array de bloques*/
+    indexBlock = 0;
+    itemBlock.forEach((elBlock) => {
+      if(articles.length <= indexArticle) {
+        $("#loadMore").hide();
+        return;
+      }
+      column_width_text = 'col-lg-12';
+      column_width_button = 'col-lg-12';
+      column_width_image = 'col-lg-12 mt-auto';
+      if(elBlock[0] == '1'){
+        column_width_text = 'col-12 col-lg-8 content-big-article';
+        column_width_button = 'col-12 col-lg-12 mt-auto mb-4';
+        column_width_image = 'col-12 col-lg-3 offset-lg-1 mt-0 img-small';
+      }
+      if(elBlock[0] == '1-4'){
+        if(indexPage > (itemProducto.length-1)) 
+        { 
+          indexPage = 0; 
+          console.log((itemProducto.length-1));
+        };
+        
+        itemArticle = '<div class="row  blog-box-row content-page-width">' + itemProducto[indexPage] + tempArticle;
+      }else{
+        itemArticle = '<div class="row blog-box-row content-page-width">' + tempArticle;
+      }
+      itemArticle2 = '';
+      itemArticle = fillArticle(elBlock, 2, column_width_text, column_width_button, column_width_image, itemArticle);
+      if(elBlock[1] == 2){
+        indexArticle += 1;
+        if(indexArticle < articles.length) {
+          itemArticle2 = tempArticle;
+          itemArticle2 = fillArticle(elBlock, 3, column_width_text, column_width_button, column_width_image, itemArticle2);
+        }
+      }
+      rowArticle = itemArticle + itemArticle2 +'</div>';
+      if((indexBlock == 2 || indexBlock == 0) && (marquee || marqueeMobile)){
+        if(indexBlock == 0){
+          marqueeMobile= false;
+          clase = 'd-flex d-lg-none';
+        }else{
+          clase = 'd-none d-lg-flex';
+          marquee = false;
+        }
+        rowArticle = rowArticle + cintillo.replaceAll('#clase#', clase);
+      }
+      indexArticle += 1;
+      indexBlock += 1;
+      $("#articleBlog").append(rowArticle);
+    })
+  }
+  function loadMore(){
+    showGroupOfArticles(itemBlock);
+  }
+  $(document).ready(function(){  
+    cintillo = `<div class="row #clase#">
+                      <div class="col-12 order-last content-cintillo-loop">
+                        <div class="row box-cintillo-loop">
+                          <div class="marquee text-uppercase">#SPREADGOODNEWS #SPREADGOODNEWS #SPREADGOODNEWS #SPREADGOODNEWS</div>
+                        </div>
+                      </div>
+                    </div>`;
+	tempProducto = `<div class="col-12 col-lg-7 content-border mb-4 mb-lg-0">
+                      <div class="box-image h-100 banner-products-blog" style="background-size: cover; background-position: center; background-repeat: no-repeat; background-image: url('#src_image#')">
+                        <div class="meta-button-blog row m-0 h-100">
+                          <div class="col-12 text-center text-uppercase my-auto">
+                            <p class=" title-banner">
+                              #title#
+                            </p>
+                            <p class="content-button-banner text-center">
+                              <a href="/" class="text-uppercase grid-link text-center firstlink" title=""#title#">
+                                <span>Descúbrelas</span>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                        <img src="#src_image#" alt="#alt_image#" class="firstimg w-100 img-fluid collapse">
+                      </div>
+                    </div>`;
+    tempArticle  = `<div class="#column_width# content-border mb-4 mb-lg-0">
+                  <div class="content-information-blog h-100 content-#tags#">
+                    <div class="row m-0 header-note-blog">
+                      <div class="col-12">
+                        <div class="row header-note-blog-container #tags#">
+                          <div class="col-12 text-left my-auto">
+                            <div class="article__tags rte m-0">
+							  <a href="`+url+`/tagged/#tags#" class="article__grid-tag w-100 d-block">#tags#</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row m-0 box-content-general-article">
+                      <div class="col-12 #column_width_text#  box-padding-content">
+                        <div class="row box-title-and-subtitle">
+                          <div class="col-12 pt-2">
+                            <h2 class="article__title h3">
+                              <a href="`+url+`#handle#" aria-label="#title#"><span>#title#</span></a>
+                            </h2>
+ <div class="rte article__grid-excerpt">
+                              #summary_html#
+                            </div>
+                          </div>
+                        </div>
+<div class="row">
+ <div class="col-12 #column_width_button# content-button">
+                        <ul class="list--inline article__meta-buttons list-unstyled p-0 m-0">
+                          <li>
+                            <a href="`+url+`#handle#" class="btn" aria-label="#title#">
+                                VER RECETA
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+</div>
+                      </div>
+                      <div class="col-12 #column_width_image# p-0 box-container-image-article">
+                        <a class="article__featured-image" href="`+url+`#handle#">
+                          <img src="#image_src#" class="lazyload" data-src="#image_src#" alt="#title#">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>`;
+    itemBlock = [
+        ['3-1', 2, 'col-12 col-lg-8 content-big-article', 'col-12 col-lg-4 box-small-article'],
+        ['1', 1, 'col-12 content-full-width',''],
+      	['1-4', 1, 'order-first col-12 col-lg-5 box-small-article',''],
+      	['1-3', 2, 'col-12 col-lg-4 box-small-article', 'col-12 col-lg-8 content-big-article'],
+    ];
+    $.getJSON('/collections/TODO/products.json')
+    .then(function(data){
+      var i = Math.floor(Math.random() * data.products.length)
+      /*itemProducto = tempProducto;
+      itemProducto = itemProducto.replaceAll('#src_image#', data.products[i].images["2"].src);
+      itemProducto = itemProducto.replaceAll('#alt_image#', data.products[i].images["2"].handle);
+      itemProducto = itemProducto.replaceAll('#src_image#', data.products[i].images["2"].src);
+      itemProducto = itemProducto.replaceAll('#url_product#', '/collections/Foodnews/products/' + data.products[i].handle + '.html');
+      itemProducto = itemProducto.replaceAll('#title#', data.products[i].title);*/
+      {% for elArticle in blog.articles %}
+      articles.push({{ elArticle | json }});
+      {% endfor %}
+        
+      shuffleArray(articles);	/*Random del Array de artículos*/
+      showGroupOfArticles(itemBlock);
+      $('.marquee').marquee({
+        duration: 10000,
+        gap: 50,
+        direction: 'left',
+        delayBeforeStart: 0,
+        duplicated: true
+      });
+  })
+  });
+</script>
+
+<div style="display:none;">
+{% section 'blog-template-product' %}  
+</div>
+
+
+
+
+
+
+
+
+
+

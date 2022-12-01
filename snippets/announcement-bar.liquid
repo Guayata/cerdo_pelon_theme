@@ -1,0 +1,49 @@
+{%- assign show_announcement = false -%}
+{%- assign announcement_block_count = 0 -%}
+{% for block in section.blocks %}
+  {%- if block.type == 'announcement' -%}
+    {%- assign show_announcement = true -%}
+    {%- assign announcement_block_count = announcement_block_count | plus: 1 -%}
+  {%- endif -%}
+{% endfor %}
+
+{% if show_announcement %}
+  <div class="announcement-bar">
+    <div class="page-width">
+      <div
+        id="AnnouncementSlider"
+        class="announcement-slider{% if section.settings.announcement_compact %} announcement-slider--compact{% endif %}"
+        data-compact-style="{{ section.settings.announcement_compact }}"
+        data-block-count="{{ announcement_block_count }}">
+        {%- assign slide_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'announcement' -%}
+            <div
+              id="AnnouncementSlide-{{ block.id }}"
+              class="announcement-slider__slide"
+              data-index="{{ slide_index }}"
+              {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a class="announcement-link" href="{{ block.settings.link }}" target="_blank">
+              {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <span class="announcement-text">{{ block.settings.text }}</span>
+                {%- endif -%}
+                {%- if block.settings.link_text != blank -%}
+                  <span class="announcement-link-text">{{ block.settings.link_text }}</span>
+                {%- endif -%}
+              {%- if block.settings.link != blank -%}
+              </a>
+              {%- endif -%}
+        </div>
+        {%- assign slide_index = slide_index | plus: 1 -%}
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    <span class="btn-close-announcement">
+      <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.69 24.69"><path d="M1860.29,37.62l10.7-10.7a1,1,0,0,0-1.37-1.37l-10.7,10.7-10.69-10.7a1,1,0,0,0-1.37,0,1,1,0,0,0,0,1.37l10.7,10.7-10.7,10.7a1,1,0,0,0,.68,1.64,1,1,0,0,0,.69-.28L1858.92,39l10.7,10.7a1,1,0,0,0,1.37-1.36Z" transform="translate(-1846.58 -25.27)"/></svg>
+    </span>
+</div>
+
+{% endif %}

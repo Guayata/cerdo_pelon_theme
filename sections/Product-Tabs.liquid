@@ -1,0 +1,142 @@
+<div id="productTabs{{ block-producttabs }}" class="content-page-width box-product-fnws">
+	<div>
+      <div class="text-center content-tabs-products">
+        <ul class="nav nav-tabs" id="TabFN" role="tablist">
+        {%- for block in section.blocks -%}
+          <li class="nav-item" role="presentation">
+          	<button class="nav-link {{ block.settings.tab_name }} {% if forloop.first %}active{% endif %}" id="FNT{{ section.id }}{{ forloop.index }}-tab" data-bs-toggle="tab" data-bs-target="#FNT{{ section.id }}{{ forloop.index }}" type="button" role="tab" aria-controls="FNT{{ section.id }}{{ forloop.index }}" 
+                    aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ block.settings.tab_name }}</button>
+          </li>
+          {%-endfor -%}
+        </ul>
+      </div>
+      <div class="tab-content" id="tabContentFN">
+        {%- for block in section.blocks -%}
+        {%- assign collection_produclists = block.settings.collection -%}
+        {%- if collection_produclists == blank -%}
+        {%- assign collection_produclists = "all" -%}
+        {%- endif -%}
+        {%- assign collection = collections[collection_produclists] -%}
+        <div class="tab-pane fade{% if forloop.first %} show active{% endif %}" id="FNT{{ section.id }}{{ forloop.index }}" role="tabpanel" aria-labelledby="FNT{{ section.id }}{{ forloop.index }}-tab">
+          <div class="text-center content-tabs-products">
+            <p class="title text-uppercase text-center mb-0">
+              {{ block.settings.title}}
+            </p>
+            <p class="subtitle text-uppercase text-center">
+              {{ block.settings.subtitle}}
+            </p>
+          </div>
+          <div class="nuestra_clase">
+            {% assign products = collection.products %}
+            {% for product in products limit:product_in_tab %}    
+              		{%- render 'product-grid-item', product: product, grid_item_width: grid_item_width, section_id: product.id, tab_name: block.settings.tab_name -%}
+                {% endfor %}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
+<script>
+  $(document).ready(function() {   
+    $('.nuestra_clase').slick({
+      infinite: false,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+        autoplay: true,
+      autoplaySpeed: 2000,
+        responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+
+      ]
+    });
+    
+    $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (event) {
+      console.log("Tab");
+      $('.nuestra_clase').slick('setPosition');
+      $('.nuestra_clase').slick('slickGoTo', 0);
+      /*event.target // newly activated tab
+      event.relatedTarget // previous active tab*/
+    });
+  });
+</script>
+{% schema %}
+  {
+    "name": "Product Tabs",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "tab_name",
+            "label": "Tab Name",
+            "default": "Tab"
+          },
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          },
+      {
+            "type": "text",
+            "id": "title",
+            "label": "Titulo"
+          },
+      {
+            "type": "text",
+            "id": "subtitle",
+            "label": "Subtitulo"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+      "name": "Product Tabs",
+      "category": "Collection",
+      "blocks": [
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          },
+          {
+            "type": "item"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

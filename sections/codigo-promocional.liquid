@@ -1,0 +1,168 @@
+<div class="container-fluid p-0">
+	<div class="row m-0">
+		<div class="col-12 p-0">
+			<a href="{{section.settings.link_url}}" target="_blank">
+				<div class=" box-codigo-promocional collapse" style="background: url('{{section.settings.image | img_url: 'master'}}')" {% if section.settings.enable_modal %}data-bs-toggle="modal" data-bs-target="#modalCodigoPromocional"{%endif%}>
+					<div class="d-flex align-items-center cont-txt-flex">
+						<div class="flex-shrink-0">
+							<img src="{{section.settings.image_icono | img_url:"master"}}" class="img-fluid">
+						</div>
+						<div class="flex-grow-1 ms-2  ms-sm-3">
+							<p class="title mb-0" style="color: {{section.settings.color_title}}">
+								{{section.settings.title}}
+							</p>
+							<p class="subtitle mb-0" style="color: {{section.settings.color_subtitle}}">
+								{{section.settings.subtitle}}
+							</p>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade modalCodigoPromo" id="modalCodigoPromocional" tabindex="-1" aria-labelledby="modalCodigoPromocional" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content" style="background: {{section.settings.color_modal}}">
+			<div class="modal-body">
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				                                                                                        viewBox="0 0 17.54 17.78" enable-background="new 0 0 17.54 17.78" xml:space="preserve">
+<g>
+	<g>
+		<polyline fill="none" stroke="#FFFFFF" stroke-miterlimit="10" points="17.18,0.35 8.77,8.89 17.18,17.43 		"/>
+		<polyline fill="none" stroke="#FFFFFF" stroke-miterlimit="10" points="0.36,17.43 8.77,8.89 0.36,0.35 		"/>
+	</g>
+</g>
+</svg></button>
+				<div class="row h-100 content-information">
+					<div class="col-12 my-auto">
+						<p class="title-modal mb-0 text-uppercase">
+							{{section.settings.title_modal}}
+						</p>
+						<p class="subtitle-modal mb-0 text-uppercase">
+							{{section.settings.subtitle_modal}}
+						</p>
+						<div class="text-modal text-justify">
+							{{section.settings.text_modal}}
+						</div>
+						<p class="button-modal mb-0 text-center">
+							<a href="{{section.settings.button_link}}" class="text-uppercase">
+								{{section.settings.button_label}}
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% schema %}
+{
+"name": "Codigo promocional",
+"class": "codigo-promocional",
+"settings": [
+{
+"type": "image_picker",
+"id": "image",
+"label": "Image Background"
+},
+{
+"type": "url",
+"id": "link_url",
+"label": "Link"
+},
+{
+"type": "image_picker",
+"id": "image_icono",
+"label": "Icono"
+},
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "Text columns with images"
+},
+{
+"type": "color",
+"id": "color_title",
+"label": "Color text",
+"default": "#FFF"
+},
+{
+"type": "text",
+"id": "subtitle",
+"label": "Heading",
+"default": "Text columns with images"
+},
+{
+"type": "color",
+"id": "color_subtitle",
+"label": "Color text",
+"default": "#FFF"
+},
+{
+"type": "header",
+"content": "============ Modal ==========="
+},
+{
+"type": "checkbox",
+"id": "enable_modal",
+"label": "Enable Modal",
+"default": true
+},
+{
+"type": "color",
+"id": "color_modal",
+"label": "Color Background",
+"default": "#FFF"
+},
+{
+"type": "text",
+"id": "title_modal",
+"label": "Heading",
+"default": "Text columns with images"
+},
+{
+"type": "color",
+"id": "color_title_modal",
+"label": "Color text",
+"default": "#FFF"
+},
+{
+"type": "text",
+"id": "subtitle_modal",
+"label": "Heading",
+"default": "Text columns with images"
+},
+{
+"type": "color",
+"id": "color_subtitle_modal",
+"label": "Color text",
+"default": "#FFF"
+},
+{
+"type": "richtext",
+"id": "text_modal",
+"label": "Text",
+"default": "<p>Text modal</p>"
+},
+{
+"type": "text",
+"id": "button_label",
+"label": "Button label"
+},
+{
+"type": "url",
+"id": "button_link",
+"label": "Button link"
+}
+],
+"presets": [
+{
+"name": "Codigo promocional",
+"category": "modal"
+}
+]
+}
+{% endschema %}

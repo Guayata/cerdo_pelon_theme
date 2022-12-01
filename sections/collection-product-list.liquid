@@ -1,0 +1,176 @@
+<div class="block-section block-list " data-section-id="{{ section.id }}" 
+     data-section-type="productlists" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{section.settings.bg_section }}" {%- endif -%}>
+  <div class="block_content ">
+    <div class="productlists-wrapper">
+    {%- if section.settings.title != blank -%}
+      <div class="section-header text-center {{ title_style }} {{ size_title }}">
+        <h2><span>{{ section.settings.title }}</span></h2>
+      </div>
+    {%- endif -%}
+      {%- assign collection_produclists = collections[section.settings.collection].products -%}
+      {%- if settings.apollo_count_down_enable and settings.apollo_count_down_collections -%}
+        {%- assign dealTime = settings.home_productdeal_time | split: ' ' | join: ' ' | split: ' ' -%}
+      {%- else -%}
+        {%- assign dealTime = false -%}
+      {%- endif-%}
+      {%- assign enable_dot = section.settings.enable_dot  -%}
+      {%- assign enable_nav = section.settings.enable_nav  -%}
+            {%- assign columns_product = section.settings.home_productlists_columntab | plus:0 -%}
+            {%- assign slidesToScroll = section.settings.home_productlists_toscroll | plus:0 -%}
+            {%- assign item_laptop = section.settings.home_productlists_toscroll_laptop | plus:0 -%}
+            {%- assign item_table = section.settings.home_productlists_toscroll_table | plus:0 -%}
+            {%- assign item_phone = section.settings.home_productlists_toscroll_phone | plus:0 -%}
+            {%- assign item_phone_min = section.settings.home_productlists_toscroll_phone_min | plus:0 -%}
+            {%- assign product_in_tab = section.settings.home_productlists_limit | plus:0 -%}
+            {%- assign product_interval = section.settings.home_productlists_interval | plus:0 -%}
+            {%- assign type_block = section.settings.home_productlists_type -%}
+            {%- assign id_productlist = section.id -%}
+    	{%- assign proLazyLoad = section.settings.home_producttabs_lazy -%}
+            {%- assign row_slick = section.settings.home_row_slick | plus:0 -%}
+      {% include 'productlist' with id_productlist %}
+            {%- if section.settings.btn_link_all != blank -%}
+               <div class="btn-tabs text-center">
+                 <a class="btn btn-outline" href="{{collections[section.settings.collection].url}}">{{section.settings.btn_link_all}}</a>
+               </div>
+            {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Collection Product List",
+  	"class": "index-section pb-0",
+    "settings": [
+  	  {
+        "type": "header",
+        "content": "Product List"
+      },
+      {
+        "type": "textarea",
+        "id": "custom_space",
+        "label": "Css Style Section",
+        "default":"padding-top:10px;padding-bottom:100px"
+      },
+      {
+         "type":      "radio",
+         "id":        "set_box",
+         "label":     "Set Layout Section",
+         "options": [
+           { "value": "box-container", "label": "Box Container" },
+           { "value": "box-full", "label": "Box Full" },
+           { "value": "none", "label": "None" }
+         ],
+         "default":   "box-full",
+         "info":      "Set Layout Section"
+      },
+      {
+        "type": "color",
+        "id": "bg_section",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },	  
+      {
+        "type": "select",
+        "id": "home_productlists_type",
+        "label": "Product List Display",
+        "options": [
+          {
+            "value": "boostrap_carousel",
+            "label": "Grid"
+          },
+          {
+            "value": "slick_carousel",
+            "label": "Slick Carousel"
+          }
+        ]
+      },
+      {
+          "type": "checkbox",
+          "id": "enable_dot",
+          "label": "Enable Dot"
+        },
+      {
+      "type": "checkbox",
+      "id": "enable_nav",
+      "label": "Enable Arrows"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_limit",
+        "label": "Limit",
+        "default": "8"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_columntab",
+        "label": "Columns In Tab",
+        "default": "4",
+        "info": "Sample: 1, 2, 3, 4, 6, 12"
+      },
+      {
+        "type": "text",
+        "id": "home_row_slick",
+        "label": "Row for Slick carousel",
+        "default": "1",
+        "info": "Sample: 1, 2, 3 for Slick carousel"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_toscroll",
+        "label": "Slider To Scroll",
+        "default": "4",
+        "info": "for slick slider ex: 1, 2, 3, 4 .."
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_toscroll_laptop",
+        "label": "Number Item per Line ( Laptop Small )",
+        "default": "3",
+        "info": "for screen 1199px"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_toscroll_table",
+        "label": "Number Item per Line (Table)",
+        "default": "2",
+        "info": "for screen 750px to 991px"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_toscroll_phone_min",
+        "label": "Number Item per Line (Phone)",
+        "default": "1",
+        "info": "for screen 749px"
+      },
+      {
+        "type": "text",
+        "id": "home_productlists_interval",
+        "label": "Interval",
+        "default": "8000",
+        "info": "Enter Time(miniseconds) to play carousel. Value 0 to stop."
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection Product List"
+      },
+      {
+        "type": "text",
+        "id": "btn_link_all",
+        "label": "Button Link Name"
+      }
+  ],
+  "presets": [
+    {
+    "name": "Collection Product List",
+    "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

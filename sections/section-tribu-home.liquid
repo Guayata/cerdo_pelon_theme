@@ -1,0 +1,122 @@
+<div class="container-fluid">
+  <div class="row content-page-width">
+    <div class="col-12 col-lg-4">
+      <div class="row h-100 content-title text-center">
+        <div class="col-12 my-auto">
+          {% if section.settings.titulo != blank%}
+          <p class="pt-2">
+            <span style="background: {{section.settings.color_titulo}}">{{ section.settings.titulo }}</span>
+          </p>
+          {%endif %}
+          {% if section.settings.url != blank%}
+          <p class="content-button">
+            <a href="{{section.settings.url}}" class="btn text-uppercase">
+              {{ section.settings.url_txt }}
+            </a>
+          </p>
+          {%endif %}
+           {% if section.settings.subtitulo != blank%}
+		        <p>
+			        <span style="background:{{section.settings.color_titulo}}">{{ section.settings.subtitulo }}</span>
+		        </p>
+	        {%endif %}
+          {% if section.settings.url_login != blank%}
+          <p class="content-button">
+            <a href="{{section.settings.url_login}}" class="btn text-uppercase">
+              {{ section.settings.url_txt_login }}
+            </a>
+          </p>
+          {%endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8 mt-4 mt-lg-0 content-slider">
+      <div class="slider-people-home">
+        <div>
+          <img class="img-fluid w-100 lazyload"
+               data-src="{{"people-1.png" | asset_url }}">
+        </div>
+        <div>
+          <img class="img-fluid w-100 lazyload"
+               data-src="{{"people-2.png" | asset_url }}">
+        </div>
+        <div>
+          <img class="img-fluid w-100 lazyload"
+               data-src="{{"people-3.png" | asset_url }}">
+        </div>
+        <div>
+          <img class="img-fluid w-100 lazyload"
+               data-src="{{"people-4.png" | asset_url }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+"name": "Tribu",
+"class": "section-tribu-home",
+"settings": [
+{
+		"type": "header",
+		"content": "==== Titulo ===="
+      },
+      {
+		"type": "color",
+		"id": "color_titulo",
+		"label":"Background titulo"
+      },
+      {
+		"type": "text",
+		"id": "titulo",
+		"label":"Titulo"
+      },
+{
+"type": "color",
+"id": "color_subtitulo",
+"label":"Color subtitulo"
+},
+{
+"type": "text",
+"id": "subtitulo",
+"label":"Subtitulo"
+},
+      {
+		"type": "header",
+		"content": "==== Botón ===="
+      },
+      {
+		"type": "url",
+		"id": "url",
+		"label":"Botón Url"
+      },
+      {
+		"type": "text",
+		"id": "url_txt",
+		"label":"Botón texto"
+      },
+     {
+		"type": "url",
+		"id": "url_login",
+		"label":"Botón Url Login"
+      },
+      {
+		"type": "text",
+		"id": "url_txt_login",
+		"label":"Botón texto Login"
+      }
+    ],
+  "presets": [
+    {
+       "name": "Tribu",
+      "category": "Images"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

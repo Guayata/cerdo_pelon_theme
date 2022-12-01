@@ -1,0 +1,160 @@
+<div class="content-page-width">
+  <div class="container-fluid box-content-testimonial" style="{{ section.settings.custom_space }};" >
+    <div class="row">
+      <div class="col-12">
+        {% if section.settings.title != blank %}
+        <div class="section-header text-center {{ title_style }} {{ size_title }}">
+          <h2><span>{{ section.settings.title }}</span></h2>
+        </div>
+        {% endif %}
+      </div>
+      <div class="col-12 page-width-padding">
+        <div class="row {% unless section.blocks.size == 5 %}{% endunless %} grid--flush-bottom">
+          <div class="col-12 ">
+            <div class="row content-box">
+              <div class="col-12 col-lg-6 p-0 ps-lg-0 pe-lg-4">
+                <div class="slider-for-images">
+                  {% for block in section.blocks %}
+                  <div>
+                    {% if block.settings.image != blank %}
+	                    <img class="img-fluid lazyload"  width="693px" height="693px"
+	                         data-src="{{ block.settings.image | img_url: 'master'}}"
+	                         data-widths="[180, 360, 540, 720, 900, 1080]"
+	                         data-aspectratio="{{ preview_image.aspect_ratio }}"
+	                         alt="{{ preview_image.alt | escape }}">
+                    {% else %}
+                    {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-12 col-lg-6 my-auto ps-lg-4">
+                <div class="slider-nav-images">
+                  {% for block in section.blocks %}
+                  <div>
+                    <div class="row">
+                      <div class="col-12 quotes-text text-center pb-4">
+                        {% if block.settings.image_quotes != blank %}
+	                        <img class="img-fluid lazyload" width="74px" height="56px"
+	                             data-src="{{ block.settings.image_quotes | img_url: 'master' }}"
+	                             data-widths="[180, 360, 540, 720, 900, 1080]"
+	                             data-aspectratio="{{ preview_image.aspect_ratio }}"
+	                             alt="{{ preview_image.alt | escape }}">
+                        {% else %}
+                        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                        {% endif %}
+                      </div>
+                      <div class="col-12 title text-center">
+                        {% if block.settings.title != blank %}
+                        {{ block.settings.title }}
+                        {% endif %}
+                      </div>
+                      <div class="col-12 text-description text-center">
+                        {% if block.settings.text != blank %}
+                        {{ block.settings.text }}
+                        {% endif %}
+                      </div>
+                      <div class="col-12 name-testimonial text-center">
+                        {% if block.settings.name != blank %}
+                        {{ block.settings.name }}
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonial",
+  "class": "index-testimonial",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "custom_space",
+      "label": "Css Style Section",
+      "default":"padding-top:100px;padding-bottom:100px"
+    },
+    {
+       "type":      "radio",
+       "id":        "set_box",
+       "label":     "Set Layout Section",
+       "options": [
+         { "value": "box-container", "label": "Box Container" },
+         { "value": "box-full", "label": "Box Full" },
+         { "value": "none", "label": "None" }
+       ],
+       "default":   "box-full",
+       "info":      "Set Layout Section"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+ {
+          "type": "image_picker",
+          "id": "image_quotes",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Add a title or tagline"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name Testimonial",
+          "default": "Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonial",
+      "category": "Testimonial",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

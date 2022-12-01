@@ -1,0 +1,164 @@
+<div class="content-page-width">
+  <div class="block-section container-fluid index-about" {%- if section.settings.custom_space != blank -%} style="{{ section.settings.custom_space }};background-color: {{section.settings.bg_section }}" {%- endif -%}>
+    <div class="block_content row">
+      <div class="col-12 page-width-padding">
+        <div class="row content-index-about">
+          <div class="col-12 overlay-index-about position-absolute"></div>
+          <div class="col-12 col-lg-5">
+            <div class="row">
+              <div class="col-12 ">
+                {% if section.settings.title != blank %}
+                <div class="title-description text-uppercase text-center text-lg-start mb-lg-2">
+                  <p>{{ section.settings.title }}</p>
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-12 mt-lg-4 mb-lg-5">
+                {% if section.settings.text != blank %}
+                <div class="rte-setting text-description text-center text-lg-start">{{ section.settings.text }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12 text-center text-lg-start">
+                {% if section.settings.enable_image %}
+                {% if section.settings.image != blank %}
+	                <img class="img-fluid lazyload" width="526px" height="238px"
+	                     data-src="{{ section.settings.image | img_url: 'master' }}"
+	                     data-widths="[180, 360, 540, 720, 900, 1080]"
+	                     data-aspectratio="{{ preview_image.aspect_ratio }}"
+	                     alt="{{ preview_image.alt | escape }}">
+                {% else %}
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-7 content-box-icon">
+            <div class="row h-100">
+              {% for block in section.blocks %}
+              <div class="col-6 col-sm-6 col-lg-6 text-center block-icon" {{ block.shopify_attributes }}>
+                <div class="row">
+                  <div class="col-12 image-icon">
+                    {% if block.settings.enable_image %}
+                    {% if block.settings.image != blank %}
+	                    <img class="img-fluid lazyload" width="56px" height="56px"
+	                         data-src="{{ block.settings.image | img_url: 'master' }}"
+	                         data-widths="[180, 360, 540, 720, 900, 1080]"
+	                         data-aspectratio="{{ preview_image.aspect_ratio }}"
+	                         alt="{{ preview_image.alt | escape }}">
+                    {% else %}
+                    {% endif %}
+                    {% endif %}
+                  </div>
+                  <div class="col-12 title-icon">
+                    {% if block.settings.title != blank %}
+                    <div class="mb-0 text-uppercase">{{ block.settings.title }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-12 text-icon mt-1">
+                    {% if block.settings.text != blank %}
+                    <div class="rte-setting">{{ block.settings.text }}</div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Text columns with images",
+  "class": "index-about",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "custom_space",
+      "label": "Css Style Section",
+      "default":"padding-top:100px;padding-bottom:100px"
+    },
+    
+    {
+      "type": "color",
+      "id": "bg_section",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    },
+ {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        },
+{
+          "type": "checkbox",
+          "id": "enable_image",
+          "label": "Show image",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        }
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Column",
+	 "limit": 4,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_image",
+          "label": "Show image",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Add a title or tagline"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Share blog posts, products, or promotions with your customers. Use this text to describe products, share details on availability and style, or as a space to display recent reviews or FAQs.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text columns with images",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

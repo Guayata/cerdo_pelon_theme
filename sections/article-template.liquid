@@ -1,0 +1,161 @@
+{% assign number_of_comments = article.comments_count %}
+{% if comment and comment.created_at %}
+    {% assign number_of_comments = article.comments_count | plus: 0 %}
+{% endif %}
+{% assign column_center = 'col-12' %}
+<section id="columns" class="columns-container mb-5">
+  <div class="container-fluid">
+    <div class="row">
+      <article id="blogpage" class="blog-detail blog-container col-12" itemscope itemtype="http://schema.org/NewsArticle">
+        <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="https://google.com/article"/>
+        <meta itemprop="headline" content="{{ article.title }}" />
+        <div class="hidden" itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="{{ article.author }}" />
+        </div>
+        <meta itemprop="datePublished" content="{{ article.published_at | date: '%Y-%m-%d' }}" />
+        <meta itemprop="dateModified" content="{{ article.published_at | date: '%Y-%m-%d' }}"/>
+        <div class="container-article-element">
+          <div class="container-box-general">
+            <div class="row m-0">
+              <div class="col-12">
+                <div class="row box-date-header-article">
+                  <div class="col-12 my-auto text-right box-date-header-content">
+                    MÉXICO | {{ "now" | date: '%Y-%m-%d'| date: format: 'month_day_year'}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 container-title-article text-center">
+                <div class="article__title text-uppercase">{{ article.title }}</div> 
+              </div>
+              <div class="col-12 text-center text-lg-left image-blog p-0">
+                {% if article.image %}
+                {% assign imageSize = settings.blogpage_imagesize %}
+                <div class="imageFeatured" itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+                  {%- assign img_url = article.image | img_url: 'master' -%}
+                  <!--<img class="img-responsive" src="{{ article.image | img_url: imageSize }}" alt="{{ article.title }}" />-->
+                  <img 
+                       class="lazyload "
+                       src="{{ article.image | img_url: 'master' }}"
+                       data-src="{{ img_url }}"
+                       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                       data-aspectratio="{{ article.image.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ article.image.alt | escape }}">
+                  <noscript>
+                    {% assign card_image = type | img_url: 'master' %}
+                    <img src="{{ card_image }}" alt="{{ type.alt | escape }}" class="card__image">
+                  </noscript>
+                  <meta itemprop="url" content="http:{{ article.image | img_url: imageSize }}">
+                  <meta itemprop="width" content="800">
+                  <meta itemprop="height" content="800">
+                </div>
+                {% endif %}
+              </div>
+              <div class="col-12 content-txt-blog">
+                <div class="row">
+                  <div class="col-12 col-lg-6 first-column-txt">
+                    <div class="rte-setting text-justify" style="color: {{ section.settings.color_subtitle_blog }};" itemprop="articleBody">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[0] | split: '[/shortdesc]' | first }}
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-6 second-column-txt">
+                    <div class="rte-setting text-justify" style="color: {{ section.settings.color_subtitle_blog }};" itemprop="articleBody">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[1] | split: '[/shortdesc]' | first }}
+                    </div>
+                    <div class="box-title-strong-index">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[2] | split: '[/shortdesc]' | first }}
+                    </div>
+                    <div class="rte-setting text-justify" style="color: {{ section.settings.color_subtitle_blog }};" itemprop="articleBody">
+                      {% assign shortdesc = article.content | split: '[shortdesc]' | last %}
+                      {% assign splitShortDesc = shortdesc | split: "|" %}
+                      {{ splitShortDesc[3] | split: '[/shortdesc]' | first }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+        </div>
+        <div class="blog-content">
+          {% if blog.comments_enabled? %}
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <hr>
+                <div class="comment-form form-vertical">
+                  {% form 'new_comment', article %}
+
+                  <h2 class="h3">{{ 'blogs.comments.title' | t }}</h2>
+
+                  {{ form.errors | default_errors }}
+
+                  <div class="row">
+
+                    <div class="col-12 col-lg-6">
+                      <label for="CommentAuthor">{{ 'blogs.comments.name' | t }}</label>
+                      <input type="text" name="comment[author]" id="CommentAuthor" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}">
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                      <label for="CommentEmail">{{ 'blogs.comments.email' | t }}</label>
+                      <input type="email" name="comment[email]" id="CommentEmail" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off">
+                    </div>
+
+                    <div class="col-12">
+                      <label for="CommentBody">{{ 'blogs.comments.message' | t }}</label>
+                      <textarea name="comment[body]" id="CommentBody" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}">{{ form.body }}</textarea>
+                    </div>
+
+                  </div>
+
+                  {% if blog.moderated? %}
+                  <p class="fine-print">{{ 'blogs.comments.moderated' | t }}</p>
+                  {% endif %}
+
+                  <input type="submit" class="btn btn-outline" value="{{ 'blogs.comments.post' | t }}">
+                  {% endform %}
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </article>      
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Posts",
+  "settings": [
+    
+{
+      "type": "header",
+      "content": "---- * Image header Setting * ----"
+    },
+ {
+      "type": "image_picker",
+      "id": "image_blog",
+      "label": "Image"
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": "Show date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show social sharing buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

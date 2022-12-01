@@ -1,0 +1,156 @@
+<style>
+  .datax tr td, .datax tr th{ font-size: 14px; padding: 5px; }
+  #usr-nombre, #usr-apellidos { text-transform: uppercase; }
+  #rwsUsers a, #viewUsers a {color: #ff3521;}
+</style>
+<div class="row" id="listUsers">
+  <div class="col-12 table-responsive">
+    <h2>USUARIOS</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col-3">CODIGO</th>
+          <th scope="col-3">NOMBRE</th>
+          <th scope="col-3">EMAIL</th>
+          <th scope="col-3">REGISTRO</th>
+        </tr>
+      </thead>
+      <tbody id="rwsUsers" class="datax">
+      </tbody>
+    </table>
+  </div>  
+</div>
+<div class="row hide" id="viewUsers">
+  <div class="col-12 table-responsive">
+    <h2><a href="#" onclick="userList()">USUARIOS</a> / <span id="usr-codigo"></span></h2>
+    <table class="table">
+        <tr>
+          <td><span id="usr-nombre"></span> <span id="usr-apellidos"></span></td>
+          <td><span id="usr-enteropor"></span>: <span id="usr-enteroname"></span></td>
+        </tr>
+        <tr>
+          <th id="usr-email"></th>
+          <td id="usr-celular"></td>
+        </tr>      
+    </table>
+	<table class="table">
+        <tr>
+          <td colspan="4" id="usr-direccion"></td>
+        </tr>
+      	<tr>
+          <th>CP</th>
+          <th>Estado</th>
+          <th>Municipio</th>
+          <th>Colonia</th>
+      	</tr>
+        <tr>
+          <td id="usr-cp"></td>
+          <td id="usr-estado"></td>
+          <td id="usr-municipio"></td>
+          <td id="usr-colonia"></td>      
+        </tr>      
+    </table>    
+  </div>
+  <div class="col-12 table-date-sell">
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <hr/>
+        <h2>REGISTRO DE VENTAS</h2>
+        <table class="table">
+          <tr>
+            <th>Nombre y apellido</th>
+            <th>Fecha</th>
+            <th>Ciudad</th>
+            <th>Monto de compra (MXN)</th>
+          </tr>
+          <tbody id="rwsVentas">
+          </tbody>
+        </table>
+      </div>
+      <div class="col-12">
+        <div class="row box-description-sale-bottom m-0">
+          <div class="col-12 col-sm-3 mb-3 my-lg-auto text-center text-lg-start box-description-content-txt">
+            VENTAS: <span id="spcajas">0</span>
+          </div>
+          <div class="col-12 col-sm-5 mb-3 my-lg-auto text-center text-lg-start box-description-content-txt">
+            MONTO TOTAL VENDIDO: <span id="sptotal">$0.00</span> MXN
+          </div>
+          <div class="col-12 col-sm-4 mb-3 my-lg-auto text-center text-lg-start box-description-content-txt">
+            COMISIÓN TOTAL: <span id="spcomision">$0.00</span> MXN
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+  const api = "//gsjf60ub30.execute-api.us-east-1.amazonaws.com/production/admin/";
+  const f = new Intl.NumberFormat('en-US', {style: 'currency',currency: 'USD' });
+  let usuarios = [];
+  function getUsers(){
+    fetch(`${api}usuarios`,{
+      method : "GET",
+      mode: 'cors',
+      headers: {
+        token: '{{ customer.email }}'
+      }
+    }).then((resp) => resp.json())
+    .then(function(r) {
+      if(r.status){
+        usuarios = r.usuarios;
+        for (var i = 0; i < r.usuarios.length; i+=1) {
+          const p = r.usuarios[i];
+          $("#rwsUsers").append(`<tr><th scope="row"><a href="#${p.codigo}" onclick="userView(${p.id});">${p.codigo}</a></th><td>${p.nombre} ${p.apellidos}</td><td>${p.email}</td><td>${p.createdAt.slice(0, 16).replace('T',' ')}</td></tr>`);
+        }
+      }
+    })
+    .catch(function(error) {
+      alert(error);
+    });       
+  };
+  function getVentas(codigo){
+    $('#spcajas').text('0');
+    $('#sptotal').text('$0.00');
+    $('#spcomision').text('$0.00');    
+    $("#rwsVentas").find('tr').remove();
+    fetch(`${api}ventas?code=${codigo}`,{
+      method : "GET",
+      mode: 'cors',
+      headers: {
+        token: '{{ customer.email }}'
+      }
+    }).then((resp) => resp.json())
+    .then(function(r) {
+      if(r.status){
+        $('#spcajas').text(r.ventas.length);
+        $('#sptotal').text(f.format(r.total));
+        $('#spcomision').text(f.format(r.total * 0.1));
+        for (var i = 0; i < r.ventas.length; i+=1) {
+          const v = r.ventas[i];
+          $("#rwsVentas").append(`<tr><td>${v.nombre}</td><td>${v.fecha}</td><td>${v.ciudad}</td><td>${f.format(v.total)}</td></tr>`);
+        }
+      }
+    })
+    .catch(function(error) {
+      alert(error);
+    });     		
+  };  
+  function userList(){
+      $("#listUsers").toggleClass('hide');
+      $("#viewUsers").toggleClass('hide');
+  }
+  function userView(id){
+    const u = usuarios.find(u=>u.id === id);
+    if(u){
+      $("#listUsers").toggleClass('hide');
+      $("#viewUsers").toggleClass('hide');      
+      for (const p in u) {
+        $(`#usr-${p}`)?.text(u[p]);
+      }
+    }
+    getVentas(u.codigo);
+  }
+  getUsers();
+</script>
+ 

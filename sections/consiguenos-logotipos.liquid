@@ -1,0 +1,137 @@
+<div class="content-page-width">
+  <div class="row">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center">
+          <p class="megatitle-cons text-uppercase">{{ section.settings.title }}</p>
+        </div>
+        <div class="col-12 col-md-11 col-lg-12 container-brand-site">
+          <div class="row justify-content-center">
+            {% for block in section.blocks %}
+            <style>
+              .content-button .btn:hover{
+                color:{{block.settings.color_text_button}};
+              }
+            </style>
+            {% if block.settings.enable_image %}
+            <div class="col-6 col-md-4 col-lg-3 content-box-logotipos">
+              <div class="row h-100">
+                <div class="col-12 content-image text-center">
+                  <div class="row h-100">
+                    <div class="col-12 my-auto">
+                      {% if block.settings.image != blank %}
+                      {{ block.settings.image | img_url: 'master' | img_tag: 'feature-row__image','img-fluid' }}
+                      {% else %}
+                      {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+                      {% endif %}
+                      {% if block.settings.title_discount != blank %}
+                      <p class="title-consiguenos-discount"  style="color:{{block.settings.color_button}};">
+                        {{block.settings.title_discount}}
+                      </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 content-button text-center">
+                  {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+                  <a href="{{ block.settings.button_link }}" class="btn" target="_blank" style="background:{{block.settings.color_button}}; color:{{block.settings.color_text_button}}">
+                    {{ block.settings.button_label }}
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>    
+
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Logotipos consiguenos",
+  "class": "consiguenos-logotipos",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_section",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Text columns with images"
+    }
+   
+  ],
+  "blocks": [
+    {
+      "type": "text_block",
+      "name": "Column",
+      "settings": [
+       {
+          "type": "checkbox",
+          "id": "enable_image",
+          "label": "Show Box",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_discount",
+          "label": "Descuento"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+"default": "Ir a la tienda"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+ {
+          "type": "color",
+          "id": "color_button",
+          "label": "Color background button",
+"default": "#FFF"
+        },
+{
+          "type": "color",
+          "id": "color_text_button",
+          "label": "Color button",
+"default": "#FFF"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logotipos consiguenos",
+      "category": "Logotipos",
+      "blocks": [
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        },
+        {
+          "type": "text_block"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

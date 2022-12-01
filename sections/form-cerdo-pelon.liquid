@@ -1,0 +1,38 @@
+{{ 'form-cerdo-pelon.scss.css' | asset_url | stylesheet_tag }}
+<div class="container-fluid formu">
+<div class="container-formu">
+    <div class="content-one">
+      <div class="content-texto">
+        <cu>¿Quieres distribuir</cu>
+        <pa>NUESTROS PRODUCTOS?</pa>
+        
+        <spa>Llena los siguientes datos y envíanos todas las dudas que tengas. Nos pondremos en contacto contigo lo más pronto posible.</spa>
+      </div>
+              <img src="{{ 'top-puerco.png' | asset_url }}" class="puerco-oreja d-none d-sm-none d-md-block">
+    </div>
+  <div class="content-two">
+<div class="globo-formbuilder" data-id="ODk2MTU="></div>
+    <div class="puerco-abajo">
+                  <img src="{{ 'top-puerco.png' | asset_url }}" class="puerco-oreja d-block d-sm-block d-md-none">
+    </div>
+  </div>
+</div>
+</div>
+
+{% schema %} 
+  { 
+    "name": "Formulario App", 
+    "class": "formu", 
+    "settings": 
+    [
+      
+    ], 
+    "presets": 
+    [ 
+      { 
+        "name": "Formulario App",
+        "category": "form" 
+      } 
+    ] 
+  } 
+  {% endschema %}
